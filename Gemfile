@@ -52,6 +52,10 @@ group :development, :test do
   gem 'seed-fu'
 
   gem 'rails-erd'
+
+  # device
+  gem 'devise'
+  gem 'devise-i18n'
 end
 
 group :development do
