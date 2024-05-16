@@ -1,2 +1,14 @@
-<h1>Tops#top</h1>
-<p>Find me in app/views/tops/top.html.erb</p>
+
+<% if user_signed_in? %>
+  <p>ログイン中</p>
+  <%= link_to 'ユーザー情報編集',edit_user_registration_path , class: 'link' %>
+  <%= link_to 'パスワード編集フォーム',edit_user_password_path , class: 'link' %>
+  <%= link_to 'パスワードを忘れた時のフォーム',new_user_password_path , class: 'link' %>
+  <%= link_to 'ログアウト',signout_path, data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' }, class: 'link' %>
+
+<% else %>
+  <p>未ログイン</p>
+  <%= link_to 'ログイン',new_user_session_path , class: 'link' %>
+  <%= link_to '新規登録',new_user_registration_path , class: 'link' %>
+  <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, data: { turbo_method: :post }, class: 'link' %>
+<% end %>
