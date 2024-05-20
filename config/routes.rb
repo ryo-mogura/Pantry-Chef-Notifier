@@ -3,7 +3,8 @@
 Rails.application.routes.draw do
   # Topページ
   root to: 'tops#top'
-  # ユーザー認証
+
+  # ユーザー認証関係
   # ゲストユーザー機能でControllerをカスタマイズしているので変更
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -16,5 +17,8 @@ Rails.application.routes.draw do
     delete 'signout', to: 'devise/sessions#destroy'
     # ゲストユーザーのログイン
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+  end
+  namespace :users do
+    resource :profile, only: [:show]
   end
 end
