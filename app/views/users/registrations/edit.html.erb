@@ -1,43 +1,67 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container mx-auto text-center">
+  <h2 class="my-11">アカウントの編集</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <div class="field flex items-center justify-center gap-10 my-11">
+      <p>ユーザー名</p>
+      <label class="input input-bordered flex items-center gap-2 max-w-xs">
+        <svg class="h-4 w-4 text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+        </svg>
+        <%= f.text_field :name, class: "grow", placeholder: "ユーザー名", autofocus: true, autocomplete: "name" %>
+      </label>
+    </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <div class="field flex items-center justify-center gap-10 my-11">
+      <p>メールアドレス</p>
+      <label class="input input-bordered flex items-center gap-2 max-w-xs">
+        <svg class="h-4 w-4 text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <%= f.email_field :email, class: "grow", placeholder: "Email", autofocus: true, autocomplete: "email" %>
+      </label>
+    </div>
+
+    <div class="field flex items-center justify-center gap-10 my-11">
+      <p>新しいパスワード</p>
+      <label class="input input-bordered flex items-center gap-2 max-w-xs">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70">
+          <path fill-rule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clip-rule="evenodd" />
+        </svg>
+        <%= f.password_field :password, class: "grow", placeholder: "新規パスワード", autofocus: true, autocomplete: "password" %>
+      </label>
+    </div>
+
+    <div class="field flex items-center justify-center gap-10 my-11">
+      <p>新しいパスワード<br>(確認用)</p>
+      <label class="input input-bordered flex items-center gap-2 max-w-xs">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70">
+          <path fill-rule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clip-rule="evenodd" />
+        </svg>
+        <%= f.password_field :password_confirmation, class: "grow", placeholder: "新規パスワード確認", autofocus: true, autocomplete: "password_confirmation" %>
+      </label>
+    </div>
+
+    <div class="field flex items-center justify-center gap-10 my-11">
+      <p>現在のパスワード</p>
+      <label class="input input-bordered flex items-center gap-2 max-w-xs">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70">
+          <path fill-rule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clip-rule="evenodd" />
+        </svg>
+        <%= f.password_field :current_password, class: "grow", placeholder: "現在のパスワード", autofocus: true, autocomplete: "current-password" %>
+      </label>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "更新する", class:"btn btn-outline" %>
+    </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
+  <div class="my-5"><%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "アカウントを削除しますか？", turbo_confirm: "アカウントを削除しますか？" }, method: :delete %></div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+  <%= link_to "戻る", :back %>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>
