@@ -11,4 +11,18 @@
       <%= link_to '編集', edit_user_registration_path, class: 'link' %>
     </div>
   </div>
+
+  <div data-controller="tabs">
+    <div role="tablist" class="tabs tabs-bordered my-10">
+      <a role="tab" class="tab tab-active" data-action="click->tabs#changeTab" data-tabs-target="tab">Tab 1</a>
+      <a role="tab" class="tab" data-action="click->tabs#changeTab" data-tabs-target="tab">Tab 2</a>
+    </div>
+
+    <div data-tabs-target="content" style="display: block;">
+      <p>登録した食材</p>
+    </div>
+    <div data-tabs-target="content" style="display: none;">
+      <p>お気に入りのレシピ</p>
+    </div>
+  </div>
 </div>
