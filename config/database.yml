@@ -84,4 +84,4 @@ production:
   <<: *default
   database: pantry_chef_notifier_app_production
   username: pantry_chef_notifier_app
-  password: <%= ENV["pantry_chef_notifier_app_DATABASE_PASSWORD"] %>
+  password: <%= ENV["PANTRY_CHEF_NOTIFIER_APP_DATABASE_PASSWORD"] %>
