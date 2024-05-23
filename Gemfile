@@ -15,9 +15,7 @@ gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # Assets
-gem 'dartsass-rails', '~> 0.4.0'
 gem 'font-awesome-rails'
-gem 'jquery-rails'
 gem 'jsbundling-rails'
 gem 'sprockets-rails'
 gem 'uglifier'
