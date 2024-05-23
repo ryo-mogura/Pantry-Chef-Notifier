@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
     volumes:
-      - postgresql_data:/var/lib/postgresql
+      - pantry_chef_notifier_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     healthcheck:
@@ -36,5 +36,5 @@ services:
         condition: service_healthy
 volumes:
   bundle_data:
-  postgresql_data:
+  pantry_chef_notifier_data:
   node_modules:
