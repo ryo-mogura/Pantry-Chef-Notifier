@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   # ゲストユーザー機能でControllerをカスタマイズしているので変更
   devise_for :users, controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    line_omniauth_callbacks: 'line_omniauth_callbacks'
   }
   devise_scope :user do
     # sign_inとsign_outのルーティングを変更する
