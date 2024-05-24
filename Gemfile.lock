@@ -161,6 +161,11 @@ GEM
     json (2.7.2)
     jwt (2.8.1)
       base64
+    libv8-node (21.7.2.0)
+    libv8-node (21.7.2.0-aarch64-linux)
+    libv8-node (21.7.2.0-arm64-darwin)
+    libv8-node (21.7.2.0-x86_64-darwin)
+    libv8-node (21.7.2.0-x86_64-linux)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -175,6 +180,8 @@ GEM
       actionpack (>= 6.0.0, < 7.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
+    mini_racer (0.12.0)
+      libv8-node (~> 21.7.2.0)
     minitest (5.22.3)
     msgpack (1.7.2)
     multi_xml (0.7.1)
@@ -432,6 +439,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   meta-tags
+  mini_racer
   omniauth-line
   omniauth-rails_csrf_protection
   pg (~> 1.1)

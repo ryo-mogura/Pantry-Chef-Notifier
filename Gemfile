@@ -21,7 +21,6 @@ gem 'sprockets-rails'
 gem 'uglifier'
 
 # UI/UX
-gem 'annotate'
 gem 'jbuilder'
 gem 'meta-tags'
 gem 'rails-i18n'
@@ -61,6 +60,8 @@ group :development, :test do
   gem 'omniauth-line'
   gem 'omniauth-rails_csrf_protection'
   gem 'dotenv-rails'
+
+  gem 'annotate'
 end
 
 group :development do
