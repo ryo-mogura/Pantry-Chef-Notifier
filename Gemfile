@@ -26,6 +26,8 @@ gem 'jbuilder'
 gem 'meta-tags'
 gem 'rails-i18n'
 
+gem 'mini_racer'
+
 group :development, :test do
   # Debugging tools
   gem 'debug', platforms: %i[mri windows]
