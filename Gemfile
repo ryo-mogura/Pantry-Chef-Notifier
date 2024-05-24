@@ -21,10 +21,11 @@ gem 'sprockets-rails'
 gem 'uglifier'
 
 # UI/UX
-gem 'annotate'
 gem 'jbuilder'
 gem 'meta-tags'
 gem 'rails-i18n'
+
+gem 'mini_racer'
 
 group :development, :test do
   # Debugging tools
@@ -59,6 +60,8 @@ group :development, :test do
   gem 'omniauth-line'
   gem 'omniauth-rails_csrf_protection'
   gem 'dotenv-rails'
+
+  gem 'annotate'
 end
 
 group :development do
