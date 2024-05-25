@@ -440,6 +440,7 @@ DEPENDENCIES
   jsbundling-rails
   meta-tags
   mini_racer
+  omniauth
   omniauth-line
   omniauth-rails_csrf_protection
   pg (~> 1.1)
