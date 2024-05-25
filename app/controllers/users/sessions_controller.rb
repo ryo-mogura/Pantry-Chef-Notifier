@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-class Users::SessionsController < Devise::SessionsController
-  # ゲストユーザーのログインアクション
-  def guest_sign_in
-    user = User.guest
-    sign_in user
-    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+module Users
+  class SessionsController < Devise::SessionsController
+    # ゲストユーザーのログインアクション
+    def guest_sign_in
+      user = User.guest
+      sign_in user
+      redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+    end
   end
 end
