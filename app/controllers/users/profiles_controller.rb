@@ -1,11 +1,15 @@
-class Users::ProfilesController < ApplicationController
-  def show
-    @user = current_user
-  end
+# frozen_string_literal: true
 
-  private
+module Users
+  class ProfilesController < ApplicationController
+    def show
+      @user = current_user
+    end
 
-  def current_user_params
-    params.require(:user).permit(:name, :email)
+    private
+
+    def current_user_params
+      params.require(:user).permit(:name, :email)
+    end
   end
 end

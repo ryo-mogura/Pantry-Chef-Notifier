@@ -4,28 +4,35 @@ source 'https://rubygems.org'
 
 ruby '3.2.3'
 
-gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'pg', '~> 1.1'
 gem 'puma', '>= 5.0'
 gem 'rails', '~> 7.1.3', '>= 7.1.3.2'
-gem 'spring'
-gem 'stimulus-rails'
-gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # Assets
 gem 'font-awesome-rails'
 gem 'jsbundling-rails'
+gem 'mini_racer'
 gem 'sprockets-rails'
+gem 'stimulus-rails'
+gem 'turbo-rails'
 gem 'uglifier'
 
 # UI/UX
+gem 'bootsnap', require: false
 gem 'jbuilder'
 gem 'meta-tags'
 gem 'rails-i18n'
 
-gem 'mini_racer'
+# device
+gem 'devise'
+gem 'devise-i18n'
+
+# omniauth
+gem 'omniauth'
+gem 'omniauth-line'
+gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   # Debugging tools
@@ -50,21 +57,14 @@ group :development, :test do
   # Seed Data
   gem 'seed-fu'
 
-  gem 'rails-erd'
-
-  # device
-  gem 'devise'
-  gem 'devise-i18n'
-
-  # gem 'omniauth'
-  gem 'omniauth-line'
-  gem 'omniauth-rails_csrf_protection'
+  # env
   gem 'dotenv-rails'
-
-  gem 'annotate'
 end
 
 group :development do
+  gem 'annotate'
+  gem 'rails-erd'
+  gem 'spring'
   gem 'web-console'
 end
 
