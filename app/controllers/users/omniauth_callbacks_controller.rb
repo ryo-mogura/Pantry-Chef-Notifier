@@ -3,12 +3,12 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def line
-      login_action
+      basic_action
     end
 
     private
 
-    def login_action
+    def basic_action
       @omniauth = request.env['omniauth.auth'] # OmniAuthから取得した認証情報を含むハッシュ
       if @omniauth.present?
         @profile = User.find_or_initialize_by(provider: @omniauth['provider'], uid: @omniauth['uid']) # 取得した認証情報のproviderとuidと一致するユーザーの検索
