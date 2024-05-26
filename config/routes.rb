@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions',
-    line_omniauth_callbacks: 'line_omniauth_callbacks'
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
   devise_scope :user do
     # sign_inとsign_outのルーティングを変更する
