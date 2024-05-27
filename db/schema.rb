@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_26_091322) do
     t.string "name"
     t.date "expiration_date"
     t.string "storage_location"
+    t.integer "quantity"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

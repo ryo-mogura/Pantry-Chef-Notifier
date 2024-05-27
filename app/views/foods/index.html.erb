@@ -1,2 +1,24 @@
-<h1>Foods#index</h1>
-<p>Find me in app/views/foods/index.html.erb</p>
+<div class="container mx-auto text-center">
+  <h1 class="text-3xl font-bold text-center my-5">食品の在庫リスト</h1>
+
+  <div class="flex justify-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-28">
+      <% @foods.each do |food| %>
+        <div class="card w-96 bg-base-100 shadow-xl">
+          <figure class="p-5 bg-primary-content">
+            <%= image_tag 'nophoto.jpg', size: "150x150"%>
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title"><%= food.name %></h2>
+            <p>数量：<%= food.quantity%></p>
+            <p>保存場所：<%= food.storage_location %></p>
+            <div class="card-actions">
+              <%= link_to "詳細", food_path(food), class: "btn btn-outline btn-success btn-xs sm:btn-sm md:btn-md lg:btn-lg" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
