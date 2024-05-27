@@ -22,4 +22,6 @@ Rails.application.routes.draw do
   namespace :users do
     resource :profile, only: [:show]
   end
+
+  resources :foods
 end

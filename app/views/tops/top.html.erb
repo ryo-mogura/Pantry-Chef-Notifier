@@ -1,8 +1,7 @@
 
 <% if user_signed_in? %>
   <p>ログイン中</p>
-  <%= link_to 'ユーザー情報編集',edit_user_registration_path , class: 'link' %>
-  <%= link_to 'パスワード編集フォーム',edit_user_password_path , class: 'link' %>
+  <%= link_to '食材一覧',foods_path , class: 'link' %>
   <%= link_to 'パスワードを忘れた時のフォーム',new_user_password_path , class: 'link' %>
   <%= link_to 'マイページ',users_profile_path , class: 'link' %>
   <%= link_to 'ログアウト',signout_path, data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' }, class: 'link' %>
