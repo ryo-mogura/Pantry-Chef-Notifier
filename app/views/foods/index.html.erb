@@ -11,6 +11,7 @@
           <div class="card-body items-center text-center">
             <h2 class="card-title"><%= food.name %></h2>
             <p>数量：<%= food.quantity%></p>
+            <p>期限：<%= food.expiration_date%></p>
             <p>保存場所：<%= food.storage_location %></p>
             <div class="card-actions">
               <%= link_to "詳細", food_path(food), class: "btn btn-outline btn-success btn-xs sm:btn-sm md:btn-md lg:btn-lg" %>
