@@ -1,0 +1,24 @@
+ja:
+  activerecord:
+    attributes:
+      food:
+        name: 食材
+        expiration_date: 期限日
+        quantity: 在庫数
+        storages:
+          refrigerator: 冷蔵庫
+          freezer: 冷凍庫
+          others: その他
+    models:
+      food: 食材
+  defaults:
+    delete_confirm: 削除しますか？
+    flash_message:
+      created: "%{item}を作成しました"
+      not_created: "%{item}を作成出来ませんでした"
+      deleted: "%{item}を削除しました"
+  foods:
+    destroy: 削除
+
+
+
