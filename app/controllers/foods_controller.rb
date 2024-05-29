@@ -14,11 +14,11 @@ class FoodsController < ApplicationController
   def create
     @food = current_user.foods.new(food_params)
 
-    if @food.save!
-      flash[:notice] = '登録しました'
-      redirect_to foods_path
+    if @food.save
+      redirect_to foods_path, success: t('defaults.flash_message.created', item: Food.model_name.human)
     else
-      render :new
+      flash.now[:warning] = t('defaults.flash_message.not_created', item: Food.model_name.human)
+      render :new, status: :unprocessable_entity
     end
   end
 
