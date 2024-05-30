@@ -5,6 +5,7 @@ ja:
         name: 食材
         expiration_date: 期限日
         quantity: 在庫数
+        storage: 保管場所
         storages:
           refrigerator: 冷蔵庫
           freezer: 冷凍庫
@@ -16,7 +17,10 @@ ja:
     flash_message:
       created: "%{item}を作成しました"
       not_created: "%{item}を作成出来ませんでした"
+      edit: "%{item}を編集しました"
+      not_edit: "%{item}を編集できませんでした"
       deleted: "%{item}を削除しました"
+
   header:
     title: PantryChefNotifier
     new: 登録
@@ -27,6 +31,7 @@ ja:
     guest: ゲストログイン（閲覧用）
     logout: ログアウト
   foods:
+    edit: 編集
     destroy: 削除
 
 
