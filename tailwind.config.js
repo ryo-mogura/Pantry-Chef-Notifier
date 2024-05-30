@@ -13,6 +13,7 @@ module.exports = {
         bermuda: 'rgb(127, 206, 215)',
         aqua_island: 'rgb(159, 210, 219)',
         alice_blue: 'rgb(240, 249, 255)',
+        cameo: 'rgb(218, 183, 160)',
         linen: 'rgb(248, 233, 227)',
         mandys_pink:'rgb(244, 210, 199)'
       },

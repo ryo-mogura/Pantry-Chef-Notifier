@@ -1,0 +1,39 @@
+<div class="navbar bg-cameo">
+  <div class="flex-1 flex justify-between items-center">
+    <%= link_to t('header.title'), root_path, class: 'btn btn-ghost text-xl' %>
+    <div class="w-20 mx-auto">
+      <%= image_tag 'organic_grocery.png', class: 'rounded-full'%>
+    </div>
+  </div>
+  <div class="navbar-center hidden sm:flex">
+    <ul class="menu menu-horizontal px-1 text-lg">
+      <li><%= link_to t('header.index'),foods_path %></li>
+      <li><%= link_to t('header.food_new'),new_food_path %></li>
+      <li>
+        <details>
+          <summary>ユーザー</summary>
+          <ul class="p-2">
+            <li><%= link_to t('header.profile'),users_profile_path, style: 'white-space: nowrap;'  %></li>
+            <li><%= link_to t('header.logout'), signout_path,data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' }, style: 'white-space: nowrap;'  %></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+  <%# ハンバーガーメニュー %>
+  <div class="flex-none gap-2 sm:hidden">
+    <div class="navbar-start">
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><%= link_to t('header.index'),foods_path %></li>
+          <li><%= link_to t('header.new'),new_food_path %></li>
+          <li><%= link_to t('header.profile'),users_profile_path %></li>
+          <li><%= link_to t('header.logout'), signout_path,data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' } %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
