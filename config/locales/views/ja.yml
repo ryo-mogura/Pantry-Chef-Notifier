@@ -17,6 +17,15 @@ ja:
       created: "%{item}を作成しました"
       not_created: "%{item}を作成出来ませんでした"
       deleted: "%{item}を削除しました"
+  header:
+    title: PantryChefNotifier
+    new: 登録
+    profile: マイページ
+    index: 食材一覧
+    food_new: 食材登録
+    login: ログイン
+    guest: ゲストログイン（閲覧用）
+    logout: ログアウト
   foods:
     destroy: 削除
 
