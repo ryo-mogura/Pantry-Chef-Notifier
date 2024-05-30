@@ -38,6 +38,6 @@
       </div>
     </div>
   </div>
-
-  <%= link_to t('foods.destroy'), food_path(@food), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm')}%>
+  <%= link_to t('foods.edit'), edit_food_path(@food), class: "btn btn-outline btn-success btn-xs sm:btn-sm md:btn-md"%>
+  <%= link_to t('foods.destroy'), food_path(@food), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm')}, class: "btn btn-outline btn-error btn-xs sm:btn-sm md:btn-md"%>
 </div>
