@@ -13,8 +13,8 @@
         <details>
           <summary>ユーザー</summary>
           <ul class="p-2">
-            <li><%= link_to t('header.profile'),users_profile_path %></li>
-            <li><%= link_to t('header.logout'), signout_path,data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' } %></li>
+            <li><%= link_to t('header.profile'),users_profile_path, style: 'white-space: nowrap;'  %></li>
+            <li><%= link_to t('header.logout'), signout_path,data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' }, style: 'white-space: nowrap;'  %></li>
           </ul>
         </details>
       </li>

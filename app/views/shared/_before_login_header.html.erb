@@ -9,7 +9,7 @@
     <%= link_to t('header.login'), new_user_session_path, class:"btn btn-outline mr-2" %>
   </div>
   <div class="flex-none gap-2 hidden sm:flex">
-    <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, data: { turbo_method: :post }, class:"btn btn-outline mr-2" %>
+    <%= link_to t('header.guest'), users_guest_sign_in_path, data: { turbo_method: :post }, class:"btn btn-outline mr-2" %>
   </div>
   <%# ハンバーガーメニュー %>
   <div class="flex-none gap-2 sm:hidden">
