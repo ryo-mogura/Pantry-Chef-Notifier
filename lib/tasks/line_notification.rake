@@ -13,7 +13,7 @@ namespace :line_notification do
               type: 'text',
               text: "「#{t.name}」の設定した期限は今日です!!"
           }
-          response = client.push_message(t.user_uid, message)
+          response = client.push_message(t.uid, message)
           p response
       end
   end

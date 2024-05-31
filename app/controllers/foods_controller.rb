@@ -13,7 +13,6 @@ class FoodsController < ApplicationController
 
   def create
     @food = current_user.foods.new(food_params)
-    @food.user_uid = current_user.uid
 
     if @food.save
       redirect_to foods_path, success: t('defaults.flash_message.created', item: Food.model_name.human)
