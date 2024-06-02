@@ -7,7 +7,7 @@ namespace :line_notification do
           config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
       }
 
-      limit_expiration = Food.where(endday: Date.today)
+      limit_expiration = Food.where(expiration_date: Date.today)
       limit_expiration.each do |t|
           message = {
               type: 'text',
