@@ -21,4 +21,5 @@ namespace :line_notification do
     end
   end
 end
+# docker compose exec web bash後
 # rails line_notification:push_line_message_expiration_date

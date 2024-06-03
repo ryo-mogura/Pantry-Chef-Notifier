@@ -61,6 +61,8 @@ group :development, :test do
 
   # env
   gem 'dotenv-rails'
+  # cron
+  gem 'whenever', require: false
 end
 
 group :development do
