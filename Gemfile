@@ -33,6 +33,8 @@ gem 'devise-i18n'
 gem 'omniauth'
 gem 'omniauth-line'
 gem 'omniauth-rails_csrf_protection'
+# line-bot
+gem 'line-bot-api'
 
 group :development, :test do
   # Debugging tools
@@ -59,6 +61,8 @@ group :development, :test do
 
   # env
   gem 'dotenv-rails'
+  # cron
+  gem 'whenever', require: false
 end
 
 group :development do
