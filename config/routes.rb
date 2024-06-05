@@ -2,7 +2,13 @@
 
 Rails.application.routes.draw do
   # Topページ
-  root to: 'tops#top'
+  authenticated :user do
+    root to: 'foods#index', as: :authenticated_root
+  end
+
+  unauthenticated do
+    root to: 'tops#top', as: :unauthenticated_root
+  end
 
   # ユーザー認証関係
   # ゲストユーザー機能でControllerをカスタマイズしているので変更
@@ -24,4 +30,5 @@ Rails.application.routes.draw do
   end
 
   resources :foods
+
 end
