@@ -1,13 +1,51 @@
+<div class="relative">
+  <%= image_tag 'top.jpg', alt: 'src', class: 'w-full h-auto object-cover bg-image' %>
+  <div class="absolute top-5 left:0 m-4 bg-black bg-opacity-50">
+    <h1 class="text-white text-center text-xs md:text-xl">PantryChefNotifier <br> - 食材管理とレシピ提示アプリ -</h1>
+  </div>
 
-<% if user_signed_in? %>
-  <p>ログイン中</p>
-  <%= link_to '食材一覧',foods_path , class: 'link' %>
-  <%= link_to 'マイページ',users_profile_path , class: 'link' %>
-  <%= link_to 'ログアウト',signout_path, data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' }, class: 'link' %>
+  <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center">
+    <div class="collapse collapse-plus border border-base-300 bg-base-200 m-4">
+      <input type="checkbox" />
+      <div class="collapse-title text-xl font-medium">
+        サービスの説明
+      </div>
+      <div class="collapse-content">
+        <div>
+          <p>食材の管理できていますか？<br>食材の数量を忘れて余分に購入してしまったり、いつの間にか消費期限切れになって捨てることがあると思います。</p>
+          <p>PantryChefNotifierは登録した食材の消費期限が近づくとLineで通知してくれるサービスです。
+            <br>また消費期限が近づいた食材を使用しているレシピも通知してくれます。
+          </p>
+        </div>
+      </div>
+    </div>
 
-<% else %>
-  <p>未ログイン</p>
-  <%= link_to 'ログイン',new_user_session_path , class: 'link' %>
-  <%= link_to '新規登録',new_user_registration_path , class: 'link' %>
-  <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, data: { turbo_method: :post }, class: 'link' %>
-<% end %>
+    <div class="collapse collapse-plus border border-base-300 bg-base-200 m-4">
+      <input type="checkbox" />
+      <div class="collapse-title text-xl font-medium">
+        使い方
+      </div>
+      <div class="collapse-content">
+        <p>食材の名前・消費期限・数量・保管場所を登録できます</p>
+        <p>Lineでログインしているユーザーは期限が近づくと通知が来ます。</p>
+      </div>
+    </div>
+
+    <div class="border border-base-300 bg-base-200 m-4 p-4">
+      <div class="text-xl text-center font-medium p-1">
+        さっそく使ってみる
+      </div>
+      <div class="flex m-5">
+        <div class="flex-none gap-2 hidden sm:flex">
+          <%= link_to t('header.new'), new_user_registration_path, class:"btn btn-outline mr-2" %>
+        </div>
+        <div class="flex-none gap-2 hidden sm:flex">
+          <%= link_to t('header.login'), new_user_session_path, class:"btn btn-outline mr-2" %>
+        </div>
+        <div class="flex-none gap-2 hidden sm:flex">
+          <%= link_to t('header.guest'), users_guest_sign_in_path, data: { turbo_method: :post }, class:"btn btn-outline mr-2" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
