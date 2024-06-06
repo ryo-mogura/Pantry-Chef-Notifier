@@ -26,7 +26,7 @@ module Users
         sign_in(:user, @profile)
       end
       flash[:notice] = 'ログインしました'
-      redirect_to root_path
+      redirect_to authenticated_root_path
     end
 
     def fake_email(_uid, _provider)
