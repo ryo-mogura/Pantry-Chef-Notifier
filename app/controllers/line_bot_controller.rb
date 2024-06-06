@@ -2,6 +2,8 @@ class LineBotController < ApplicationController
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery :except => [:callback]
 
+  include FoodHelper
+
   def callback
     body = request.body.read
     events = client.parse_events_from(body)
@@ -59,42 +61,6 @@ class LineBotController < ApplicationController
       response = "食材が登録されていません。"
     end
   end
-
-  def food_list(response, text)
-    {
-      type: 'flex',
-      altText: text,
-      contents: {
-        type: 'bubble',
-        header:{
-          type: 'box',
-          layout: 'horizontal',
-          contents:[
-            {
-              type: 'text',
-              text: text,
-              wrap: true,
-              size: 'lg',
-              align: 'center',
-            }
-          ]
-        },
-        body: {
-          type: 'box',
-          layout: 'horizontal',
-          contents: [
-            {
-              type: 'text',
-              text: response,
-              wrap: true,
-              size: 'sm',
-            }
-          ]
-        }
-      }
-    }
-  end
-
   def send_food_limits(user)
     limit_second_days = Date.today..Time.now.end_of_day + (2.days)
     limit_foods =  Food.where(user_id: user.id).where(expiration_date: limit_second_days)
