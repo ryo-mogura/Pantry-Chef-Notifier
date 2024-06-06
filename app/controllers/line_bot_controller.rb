@@ -22,8 +22,9 @@ class LineBotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           if event.message["text"] == "食材リスト"
-            message = food_list(send_foods_item(user))
-            #メッセージに食品の名前と数量を表示させたい
+            message = food_list(send_foods_item(user), event.message["text"])
+          elsif event.message["text"].include?("消費期限")
+            message = food_list(send_food_limits(user), event.message["text"])
           else
             message = {
               type: "text",
@@ -35,7 +36,7 @@ class LineBotController < ApplicationController
         end
       end
     end
-
+    head :ok
   end
 
   private
@@ -59,10 +60,10 @@ class LineBotController < ApplicationController
     end
   end
 
-  def food_list(response)
+  def food_list(response, text)
     {
       type: 'flex',
-      altText: '食材リスト',
+      altText: text,
       contents: {
         type: 'bubble',
         header:{
@@ -71,9 +72,10 @@ class LineBotController < ApplicationController
           contents:[
             {
               type: 'text',
-              text: '食材リスト',
+              text: text,
               wrap: true,
-              size: 'md',
+              size: 'lg',
+              align: 'center',
             }
           ]
         },
@@ -91,5 +93,18 @@ class LineBotController < ApplicationController
         }
       }
     }
+  end
+
+  def send_food_limits(user)
+    limit_second_days = Date.today..Time.now.end_of_day + (2.days)
+    limit_foods =  Food.where(user_id: user.id).where(expiration_date: limit_second_days)
+    if limit_foods != []
+      names = limit_foods.map {|item| item.name }
+      expiration_dates = limit_foods.map {|item| item.expiration_date }
+      result = names.zip(expiration_dates).map { |name, expiration_date | "#{name} : 消費期限#{expiration_date}" }.join("\n")
+      response = "以下の食材の消費期限が近づいています（二日以内）。\n早めに消費することをオススメします。\n\n#{result}"
+    else
+      response = "二日以内が期限の食材はありません。"
+    end
   end
 end
