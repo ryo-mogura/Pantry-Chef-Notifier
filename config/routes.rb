@@ -25,10 +25,11 @@ Rails.application.routes.draw do
     # ゲストユーザーのログイン
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
+  # LineBot
+  post '/', to: 'line_bot#callback'
   namespace :users do
     resource :profile, only: [:show]
   end
 
   resources :foods
-
 end

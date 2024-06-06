@@ -8,7 +8,7 @@ User.seed do |s|
 end
 
 User.seed do |s|
-  s.id    = 2
+  s.id = 2
   s.uid = '1234567890'
   s.provider = 'line'
   s.email = 'line_user@example.com'
