@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FoodHelper
   def food_list(response, text)
     {
@@ -5,16 +7,16 @@ module FoodHelper
       altText: text,
       contents: {
         type: 'bubble',
-        header:{
+        header: {
           type: 'box',
           layout: 'horizontal',
-          contents:[
+          contents: [
             {
               type: 'text',
-              text: text,
+              text:,
               wrap: true,
               size: 'lg',
-              align: 'center',
+              align: 'center'
             }
           ]
         },
@@ -26,7 +28,7 @@ module FoodHelper
               type: 'text',
               text: response,
               wrap: true,
-              size: 'sm',
+              size: 'sm'
             }
           ]
         }
