@@ -20,6 +20,7 @@ ja:
       edit: "%{item}を編集しました"
       not_edit: "%{item}を編集できませんでした"
       deleted: "%{item}を削除しました"
+      not_searched: "検索結果がありません"
 
   header:
     title: PantryChefNotifier

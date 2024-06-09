@@ -1,14 +1,16 @@
 class RakutenRecipesController < ApplicationController
   def search
-    @categories = RakutenWebService::Recipe.medium_categories
+    @categories = RakutenWebService::Recipe.small_categories
     @search = params[:keyword]
+
     if @search.present?
-      @filtered_categories = @categories.select { |category| category.name.include?(@search) }
-
-      @recipes = @categories.first.ranking
-
+      category = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(@search) }
+      if category.nil?
+        @recipes = []
+        flash.now[:warning] = t('defaults.flash_message.not_searched')
+      else
+        @recipes = category.ranking
+      end
     end
   end
 end
-
-# カテゴリー一覧APIでカテゴリーを取得
