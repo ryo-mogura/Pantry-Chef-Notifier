@@ -36,6 +36,8 @@ gem 'omniauth-rails_csrf_protection'
 # line-bot
 gem 'line-bot-api'
 
+gem 'rakuten_web_service'
+
 group :development, :test do
   # Debugging tools
   gem 'debug', platforms: %i[mri windows]
