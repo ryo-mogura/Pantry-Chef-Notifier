@@ -32,4 +32,7 @@ Rails.application.routes.draw do
   end
 
   resources :foods
+
+  # rakuten
+    get 'search', to: 'rakuten_recipes#search'
 end
