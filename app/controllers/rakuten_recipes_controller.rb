@@ -1,6 +1,5 @@
 class RakutenRecipesController < ApplicationController
   def search
-    @categories = RakutenWebService::Recipe.small_categories
     @search = params[:keyword]
 
     if @search.present?
