@@ -1,0 +1,34 @@
+<div class="container mx-auto text-center">
+  <h1>人気レシピ検索</h1>
+  <div class='my-5'>
+    <%= form_with url: search_path, method: :get, local: true do |f| %>
+      <div class="field">
+        <div class="max-w-xs mx-auto">
+          <%= f.text_field :keyword, class: "input input-bordered w-full text-center" %>
+        </div>
+        <%= f.submit '検索する', disable_with: '検索中...', class: "btn btn-outline btn-success my-5" %>
+      </div>
+    <% end %>
+  </div>
+  <% if @search.present? %>
+    <div class="flex justify-center my-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-20">
+        <% @recipes.each do |r| %>
+          <div class="card w-96 bg-base-100 shadow-xl">
+            <figure class="p-5 bg-primary-content" style="height: 241px;">
+              <%= image_tag r['foodImageUrl'], alt: r['recipe_title'], class: "rounded-lg"%>
+            </figure>
+            <div class="card-body items-center text-center">
+              <h2 class="card-title"><%= r['recipe_title'] %></h2>
+              <p>調理時間：<%= r['recipe_indication'] %></p>
+              <p>費用：<%= r['recipe_cost'] %></p>
+              <div class="card-actions">
+                  <%= link_to "詳細", r['recipe_url'], target: "_blank", rel: "noopener noreferrer", data: { controller: "confirm-dialog", action: "click->confirm-dialog#confirm" }, class: "btn btn-outline btn-info" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
