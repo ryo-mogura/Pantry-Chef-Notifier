@@ -9,15 +9,26 @@ namespace :line_notification do
     end
 
     User.find_each do |user|
-      limit_expiration = user.foods.where(expiration_date: Date.today)
+      # 今日から2日後までの消費期限を取得
+      limit_expiration = user.foods.where(expiration_date: Date.today..2.days.from_now.to_date)
+
       limit_expiration.each do |f|
+        expiration_notice = case f.expiration_date
+                            when Date.today
+                              '今日'
+                            when Date.tomorrow
+                              '明日'
+                            else
+                              f.expiration_date.strftime('%m月%d日')
+                            end
+
         recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
 
         columns = recipes.map do |recipe|
           {
             thumbnailImageUrl: recipe['foodImageUrl'],
-            title: (recipe['recipeTitle'][0..39] || ""), # タイトルを40文字以内に切り詰める
-            text: (recipe['recipeDescription'][0..59] || ""), # テキストを60文字以内に切り詰める
+            title: (recipe['recipeTitle'][0..39] || ""), # タイトルを40文字以内に
+            text: (recipe['recipeDescription'][0..59] || ""), # テキストを60文字以内に
             actions: [
               {
                 type: 'uri',
@@ -30,12 +41,12 @@ namespace :line_notification do
 
         message1 = {
           type: 'text',
-          text: "「#{f.name}」の期限は今日です!    関連するレシピをご覧ください"
+          text: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください"
         }
 
         message2 = {
           type: 'template',
-          altText: "「#{f.name}」の期限は今日です!! 関連するレシピをご覧ください。",
+          altText: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください。",
           template: {
             type: 'carousel',
             columns: columns.slice(0, 10) # カラムを最大10個に制限
@@ -50,9 +61,13 @@ namespace :line_notification do
 
         response2 = client.push_message(user.uid, message2)
         p response2
+
+        puts message1.to_json
+        puts message2.to_json
       end
     end
   end
 end
+
 # docker compose exec web bash後
 # rails line_notification:push_line_message_expiration_date
