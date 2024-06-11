@@ -52,22 +52,14 @@ namespace :line_notification do
             columns: columns.slice(0, 10) # カラムを最大10個に制限
           }
         }
-
-        puts message1.to_json
-        puts message2.to_json
-
         response1 = client.push_message(user.uid, message1)
         p response1
 
         response2 = client.push_message(user.uid, message2)
         p response2
-
-        puts message1.to_json
-        puts message2.to_json
       end
     end
   end
 end
 
-# docker compose exec web bash後
 # rails line_notification:push_line_message_expiration_date
