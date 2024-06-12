@@ -11,3 +11,13 @@ Food.create!([
                { name: 'カツオ', expiration_date: '2024-06-03', storage: 1, quantity: 3, user_id: User.find(2).id },
                { name: '車海老', expiration_date: '2024-06-02', storage: 1, quantity: 3, user_id: User.find(2).id }
              ])
+
+20.times do
+  Food.create!(
+    name: Faker::Food.vegetables,
+    expiration_date: Faker::Date.between(from: '2024-06-16', to: '2024-07-30'),
+    storage: [0, 1, 2].sample,
+    quantity: rand(1..10),
+    user_id: User.find(1).id
+  )
+end
