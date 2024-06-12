@@ -34,5 +34,5 @@ Rails.application.routes.draw do
   resources :foods
 
   # rakuten
-    get 'search', to: 'rakuten_recipes#search'
+  get 'search', to: 'rakuten_recipes#search'
 end

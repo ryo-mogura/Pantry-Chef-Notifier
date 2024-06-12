@@ -1,17 +1,16 @@
-
 <%= search_form_for @q do |f| %>
   <div class="label_title mb-4">
     <%= f.label :s, "並び替え", class: "block text-gray-700 text-sm font-bold mb-2" %>
     <div class="sort_order">
       <%= select_tag 'q[s]', options_for_select(
-  [
-    ["指定なし", ""],
-    ['消費期限が近い順', 'expiration_date asc'],
-    ['消費期限が遠い順', 'expiration_date desc'],
-    ['あいうえお順', 'name asc']
-  ],
-  selected: params.dig(:q, :s).presence || ''
-), class: 'w-full max-w-xs p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-center' %>
+        [
+          ["指定なし", ""],
+          ['消費期限が近い順', 'expiration_date asc'],
+          ['消費期限が遠い順', 'expiration_date desc'],
+          ['あいうえお順', 'name asc']
+        ],
+        selected: params.dig(:q, :s).presence || ''
+      ), class: 'w-full max-w-xs p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-center' %>
     </div>
   </div>
   <%= f.submit "絞り込む", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5" %>
