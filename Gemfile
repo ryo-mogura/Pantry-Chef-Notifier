@@ -40,6 +40,8 @@ gem 'rakuten_web_service'
 
 gem 'ransack'
 
+gem 'kaminari'
+
 group :development, :test do
   # Debugging tools
   gem 'debug', platforms: %i[mri windows]
@@ -62,6 +64,7 @@ group :development, :test do
 
   # Seed Data
   gem 'seed-fu'
+  gem 'faker'
 
   # env
   gem 'dotenv-rails'
@@ -78,7 +81,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'faker'
   gem 'fuubar'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
