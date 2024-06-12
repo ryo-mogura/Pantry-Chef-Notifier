@@ -2,9 +2,10 @@
 
 class FoodsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_q, only: [:index]
 
   def index
-    @foods = current_user.foods
+    @foods = @q.result(distinct: true)
   end
 
   def new
@@ -52,5 +53,9 @@ class FoodsController < ApplicationController
 
   def food_params
     params.require(:food).permit(:id, :name, :quantity, :expiration_date, :storage)
+  end
+
+  def set_q
+    @q = current_user.foods.ransack(params[:q])
   end
 end

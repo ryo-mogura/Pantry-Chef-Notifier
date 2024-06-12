@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RakutenRecipesController < ApplicationController
   def search
     @search = params[:keyword]

@@ -38,6 +38,8 @@ gem 'line-bot-api'
 
 gem 'rakuten_web_service'
 
+gem 'ransack'
+
 group :development, :test do
   # Debugging tools
   gem 'debug', platforms: %i[mri windows]

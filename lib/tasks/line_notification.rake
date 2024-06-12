@@ -27,8 +27,8 @@ namespace :line_notification do
         columns = recipes.map do |recipe|
           {
             thumbnailImageUrl: recipe['foodImageUrl'],
-            title: (recipe['recipeTitle'][0..39] || ""), # タイトルを40文字以内に
-            text: (recipe['recipeDescription'][0..59] || ""), # テキストを60文字以内に
+            title: (recipe['recipeTitle'][0..39] || ''), # タイトルを40文字以内に
+            text: (recipe['recipeDescription'][0..59] || ''), # テキストを60文字以内に
             actions: [
               {
                 type: 'uri',
