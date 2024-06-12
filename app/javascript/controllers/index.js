@@ -10,5 +10,8 @@ application.register("confirm-dialog", ConfirmDialogController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import SelectSubmitController from "./select_submit_controller"
+application.register("select-submit", SelectSubmitController)
+
 import TabsController from "./tabs_controller"
 application.register("tabs", TabsController)
