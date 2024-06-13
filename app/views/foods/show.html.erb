@@ -5,7 +5,7 @@
       <div class="px-10">
         <div class="h-32 p-5 card bg-base-200 rounded-box place-items-center"><%= image_tag 'nophoto.jpg', size: "100x100"%></div>
       </div>
-      <div class="grid flex-grow h-32 max-w-96 card bg-base-200 rounded-box place-items-center font-semibold"><%= @food.name %></div>
+      <%= render partial: 'edit_name_modal', locals: { food: @food } %>
     </div>
   </div>
 
@@ -16,11 +16,10 @@
         <%= @food.expiration_date %>
       </div>
     </div>
+
     <div class="grid flex-grow max-w-96 text-center font-semibold p-5">
       <p>在庫数</p>
-      <div class="card bg-base-200 rounded-box place-items-center p-5">
-        <%= @food.quantity %>
-      </div>
+      <%= render partial: 'edit_quantity_modal', locals: { food: @food } %>
     </div>
   </div>
 
