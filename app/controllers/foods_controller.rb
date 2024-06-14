@@ -32,11 +32,11 @@ class FoodsController < ApplicationController
   end
 
   def update
-    @food = Food.find(params[:id])
-    @food.update(food_params)
+    food = Food.find(params[:id])
+    food.update(food_params)
 
-    if @food.save
-      redirect_to foods_path, success: t('defaults.flash_message.edit', item: Food.model_name.human)
+    if food.save
+      redirect_to food_path(food)
     else
       flash.now[:warning] = t('defaults.flash_message.not_edit', item: Food.model_name.human)
       render :new, status: :unprocessable_entity
