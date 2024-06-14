@@ -1,0 +1,17 @@
+<button class="btn grid flex-grow max-w-96 card bg-base-200 rounded-box place-items-center" onclick="expiration_modal.showModal()">
+  <%= food.expiration_date %>
+</button>
+<dialog id="expiration_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg mb-3">期限を設定</h3>
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <%= form_with model: food, local:true do |f|%>
+      <div class='flex items-center mx-auto max-w-xs'>
+        <%= f.date_field :expiration_date, class:"mx-auto text-center"%>
+      </div>
+      <%= f.submit "入力完了", disable_with: '登録中...', class:"btn btn-outline btn-success mt-5"%>
+    <% end %>
+  </div>
+</dialog>
