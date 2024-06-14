@@ -1,28 +1,30 @@
 <div class="container mx-auto text-center">
-  <h1 class="text-3xl font-bold text-center my-5">食材詳細</h1>
+  <h1 class="text-3xl font-bold my-5">食材詳細</h1>
   <div class='my-5'>
-    <div class="flex flex-row justify-center">
-      <div class="px-10">
-        <div class="h-32 p-5 card bg-base-200 rounded-box place-items-center"><%= image_tag 'nophoto.jpg', size: "100x100"%></div>
-      </div>
-      <%= render partial: 'edit_name_modal', locals: { food: @food } %>
+    <div class=" justify-center">
+        <div class="h-32 p-5 card bg-slate-50 rounded-box items-center">
+          <%= image_tag 'nophoto.jpg', size: "100x100"%>
+        </div>
     </div>
   </div>
 
   <div class="flex flex-row justify-center">
-    <div class="p-5 text-center font-semibold">
-      <p>消費期限</p>
-      <%= render partial: 'edit_expiration_modal', locals: { food: @food } %>
+    <div class="grid flex-grow max-w-96 font-semibold p-5">
+      <p>食材名</p>
+      <%= render partial: 'edit_name_modal', locals: { food: @food } %>
     </div>
-
-    <div class="grid flex-grow max-w-96 text-center font-semibold p-5">
+    <div class="grid flex-grow max-w-96 font-semibold p-5">
       <p>在庫数</p>
       <%= render partial: 'edit_quantity_modal', locals: { food: @food } %>
     </div>
   </div>
 
   <div class="flex flex-row justify-center">
-    <div class="grid flex-grow max-w-96 text-center font-semibold p-5">
+    <div class="grid flex-grow max-w-96 font-semibold p-5">
+      <p>消費期限</p>
+      <%= render partial: 'edit_expiration_modal', locals: { food: @food } %>
+    </div>
+    <div class="grid flex-grow max-w-96 font-semibold p-5">
       <p>保存場所</p>
       <%= render partial: 'edit_storage_modal', locals: { food: @food } %>
     </div>
