@@ -1,0 +1,12 @@
+
+<div class="grid flex-grow card rounded-box place-items-center">
+  <%= form_with model: food, local:true do |f|%>
+    <div class="space-y-6">
+      <div class="relative w-40" data-controller="input-number">
+        <button class="absolute left-0 top-0 rounded-r-none btn btn-square " data-action="click->input-number#decrease">-</button>
+        <%= f.number_field :quantity, class: "w-full text-center px-12 input input-bordered", id: "input-number", data: { target: "input-number.input" }, min: 0%>
+        <button class="absolute right-0 top-0 rounded-l-none btn btn-square" data-action="click->input-number#increase">+</button>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class='h-full'>
   <head>
     <title>pantry_chef_notifier_app</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,13 +11,17 @@
   </head>
 
   <body class='bg-linen'>
-    <% if user_signed_in? %>
-      <%= render 'shared/header' %>
-    <% else %>
-      <%= render 'shared/before_login_header' %>
-    <% end %>
-    <%= render 'shared/flash_message' %>
-    <%= yield %>
-    <%= render 'shared/footer' %>
+    <div class='flex flex-col min-h-screen'>
+      <% if user_signed_in? %>
+        <%= render 'shared/header' %>
+      <% else %>
+        <%= render 'shared/before_login_header' %>
+      <% end %>
+      <%= render 'shared/flash_message' %>
+      <div class='flex-grow'>
+        <%= yield %>
+      </div>
+      <%= render 'shared/footer' %>
+    </div>
   </body>
 </html>
