@@ -1,6 +1,9 @@
-<button class="btn grid flex-grow card bg-slate-50 rounded-box place-items-center" onclick="storage_modal.showModal()">
-  <%= t("activerecord.attributes.food.storages.#{@food.storage}")%>
+<button class="btn card bg-slate-50 rounded-box flex flex-row justify-between items-center w-full min-w-40" onclick="storage_modal.showModal()">
+  <span></span>
+  <span><%= t("activerecord.attributes.food.storages.#{@food.storage}")%></span>
+  <span>&gt;</span>
 </button>
+
 <dialog id="storage_modal" class="modal">
   <div class="modal-box">
     <h3 class="font-bold text-lg mb-3">保存場所</h3>
@@ -11,7 +14,7 @@
       <div class='flex items-center mx-auto max-w-xs'>
         <%= f.select :storage, Food.storages.keys.map { |key| [I18n.t("activerecord.attributes.food.storages.#{key}"), key] }, { selected: Food.storages.keys.first }, class:"mx-auto text-center" %>
       </div>
-      <%= f.submit "入力完了", disable_with: '登録中...', class:"btn btn-outline btn-success mt-5"%>
+      <%= f.submit "変更する", disable_with: '登録中...', class:"btn btn-outline btn-success mt-5"%>
     <% end %>
   </div>
 </dialog>

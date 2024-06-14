@@ -1,5 +1,8 @@
-<button class="btn card bg-slate-50 rounded-box" onclick="name_modal.showModal()">
-  <%= food.name %>
+<button class="btn card bg-slate-50 rounded-box flex flex-row justify-between items-center w-full min-w-40 max-w-xs" onclick="name_modal.showModal()">
+  <span class="flex-shrink-0"></span>
+  <span class="truncate flex-1 mx-2"><%= food.name %></span>
+  <span class="flex-shrink-0">&gt;</span>
+</button>
 </button>
 <dialog id="name_modal" class="modal">
   <div class="modal-box">
@@ -11,7 +14,7 @@
       <div class='flex items-center mx-auto max-w-xs'>
         <%= f.text_area :name, class:"textarea textarea-bordered w-full", placeholder: "食材名を入力" %>
       </div>
-      <%= f.submit "入力完了", disable_with: '登録中...', class:"btn btn-outline btn-success mt-5"%>
+      <%= f.submit "変更する", disable_with: '登録中...', class:"btn btn-outline btn-success mt-5"%>
     <% end %>
   </div>
 </dialog>
