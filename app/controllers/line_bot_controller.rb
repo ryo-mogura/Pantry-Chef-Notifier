@@ -101,10 +101,15 @@ class LineBotController < ApplicationController
       { type: 'text', text: '食材名を入力してください' }
     when 'waiting_for_recipe'
       if food_name
-        recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(food_name) }.ranking
-        message = FoodHelper.recipes_list(recipes, 'レシピ一覧')
-        user.update(status: 'idle')
-        message
+        category = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(food_name) }
+        if category.nil?
+          { type: 'text', text: '検索結果はありません' }
+        else
+          recipes = category.ranking
+          message = FoodHelper.recipes_list(recipes, 'レシピ一覧')
+          user.update(status: 'idle')
+          message
+        end
       else
         { type: 'text', text: '食材名を入力してください' }
       end
