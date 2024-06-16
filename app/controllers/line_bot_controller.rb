@@ -35,9 +35,6 @@ class LineBotController < ApplicationController
   def find_user(event)
     line_id = event['source']['userId']  # eventはメソッドのスコープ外で定義されていると仮定する
     user = User.find_by(uid: line_id)
-    Rails.logger.debug("====================")
-    Rails.logger.debug(user.status)
-    Rails.logger.debug("====================")
     return user  # ユーザーが見つかった場合にそのユーザーを返す
   end
   # メッセージ処理
