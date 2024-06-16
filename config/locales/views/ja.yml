@@ -12,6 +12,10 @@ ja:
           others: その他
     models:
       food: 食材
+  date:
+    formats:
+      default: "%Y年%m月%d日"
+      short: "%m月%d日"
   defaults:
     delete_confirm: 削除しますか？
     flash_message:
@@ -34,6 +38,5 @@ ja:
   foods:
     edit: 編集
     destroy: 使いきった
-
 
 
