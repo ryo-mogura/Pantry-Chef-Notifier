@@ -18,27 +18,8 @@ class LineBotController < ApplicationController
 
     # LineBotの処理
     events.each do |event|
-      user_id = event['source']['userId']
-      user = User.where(uid: user_id)[0]
-
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          message = if event.message['text'] == '食材リスト'
-                      food_list(send_foods_item(user), event.message['text'])
-                    elsif event.message['text'].include?('消費期限')
-                      food_list(send_food_limits(user), event.message['text'])
-                    else
-                      {
-                        type: 'text',
-                        text: event.message['text']
-                      }
-                    end
-          # message = [{type: "text", text: "メッセージ1"}, {type: "text", text: 'メッセージ2'}] #複数の返答の場合
-          client.reply_message(event['replyToken'], message)
-        end
-      end
+      user = find_user(event)
+      main_event(event, user)
     end
     head :ok
   end
@@ -50,6 +31,34 @@ class LineBotController < ApplicationController
     @client ||= Line::Bot::Client.new do |config|
       config.channel_secret = ENV['LINE_CHANNEL_SECRET']
       config.channel_token = ENV['LINE_CHANNEL_TOKEN']
+    end
+  end
+
+  # ユーザー検索
+  def find_user(event)
+    line_id = event['source']['userId']  # eventはメソッドのスコープ外で定義されていると仮定する
+    user = User.find_by(uid: line_id)
+    return user  # ユーザーが見つかった場合にそのユーザーを返す
+  end
+
+  def main_event(event, user)
+    case event
+    when Line::Bot::Event::Message
+      case event.type
+      when Line::Bot::Event::MessageType::Text
+        message = create_message(event.message['text'], user)
+        client.reply_message(event['replyToken'], message)
+      end
+    end
+  end
+
+  def create_message(text, user)
+    if text == '食材リスト'
+      food_list(send_foods_item(user), text)
+    elsif text.include?('消費期限')
+      food_list(send_food_limits(user), text)
+    else
+      { type: 'text', text: text }
     end
   end
 
