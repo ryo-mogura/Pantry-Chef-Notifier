@@ -3,7 +3,6 @@
 class LineBotController < ApplicationController
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery except: [:callback]
-
   include FoodHelper
 
   def callback
@@ -15,30 +14,10 @@ class LineBotController < ApplicationController
       render plain: 'Bad Request', status: 400
       return
     end
-
     # LineBotの処理
     events.each do |event|
-      user_id = event['source']['userId']
-      user = User.where(uid: user_id)[0]
-
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          message = if event.message['text'] == '食材リスト'
-                      food_list(send_foods_item(user), event.message['text'])
-                    elsif event.message['text'].include?('消費期限')
-                      food_list(send_food_limits(user), event.message['text'])
-                    else
-                      {
-                        type: 'text',
-                        text: event.message['text']
-                      }
-                    end
-          # message = [{type: "text", text: "メッセージ1"}, {type: "text", text: 'メッセージ2'}] #複数の返答の場合
-          client.reply_message(event['replyToken'], message)
-        end
-      end
+      user = find_user(event)
+      main_event(event, user)
     end
     head :ok
   end
@@ -52,7 +31,41 @@ class LineBotController < ApplicationController
       config.channel_token = ENV['LINE_CHANNEL_TOKEN']
     end
   end
-
+  # ユーザー検索
+  def find_user(event)
+    line_id = event['source']['userId']  # eventはメソッドのスコープ外で定義されていると仮定する
+    user = User.find_by(uid: line_id)
+    return user  # ユーザーが見つかった場合にそのユーザーを返す
+  end
+  # メッセージ処理
+  def main_event(event, user)
+    case event
+    when Line::Bot::Event::Message
+      case event.type
+      when Line::Bot::Event::MessageType::Text
+        message = create_message(event.message['text'], user)
+        client.reply_message(event['replyToken'], message)
+      end
+    end
+  end
+  # LineBotからユーザーへのメッセージ生成
+  def create_message(text, user)
+    case text
+    when '食材リスト'
+      food_list(send_foods_item(user), text)
+    when '消費期限'
+      food_list(send_food_limits(user), text)
+    when 'レシピ検索'
+      recipe_branch(user)
+    else
+      if user.status == 'waiting_for_recipe'
+        recipe_branch(user, text)
+      else
+        { type: 'text', text: text }
+      end
+    end
+  end
+  # 食材リストの取得とメッセージ生成
   def send_foods_item(user)
     food_items =  Food.where(user_id: user.id)
     if food_items != []
@@ -64,7 +77,7 @@ class LineBotController < ApplicationController
       response = '食材が登録されていません。'
     end
   end
-
+  # 期限が近づいている食材の取得とメッセージの生成
   def send_food_limits(user)
     limit_second_days = Date.today..Time.now.end_of_day + 2.days
     limit_foods =  Food.where(user_id: user.id).where(expiration_date: limit_second_days)
@@ -75,6 +88,28 @@ class LineBotController < ApplicationController
       response = "以下の食材の消費期限が近づいています（二日以内）。\n早めに消費することをオススメします。\n\n#{result}"
     else
       response = '二日以内が期限の食材はありません。'
+    end
+  end
+  # レシピ検索の対話機能の条件分離
+  def recipe_branch(user, food_name = nil)
+    case user.status
+    when 'idle'
+      user.update(status: 'waiting_for_recipe')
+      { type: 'text', text: '食材名を入力してください' }
+    when 'waiting_for_recipe'
+      if food_name
+        category = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(food_name) }
+        if category.nil?
+          { type: 'text', text: '検索結果はありません' }
+        else
+          recipes = category.ranking
+          message = FoodHelper.recipes_list(recipes, 'レシピ一覧')
+          user.update(status: 'idle')
+          message
+        end
+      else
+        { type: 'text', text: '食材名を入力してください' }
+      end
     end
   end
 end
