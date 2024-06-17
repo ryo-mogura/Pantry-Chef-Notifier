@@ -41,6 +41,9 @@ gem 'rakuten_web_service'
 gem 'ransack'
 
 gem 'kaminari'
+# image_uploader
+gem 'carrierwave'
+gem 'mini_magick'
 
 group :development, :test do
   # Debugging tools
