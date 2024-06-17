@@ -45,6 +45,9 @@ gem 'kaminari'
 gem 'carrierwave'
 gem 'mini_magick'
 
+gem "aws-sdk-s3", require: false
+gem 'fog-aws'
+
 group :development, :test do
   # Debugging tools
   gem 'debug', platforms: %i[mri windows]
