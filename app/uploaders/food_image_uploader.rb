@@ -20,7 +20,7 @@ class FoodImageUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
-    'nophoto'
+    'nophoto.jpg'
   end
 
   # Process files as they are uploaded:
