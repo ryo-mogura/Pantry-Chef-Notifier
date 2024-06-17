@@ -2,6 +2,7 @@
 
 class Food < ApplicationRecord
   belongs_to :user
+  mount_uploader :food_image, FoodImageUploader
   enum storage: { refrigerator: 0, freezer: 1, others: 2 }
 
   validates :name, presence: true

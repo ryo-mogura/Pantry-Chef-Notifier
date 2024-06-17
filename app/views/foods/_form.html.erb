@@ -1,33 +1,38 @@
 
 <%= form_with model: @food, local:true do |f|%>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="field my-11">
+  <div class="field mb-8">
     <div class='input input-bordered flex items-center gap-2 mx-auto max-w-xs'>
       <%= f.label :name %>
       <%= f.text_field :name, class:"text-area mx-auto text-center ", placeholder: "食材名" %>
     </div>
   </div>
 
-  <div class="field my-11">
+  <div class="field mb-8">
     <div class='input input-bordered flex items-center gap-2 mx-auto max-w-xs'>
       <%= f.label :quantity %>
       <%= f.number_field :quantity, class:"mx-auto text-center", placeholder: "0", min: 0 %>
     </div>
   </div>
 
-  <div class="field my-11">
+  <div class="field mb-8">
     <div class='input input-bordered flex items-center gap-2 mx-auto max-w-xs'>
       <%= f.label :expiration_date %>
       <%= f.date_field :expiration_date, class:"mx-auto text-center"%>
     </div>
   </div>
 
-  <div class="field my-11">
+  <div class="field mb-8">
     <div class='input input-bordered flex items-center gap-2 mx-auto max-w-xs'>
       <%= f.label :storage %>
       <%= f.select :storage, Food.storages.keys.map { |key| [I18n.t("activerecord.attributes.food.storages.#{key}"), key] }, { selected: Food.storages.keys.first }, class:"mx-auto text-center" %>
     </div>
   </div>
 
-  <%= f.submit "登録する", disable_with: '登録中...', class:"btn btn-outline btn-success"%>
+  <div class="mb-8">
+    <%= f.file_field :food_image, class: "file-input file-input-bordered w-full max-w-xs", accept: 'image/*' %>
+    <%= f.hidden_field :food_image_cache %>
+  </div>
+
+  <%= f.submit "登録する", disable_with: '登録中...', class:"btn btn-outline btn-success mb-5"%>
 <% end %>
