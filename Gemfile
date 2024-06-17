@@ -41,6 +41,12 @@ gem 'rakuten_web_service'
 gem 'ransack'
 
 gem 'kaminari'
+# image_uploader
+gem 'carrierwave'
+gem 'mini_magick'
+
+gem "aws-sdk-s3", require: false
+gem 'fog-aws'
 
 group :development, :test do
   # Debugging tools

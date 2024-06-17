@@ -52,7 +52,7 @@ class FoodsController < ApplicationController
   private
 
   def food_params
-    params.require(:food).permit(:id, :name, :quantity, :expiration_date, :storage)
+    params.require(:food).permit(:id, :name, :quantity, :expiration_date, :storage, :food_image, :food_image_cache)
   end
 
   def set_q
