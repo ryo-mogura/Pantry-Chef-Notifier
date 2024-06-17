@@ -1,9 +1,7 @@
 <div class="container mx-auto text-center">
   <h1 class="text-3xl font-bold mt-5">食材詳細</h1>
     <div class=" justify-center">
-      <div class="h-62 p-5 card rounded-box items-center">
-        <%= image_tag @food.food_image_url, class: "w-36 h-36 sm:w-72 sm:h-72" %>
-      </div>
+      <%= render partial: 'edit_image_modal', locals: { food: @food } %>
     </div>
 
   <div class="flex flex-row justify-center">
