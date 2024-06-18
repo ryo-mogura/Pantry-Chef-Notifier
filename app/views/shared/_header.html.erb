@@ -1,9 +1,9 @@
 <div class="navbar bg-cameo">
-  <div class="flex-1 flex justify-between items-center">
+  <div class="flex-1 flex  items-center">
     <%= link_to t('header.title'), authenticated_root_path, class: 'btn btn-ghost text-xl' %>
-    <div class="w-20 mx-auto">
-      <%= image_tag 'organic_grocery.png', class: 'rounded-full'%>
-    </div>
+    <%= link_to "https://lin.ee/KF06CrK" do %>
+      <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="18" border="0">
+    <% end %>
   </div>
   <div class="navbar-center hidden sm:flex">
     <ul class="menu menu-horizontal px-1 text-lg">
