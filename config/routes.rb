@@ -22,8 +22,8 @@ Rails.application.routes.draw do
     get 'login', to: 'devise/sessions#new'
     post 'login', to: 'devise/sessions#create'
     delete 'signout', to: 'devise/sessions#destroy'
-    # ゲストユーザーのログイン
-    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+    # ゲストユーザーのログイン(6.18 使用しないと考えコメントアウト)
+    # post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
   # LineBot
   post '/', to: 'line_bot#callback'

@@ -8,9 +8,6 @@
   <div class="flex-none gap-2 hidden sm:flex">
     <%= link_to t('header.login'), new_user_session_path, class:"btn btn-outline mr-2" %>
   </div>
-  <div class="flex-none gap-2 hidden sm:flex">
-    <%= link_to t('header.guest'), users_guest_sign_in_path, data: { turbo_method: :post }, class:"btn btn-outline mr-2" %>
-  </div>
   <%# ハンバーガーメニュー %>
   <div class="flex-none gap-2 sm:hidden">
     <div class="dropdown dropdown-end">
@@ -20,7 +17,6 @@
       <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <li><%= link_to t('header.new'), new_user_registration_path %></li>
         <li><%= link_to t('header.login'), new_user_session_path %></li>
-        <li><%= link_to t('header.guest'), users_guest_sign_in_path, data: { turbo_method: :post } %></li>
       </ul>
     </div>
   </div>
