@@ -1,39 +1,78 @@
 <div class="relative">
   <%= image_tag 'top.jpg', alt: 'src', class: 'w-full h-auto object-cover bg-image' %>
-  <div class="absolute top-5 left:0 m-4 bg-black bg-opacity-50">
-    <h1 class="text-white text-center text-xs md:text-xl">PantryChefNotifier <br> - 食材管理とレシピ提示アプリ -</h1>
+  <div class="absolute top-10 left-52 m-4 bg-black bg-opacity-50">
+    <h1 class="text-white text-center text-xs md:text-4xl">PantryChefNotifier <br> - 食材管理とレシピ提示アプリ -</h1>
   </div>
 
   <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center">
     <div class="collapse collapse-plus border border-base-300 bg-base-200 m-4">
       <input type="checkbox" />
-      <div class="collapse-title text-xl font-medium">
-        サービスの説明
+      <div class="collapse-title text-2xl font-medium">
+        <p>サービスの説明</p>
       </div>
       <div class="collapse-content">
-        <div>
-          <p>食材の管理できていますか？<br>食材の数量を忘れて余分に購入してしまったり、いつの間にか消費期限切れになって捨てることがあると思います。</p>
-          <p>PantryChefNotifierは登録した食材の消費期限が近づくとLineで通知してくれるサービスです。
-            <br>また消費期限が近づいた食材を使用しているレシピも通知してくれます。
-          </p>
+        <div class="card w-100 bg-base-100 shadow-xl">
+          <div class="card-body">
+            <p class="leading-loose">
+              食材の管理できていますか？<br>
+              食材の数量を忘れて余分に購入してしまったり、いつの間にか消費期限切れになって廃棄したことがあると思います。<br>
+              PantryChefNotifierは食材の管理を簡単に行えるサービスです<br>
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="collapse collapse-plus border border-base-300 bg-base-200 m-4">
       <input type="checkbox" />
-      <div class="collapse-title text-xl font-medium">
-        使い方
+      <div class="collapse-title text-2xl font-medium">
+        <p>アプリの使い方</p>
       </div>
       <div class="collapse-content">
-        <p>食材の名前・消費期限・数量・保管場所を登録できます</p>
-        <p>Lineでログインしているユーザーは期限が近づくと通知が来ます。</p>
+        <div class="flex space-x-4">
+          <ul class="w-1/2">
+            <div class="card w-100 bg-base-100 shadow-xl">
+              <div class="card-body">
+                <h2 class="card-title mb-5">Webアプリでできること</h2>
+                <li>食材の名前・消費期限・数量・保管場所・画像の登録</li>
+                <li>登録した食材の閲覧</li>
+                <li>レシピの検索</li>
+              </div>
+            </div>
+          </ul>
+          <ul class="w-1/2">
+            <div class="card w-100 bg-base-100 shadow-xl">
+              <div class="card-body">
+                <h2 class="card-title mb-5">Line上でできること</h2>
+                <li>食材リストの取得</li>
+                <li>消費期限が近づいた食材のリストを取得</li>
+                <li>レシピの検索</li>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse collapse-plus border border-base-300 bg-base-200 m-4">
+      <input type="checkbox" />
+      <div class="collapse-title text-2xl font-medium">
+        <p>追加予定の機能</p>
+      </div>
+      <div class="collapse-content">
+        <div class="card w-100 bg-base-100 shadow-xl">
+          <div class="card-body">
+            <li>メールアドレスでログインしているユーザーへの通知機能</li>
+            <li>食材のカテゴリー機能</li>
+            <li>レシピのお気に入り機能</li>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="border border-base-300 bg-base-200 m-4 p-4">
       <div class="text-xl text-center font-medium p-1">
-        さっそく使ってみる
+        <p>さっそく使ってみる</p>
       </div>
       <div class="flex m-5">
         <div class="flex-none gap-2 hidden sm:flex">
