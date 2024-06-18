@@ -28,7 +28,7 @@ ja:
 
   header:
     title: PantryChefNotifier
-    new: 登録
+    new: 登録する
     profile: マイページ
     index: 食材一覧
     food_new: 食材登録
@@ -38,5 +38,7 @@ ja:
   foods:
     edit: 編集
     destroy: 使いきった
+  top:
+    login: 新規登録 / ログイン
 
 

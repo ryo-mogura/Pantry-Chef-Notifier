@@ -8,13 +8,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[line]
-  # ゲストログイン機能アクション
-  def self.guest
-    find_or_create_by!(email: 'guest@example.com') do |user|
-      user.password = SecureRandom.urlsafe_base64
-      user.name = 'ゲストユーザー'
-    end
-  end
+  # ゲストログイン機能アクション（6.18 使用しないと考えコメントアウト）
+  # def self.guest
+  #   find_or_create_by!(email: 'guest@example.com') do |user|
+  #     user.password = SecureRandom.urlsafe_base64
+  #     user.name = 'ゲストユーザー'
+  #   end
+  # end
 
   # Lineログイン機能アクション
   def social_profile(provider)

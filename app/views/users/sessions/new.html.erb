@@ -1,5 +1,5 @@
 <div class="container mx-auto text-center">
-  <h2 class="my-11">ログイン</h2>
+  <h1 class="my-11 text-3xl font-bold">ログイン</h1>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field my-11">
@@ -28,10 +28,9 @@
     <% end %>
 
     <div class="actions">
-      <%= f.submit "ログイン", class:"btn btn-outline my-5" %>
+      <%= f.submit "ログイン", class:"btn btn-outline my-3" %>
     </div>
-
   <% end %>
 
-  <%= render "devise/shared/links" %>
+  <%= render "users/shared/links" %>
 </div>
