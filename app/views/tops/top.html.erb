@@ -1,10 +1,10 @@
 <div class="relative">
   <%= image_tag 'top.jpg', alt: 'src', class: 'w-full h-auto object-cover bg-image' %>
-  <div class="absolute top-10 left-52 m-4 bg-black bg-opacity-50">
-    <h1 class="text-white text-center text-xs md:text-4xl">PantryChefNotifier <br> - 食材管理とレシピ提示アプリ -</h1>
+  <div class="absolute top-10 md:left-52 m-4 bg-black bg-opacity-50">
+    <h1 class="text-white text-center text-sm md:text-4xl">PantryChefNotifier <br> - 食材管理とレシピ提示アプリ -</h1>
   </div>
 
-  <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center">
+  <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center hidden sm:flex">
     <div class="collapse collapse-plus border border-base-300 bg-base-200 m-4">
       <input type="checkbox" />
       <div class="collapse-title text-2xl font-medium">
@@ -69,26 +69,100 @@
         </div>
       </div>
     </div>
-
     <div class="border border-base-300 bg-base-200 m-4 p-4">
       <div class="text-xl text-center font-medium p-1">
+          <p>さっそく使ってみる</p>
+        </div>
+        <div class="flex m-5">
+          <div class="flex-none gap-2 hidden sm:flex">
+            <%= link_to t('top.login'), new_user_session_path, class:"btn btn-outline mr-2" %>
+          </div>
+
+          <% resource_class.omniauth_providers.each do |provider| %>
+            <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
+              <%= image_tag("btn_login_base.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}") %>
+            <% end %><br />
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center">
+    <button class="btn mb-5 block md:hidden" onclick="description.showModal()">サービスの説明</button>
+    <dialog id="description" class="modal">
+      <div class="modal-box bg-base-200">
+        <form method="dialog">
+          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <div class="card w-100 bg-base-100 shadow-xl text-sm">
+          <div class="card-body">
+            <p class="leading-loose">
+              食材の管理できていますか？<br>
+              食材の数量を忘れて余分に購入してしまったり、いつの間にか消費期限切れになって廃棄したことがあると思います。<br>
+              PantryChefNotifierは食材の管理を簡単に行えるサービスです<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+
+    <button class="btn mb-5 block md:hidden" onclick="use.showModal()">アプリの使い方</button>
+    <dialog id="use" class="modal">
+      <div class="modal-box bg-base-200">
+        <form method="dialog">
+          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+            <div class="card w-100 bg-base-100 shadow-xl my-5 text-sm">
+              <div class="card-body">
+                <h2 class="card-title mb-5">Webアプリでできること</h2>
+                <li>食材の登録</li>
+                <li>登録した食材の閲覧</li>
+                <li>レシピの検索</li>
+              </div>
+            </div>
+            <div class="card w-100 bg-base-100 shadow-xl text-sm">
+              <div class="card-body">
+                <h2 class="card-title mb-5">Line上でできること</h2>
+                <li>食材リストの取得</li>
+                <li>期限が近い食材のリストを取得</li>
+                <li>レシピの検索</li>
+              </div>
+            </div>
+    </dialog>
+
+
+    <button class="btn mb-5 block md:hidden" onclick="features_added.showModal()">追加予定の機能</button>
+    <dialog id="features_added" class="modal">
+      <div class="modal-box bg-base-200">
+        <form method="dialog">
+          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <div class="card w-100 bg-base-100 shadow-xl">
+          <div class="card-body">
+            <li>メールアドレスでログインしているユーザーへの通知機能</li>
+            <li>食材のカテゴリー機能</li>
+            <li>レシピのお気に入り機能</li>
+          </div>
+        </div>
+    </dialog>
+  </div>
+
+  <div class="border border-base-300 bg-base-200 m-4 p-4 block md:hidden">
+    <div class="text-sm text-center font-semibold p-1">
         <p>さっそく使ってみる</p>
       </div>
       <div class="flex m-5">
-        <div class="flex-none gap-2 hidden sm:flex">
-          <%= link_to t('header.new'), new_user_registration_path, class:"btn btn-outline mr-2" %>
-        </div>
-        <div class="flex-none gap-2 hidden sm:flex">
-          <%= link_to t('header.login'), new_user_session_path, class:"btn btn-outline mr-2" %>
+        <div class="flex-none gap-2">
+          <%= link_to t('top.login'), new_user_session_path, class:"btn btn-sm btn-outline mr-2" %>
         </div>
 
         <% resource_class.omniauth_providers.each do |provider| %>
           <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
-            <%= image_tag("btn_login_base.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}") %>
+            <%= image_tag("btn_login_base.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44") %>
           <% end %><br />
         <% end %>
-
-
       </div>
     </div>
   </div>

@@ -38,5 +38,7 @@ ja:
   foods:
     edit: 編集
     destroy: 使いきった
+  top:
+    login: 新規登録 / ログイン
 
 
