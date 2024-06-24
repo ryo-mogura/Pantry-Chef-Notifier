@@ -61,3 +61,6 @@ https://pantry-chef-notifier.onrender.com
 | Environment | Docker / docker-compose |
 | Infrastructure | Render.com |
 | other | [Line Messaging API](https://github.com/line/line-bot-sdk-ruby), [Rakuten_web_service API](https://github.com/rakuten-ws/rws-ruby-sdk/blob/master/README.ja.md) |
+
+## 画面遷移図
+Figma : https://www.figma.com/design/x2fw3OmqTtjzpc56sfMBTQ/Pantry-Chef-Notifier?m=auto&t=HUXtHfzUDPXl2FWk-6
