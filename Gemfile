@@ -83,6 +83,7 @@ group :development do
   gem 'rails-erd'
   gem 'spring'
   gem 'web-console'
+  gem 'letter_opener_web'
 end
 
 group :test do

@@ -77,5 +77,9 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  config.action_mailer.default_url_options = { protocol: 'https', host: 'トップページアドレス' }
+  # config.action_mailer.default_url_options = { protocol: 'https', host: 'トップページアドレス' }
+  host = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+
+  config.action_mailer.delivery_method = :letter_opener_web
 end
