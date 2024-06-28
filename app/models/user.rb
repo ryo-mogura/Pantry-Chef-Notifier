@@ -3,7 +3,14 @@
 class User < ApplicationRecord
   has_many :foods, dependent: :destroy
 
-  enum status: { idle: 0, waiting_for_recipe: 1, waiting_for_food_name: 2 }
+  enum status: { idle: 0,
+                waiting_for_recipe: 1,
+                waiting_add_food_name: 2,
+                waiting_add_food_quantity: 3,
+                waiting_add_food_expiration: 4,
+                waiting_add_food_storage: 5,
+                waiting_add_food_image: 6
+              }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
