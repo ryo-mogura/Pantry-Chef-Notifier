@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   has_many :foods, dependent: :destroy
+  has_many :line_messages, dependent: :destroy
 
   enum status: { idle: 0,
                 waiting_for_recipe: 1,
