@@ -55,39 +55,41 @@ class LineBotController < ApplicationController
       food_list(send_foods_item(user), text)
     when '消費期限'
       food_list(send_food_limits(user), text)
+
     when '食材登録'
       case user.status
       when 'idle' # ユーザーが何もしていない状態
         user.update(status: 'waiting_add_food_name')
-        { type: 'text', text: '食材名を入力してください' }
-      when 'waiting_add_food_name' # 食材名を入力待ち
-        user.update(status: 'waiting_add_food_quantity')
-        user.foods.create(name: text)
-        { type: 'text', text: '量を入力してください' }
-      when 'waiting_add_food_quantity' # 食材の量を入力待ち
-        user.update(status: 'waiting_add_food_expiration')
-        user.foods.last.update(quantity: text)
-        { type: 'text', text: '消費期限を入力してください' }
-      when 'waiting_add_food_expiration'# 食材の消費期限を入力待ち
-        user.update(status: 'waiting_add_food_storage')
-        user.foods.last.update(expiration_date: text)
-        { type: 'text', text: '保存場所を入力してください' }
-      when 'waiting_add_food_storage'# 食材の保存場所を入力待ち
-        user.update(status: 'waiting_add_food_image')
-        user.foods.last.update(storage: text)
-        { type: 'text', text: '画像を送信してください' }
-      when 'waiting_add_food_image'# 食材の画像を入力待ち
-        user.update(status: 'idle')
-        user.foods.last.update(image: params[:food_image])
-        { type: 'text', text: '食材を登録しました' }
+        { type: 'text', text: '登録する食材名を入力してください' }
       end
     when 'レシピ検索'
       recipe_branch(user)
     else
       if user.status == 'waiting_for_recipe'
         recipe_branch(user, text)
+      elsif  user.status == 'waiting_add_food_name'
+        user.update(status: 'waiting_add_food_quantity')
+
+        { type: 'text', text: '在庫数を入力してください' }
+      elsif user.status == 'waiting_add_food_quantity'
+        user.update(status: 'waiting_add_food_expiration')
+
+        { type: 'text', text: '消費期限を入力してください' }
+      elsif user.status == 'waiting_add_food_expiration'
+        user.update(status: 'waiting_add_food_storage')
+
+        { type: 'text', text: '保存場所を入力してください' }
+      elsif user.status == 'waiting_add_food_storage'
+        user.update(status: 'waiting_add_food_image')
+
+        { type: 'text', text: '画像を送信してください' }
+      elsif user.status == 'waiting_add_food_image'
+        user.update(status: 'idle')
+
+        { type: 'text', text: '食材を登録しました' }
       else
-        { type: 'text', text: text }
+        user.update(status: 'idle')
+        { type: 'text', text: 'エラー発生' }
       end
     end
   end
