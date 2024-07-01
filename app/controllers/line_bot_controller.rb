@@ -69,24 +69,35 @@ class LineBotController < ApplicationController
         recipe_branch(user, text)
       elsif  user.status == 'waiting_add_food_name'
         user.update(status: 'waiting_add_food_quantity')
-
+        user.line_messages.create(message_content: text)
+        { type: 'text', text: user.line_messages.first.message_content }
         { type: 'text', text: '在庫数を入力してください' }
       elsif user.status == 'waiting_add_food_quantity'
         user.update(status: 'waiting_add_food_expiration')
-
-        { type: 'text', text: '消費期限を入力してください' }
+        user.line_messages.create(message_content: text)
+        { type: 'text', text: '消費期限を入力してください。例）2024-07-25' }
       elsif user.status == 'waiting_add_food_expiration'
         user.update(status: 'waiting_add_food_storage')
-
-        { type: 'text', text: '保存場所を入力してください' }
+        user.line_messages.create(message_content: text)
+        { type: 'text', text: '保存場所を数字で入力してください。0: 冷蔵庫 1: 冷凍庫 2: その他' }
       elsif user.status == 'waiting_add_food_storage'
         user.update(status: 'waiting_add_food_image')
-
+        # まだ未実装
+        user.line_messages.create(message_content: text)
         { type: 'text', text: '画像を送信してください' }
       elsif user.status == 'waiting_add_food_image'
         user.update(status: 'idle')
-
+        user.line_messages.create(message_content: text)
         { type: 'text', text: '食材を登録しました' }
+        food_name = user.line_messages[-5].message_content
+        food_quantity = user.line_messages[-4].message_content
+        food_expiration = user.line_messages[-3].message_content
+        food_storage = user.line_messages[-2].message_content
+        # food_image = user.line_messages[-1].message_content
+        Food.create(name: food_name, quantity: food_quantity, expiration_date: food_expiration, storage: food_storage.to_i, user_id: user.id)
+        saved_food = Food.find_by(name: food_name, user_id: user.id)
+        response = "以下の食材が保存されました。\n\n食材名: #{saved_food.name}\n在庫数: #{saved_food.quantity}\n消費期限: #{saved_food.expiration_date}\n保存場所: #{saved_food.storage}"
+        { type: 'text', text: response }
       else
         user.update(status: 'idle')
         { type: 'text', text: 'エラー発生' }
@@ -140,4 +151,9 @@ class LineBotController < ApplicationController
       end
     end
   end
+
+  # 食材の画登録処理
+  # def
+
+  # end
 end
