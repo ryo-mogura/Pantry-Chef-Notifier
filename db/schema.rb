@@ -27,7 +27,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_105319) do
   end
 
   create_table "line_messages", force: :cascade do |t|
-    t.string "message_content"
+    t.string "temp_name"
+    t.string "temp_quantity"
+    t.string "temp_expiration_date"
+    t.string "temp_storage"
+    t.string "temp_image"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
