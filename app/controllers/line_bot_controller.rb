@@ -50,51 +50,49 @@ class LineBotController < ApplicationController
   end
   # LineBotからユーザーへのメッセージ生成
   def create_message(text, user)
+    # user.update(status: 'idle')
     case text
     when '食材リスト'
       food_list(send_foods_item(user), text)
     when '消費期限'
       food_list(send_food_limits(user), text)
-
     when '食材登録'
       case user.status
-      when 'idle' # ユーザーが何もしていない状態
+      when 'idle'
         user.update(status: 'waiting_add_food_name')
         { type: 'text', text: '登録する食材名を入力してください' }
       end
     when 'レシピ検索'
       recipe_branch(user)
     else
+
       if user.status == 'waiting_for_recipe'
         recipe_branch(user, text)
       elsif  user.status == 'waiting_add_food_name'
-        user.update(status: 'waiting_add_food_quantity')
-        user.line_messages.create(message_content: text)
-        { type: 'text', text: user.line_messages.first.message_content }
+
+        temp_food = user.line_messages.create(temp_name: text)
+        user.update(status: 'waiting_add_food_quantity', current_temp_food_id: temp_food.id)
         { type: 'text', text: '在庫数を入力してください' }
       elsif user.status == 'waiting_add_food_quantity'
+        temp_food = LineMessage.find(user.current_temp_food_id)
+        temp_food.update(temp_quantity: text)
         user.update(status: 'waiting_add_food_expiration')
         user.line_messages.create(message_content: text)
         { type: 'text', text: '消費期限を入力してください。例）2024-07-25' }
       elsif user.status == 'waiting_add_food_expiration'
         user.update(status: 'waiting_add_food_storage')
-        user.line_messages.create(message_content: text)
+        temp_food = LineMessage.find(user.current_temp_food_id)
+        temp_food.update(temp_expiration_date: text)
+
         { type: 'text', text: '保存場所を数字で入力してください。0: 冷蔵庫 1: 冷凍庫 2: その他' }
       elsif user.status == 'waiting_add_food_storage'
         user.update(status: 'waiting_add_food_image')
-        # まだ未実装
-        user.line_messages.create(message_content: text)
+        temp_food = LineMessage.find(user.current_temp_food_id)
+        temp_food.update(temp_storage: text)
         { type: 'text', text: '画像を送信してください' }
       elsif user.status == 'waiting_add_food_image'
         user.update(status: 'idle')
-        user.line_messages.create(message_content: text)
-        { type: 'text', text: '食材を登録しました' }
-        food_name = user.line_messages[-5].message_content
-        food_quantity = user.line_messages[-4].message_content
-        food_expiration = user.line_messages[-3].message_content
-        food_storage = user.line_messages[-2].message_content
-        # food_image = user.line_messages[-1].message_content
-        Food.create(name: food_name, quantity: food_quantity, expiration_date: food_expiration, storage: food_storage.to_i, user_id: user.id)
+        Food.create(name: temp_food.name, quantity: temp_food.quantity, expiration_date: temp_food.expiration_date, storage: temp_food.storage.to_i, user_id: user.id)
         saved_food = Food.find_by(name: food_name, user_id: user.id)
         response = "以下の食材が保存されました。\n\n食材名: #{saved_food.name}\n在庫数: #{saved_food.quantity}\n消費期限: #{saved_food.expiration_date}\n保存場所: #{saved_food.storage}"
         { type: 'text', text: response }
