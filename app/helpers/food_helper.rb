@@ -1,39 +1,16 @@
 # frozen_string_literal: true
 
 module FoodHelper
-  def food_list(response, text)
-    {
-      type: 'flex',
-      altText: text,
-      contents: {
-        type: 'bubble',
-        header: {
-          type: 'box',
-          layout: 'horizontal',
-          contents: [
-            {
-              type: 'text',
-              text:,
-              wrap: true,
-              size: 'lg',
-              align: 'center'
-            }
-          ]
-        },
-        body: {
-          type: 'box',
-          layout: 'horizontal',
-          contents: [
-            {
-              type: 'text',
-              text: response,
-              wrap: true,
-              size: 'sm'
-            }
-          ]
-        }
-      }
-    }
+  def format_food_list(food_items)
+    food_items.map do |food|
+      "食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n"
+    end.join("\n")
+  end
+
+  def format_food_limits(limit_foods)
+    limit_foods.map do |food|
+      "食材名: #{food.name}\n消費期限: #{food.expiration_date}\n"
+    end.join("\n")
   end
 
   def self.recipes_list(response, text)
