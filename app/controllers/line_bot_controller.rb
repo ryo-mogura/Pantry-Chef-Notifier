@@ -184,10 +184,7 @@ class LineBotController < ApplicationController
   def send_foods_item(user)
     food_items = Food.where(user_id: user.id)
     if food_items.any?
-      names = food_items.map(&:name)
-      quantity = food_items.map(&:quantity)
-      result = names.zip(quantity).map { |name, qty| "#{name} : 在庫数#{qty}" }.join("\n")
-      "以下の食材があります。\n\n#{result}"
+      format_food_list(food_items)
     else
       '食材が登録されていません。'
     end
@@ -198,10 +195,7 @@ class LineBotController < ApplicationController
     limit_second_days = Date.today..Time.now.end_of_day + 2.days
     limit_foods = Food.where(user_id: user.id, expiration_date: limit_second_days)
     if limit_foods.any?
-      names = limit_foods.map(&:name)
-      expiration_dates = limit_foods.map(&:expiration_date)
-      result = names.zip(expiration_dates).map { |name, expiration_date| "#{name} : 消費期限#{expiration_date}" }.join("\n")
-      "以下の食材の消費期限が近づいています（二日以内）。\n早めに消費することをオススメします。\n\n#{result}"
+      format_food_limits(limit_foods)
     else
       '二日以内が期限の食材はありません。'
     end
