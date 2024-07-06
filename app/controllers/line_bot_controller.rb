@@ -43,7 +43,7 @@ class LineBotController < ApplicationController
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
-        message = create_message(event.message['text'], user)
+        message = create_message(event.message['text'], user, event)
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image
         handle_image_message(event, user)
@@ -51,8 +51,7 @@ class LineBotController < ApplicationController
     end
   end
   # LineBotからユーザーへのメッセージ生成
-  def create_message(text, user)
-    # user.update(status: 'idle')
+  def create_message(text, user, event)
     case text
     when '食材リスト'
       { type: 'text', text: send_foods_item(user) }
@@ -60,10 +59,15 @@ class LineBotController < ApplicationController
       { type: 'text', text: send_food_limits(user) }
     when 'レシピ検索'
       recipe_branch(user)
-    when '食材登録'
+    when '食材の登録'
       if user.status == 'idle'
         user.update(status: 'waiting_add_food_name')
         { type: 'text', text: '登録する食材名を入力してください' }
+      end
+    when 'スキップ'
+      if user.status == 'waiting_add_food_image'
+        user.update(status: 'idle')
+        save_food_without_image(user, event)
       end
     else
       handle_text_message(text, user)
@@ -82,44 +86,7 @@ class LineBotController < ApplicationController
       respond_with_error(event)
     end
   end
-# messageIDから画像ファイルを一時保存
-  def fetch_image_file(message_id)
-    response = client.get_message_content(message_id)
-    file = Tempfile.new(['line_image', '.jpg'])
-    file.binmode
-    file.write(response.body)
-    file.rewind
-    file
-  end
 
-# Foodオブジェクトの作成
-  def save_food_with_image(file, user, event)
-    temp_food = user.line_messages.last
-    food = Food.new(
-      name: temp_food.temp_name,
-      quantity: temp_food.temp_quantity,
-      expiration_date: temp_food.temp_expiration_date,
-      storage: temp_food.temp_storage.to_i,
-      user_id: user.id,
-      food_image: file
-    )
-
-    file.close
-    file.unlink
-
-    if food.save
-      response_text = "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
-    else
-      response_text = 'エラーが発生しました。正しく入力してください。'
-    end
-    user.update(status: 'idle')
-    client.reply_message(event['replyToken'], { type: 'text', text: response_text })
-  end
-# エラーの場合の処理
-  def respond_with_error(event)
-    client.reply_message(event['replyToken'], { type: 'text', text: 'エラーが発生しました。正しく入力してください。' })
-    user.update(status: 'idle')
-  end
 # 食材登録の対話機能の条件分岐（食材名、在庫数、消費期限、保存場所）
   def handle_text_message(text, user)
     case user.status
@@ -143,11 +110,71 @@ class LineBotController < ApplicationController
       temp_food = user.line_messages.last
       temp_food.update(temp_storage: text)
       user.update(status: 'waiting_add_food_image')
-      { type: 'text', text: '画像を送信してください' }
+      { type: 'text', text: '画像を送信してください。画像を保存しない場合は「スキップ」と入力してください。' }
     else
       user.update(status: 'idle')
       { type: 'text', text: 'エラーが発生しました。正しく入力してください。' }
     end
+  end
+
+  # messageIDから画像ファイルを一時保存
+  def fetch_image_file(message_id)
+    response = client.get_message_content(message_id)
+    file = Tempfile.new(['line_image', '.jpg'])
+    file.binmode
+    file.write(response.body)
+    file.rewind
+    file
+  end
+
+  # Foodオブジェクトの作成(画像あり)
+  def save_food_with_image(file, user, event)
+    temp_food = user.line_messages.last
+    food = Food.new(
+      name: temp_food.temp_name,
+      quantity: temp_food.temp_quantity,
+      expiration_date: temp_food.temp_expiration_date,
+      storage: temp_food.temp_storage.to_i,
+      user_id: user.id,
+      food_image: file
+    )
+
+    file.close
+    file.unlink
+
+    if food.save
+      response_text = "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
+    else
+      response_text = 'エラーが発生しました。正しく入力してください。'
+    end
+    user.update(status: 'idle')
+    client.reply_message(event['replyToken'], { type: 'text', text: response_text })
+  end
+
+  # Foodオブジェクトの作成(画像なし)
+  def save_food_without_image(user, event)
+    temp_food = user.line_messages.last
+    food = Food.new(
+      name: temp_food.temp_name,
+      quantity: temp_food.temp_quantity,
+      expiration_date: temp_food.temp_expiration_date,
+      storage: temp_food.temp_storage.to_i,
+      user_id: user.id,
+    )
+
+    if food.save
+      response_text = "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
+    else
+      response_text = 'エラーが発生しました。正しく入力してください。'
+    end
+    user.update(status: 'idle')
+    client.reply_message(event['replyToken'], { type: 'text', text: response_text })
+  end
+
+  # エラーの場合の処理
+  def respond_with_error(event)
+    client.reply_message(event['replyToken'], { type: 'text', text: 'エラーが発生しました。正しく入力してください。' })
+    user.update(status: 'idle')
   end
 
   # 食材リストの取得とメッセージ生成
