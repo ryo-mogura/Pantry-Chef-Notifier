@@ -69,6 +69,9 @@ class LineBotController < ApplicationController
         user.update(status: 'idle')
         save_food_without_image(user, event)
       end
+    when 'リセット'
+      user.update(status: 'idle')
+      { type: 'text', text: '入力情報をリセットしました。' }
     else
       handle_text_message(text, user)
     end
