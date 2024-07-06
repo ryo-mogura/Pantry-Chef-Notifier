@@ -2,19 +2,15 @@
 
 module FoodHelper
   def format_food_list(food_items)
-    header = "| 食材名 | 在庫数 | 消費期限 |\n|---|---|---|\n"
-    rows = food_items.map do |food|
-      "| #{food.name} | #{food.quantity} | #{food.expiration_date} |"
+    food_items.map do |food|
+      "食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n"
     end.join("\n")
-    header + rows
   end
 
   def format_food_limits(limit_foods)
-    header = "| 食材名 | 消費期限 |\n|---|---|\n"
-    rows = limit_foods.map do |food|
-      "| #{food.name} | #{food.expiration_date} |"
+    limit_foods.map do |food|
+      "食材名: #{food.name}\n消費期限: #{food.expiration_date}\n"
     end.join("\n")
-    header + rows
   end
 
   def self.recipes_list(response, text)
