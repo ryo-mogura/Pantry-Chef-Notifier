@@ -2,7 +2,7 @@
   <div class="flex-1 flex  items-center">
     <%= link_to t('header.title'), authenticated_root_path, class: 'btn btn-ghost text-xl' %>
     <%= link_to "https://lin.ee/KF06CrK" do %>
-      <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="18" border="0">
+      <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="18">
     <% end %>
   </div>
   <div class="navbar-center hidden sm:flex">
@@ -31,6 +31,7 @@
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
           <li><%= link_to t('header.index'),foods_path %></li>
           <li><%= link_to t('header.new'),new_food_path %></li>
+          <li><%= link_to "レシピ検索",search_path %></li>
           <li><%= link_to t('header.profile'),users_profile_path %></li>
           <li><%= link_to t('header.logout'), signout_path,data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' } %></li>
         </ul>

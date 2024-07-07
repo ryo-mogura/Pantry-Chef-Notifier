@@ -1,12 +1,12 @@
 <div class="container mx-auto text-center">
-  <h1>人気レシピ検索</h1>
+  <h1 class="text-3xl font-bold text-center my-5">人気レシピ検索</h1>
   <div class='my-5'>
     <%= form_with url: search_path, method: :get, local: true do |f| %>
       <div class="field">
         <div class="max-w-xs mx-auto">
           <%= f.text_field :keyword, class: "input input-bordered w-full text-center" %>
         </div>
-        <%= f.submit '検索する', disable_with: '検索中...', class: "btn btn-outline btn-success my-5" %>
+        <%= f.submit '検索する', disable_with: '検索中...', class: "btn btn-outline btn-primary my-5" %>
       </div>
     <% end %>
   </div>

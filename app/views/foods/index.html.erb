@@ -37,7 +37,14 @@
               <div class="card-body items-center text-center">
                 <h2 class="card-title"><%= food.name %></h2>
                 <p>数量：<%= food.quantity %></p>
-                <p>期限：<%= food.expiration_date %></p>
+                <% if (food.expiration_date - Date.today).to_i >= 0 %>
+                  <p class="text-gray-600">
+                    期限：<%= food.expiration_date %>
+                    (あと<%= (food.expiration_date - Date.today).to_i %>日)
+                  </p>
+                <% else %>
+                  <p class="text-red-500 text-sm pt-1">期限切れ<%= (food.expiration_date - Date.today).to_i.abs %>日経過</p>
+                <% end %>
                 <p>保存場所：<%= t("activerecord.attributes.food.storages.#{food.storage}") %></p>
                 <div class="card-actions">
                   <%= link_to "詳細", food_path(food), class: "btn btn-outline btn-success btn-xs sm:btn-sm md:btn-md lg:btn-lg" %>
