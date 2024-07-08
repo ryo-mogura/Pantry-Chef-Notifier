@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLineMessages < ActiveRecord::Migration[7.1]
   def change
     create_table :line_messages do |t|

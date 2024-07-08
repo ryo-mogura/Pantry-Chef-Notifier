@@ -34,7 +34,7 @@ module FoodHelper
       altText: text || 'レシピ一覧',
       template: {
         type: 'carousel',
-        columns: columns
+        columns:
       }
     }
   end

@@ -45,7 +45,7 @@ gem 'kaminari'
 gem 'carrierwave'
 gem 'mini_magick'
 
-gem "aws-sdk-s3", require: false
+gem 'aws-sdk-s3', require: false
 gem 'fog-aws'
 
 group :development, :test do
@@ -69,8 +69,8 @@ group :development, :test do
   gem 'rubocop-rspec'
 
   # Seed Data
-  gem 'seed-fu'
   gem 'faker'
+  gem 'seed-fu'
 
   # env
   gem 'dotenv-rails'
@@ -80,10 +80,10 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'letter_opener_web'
   gem 'rails-erd'
   gem 'spring'
   gem 'web-console'
-  gem 'letter_opener_web'
 end
 
 group :test do
