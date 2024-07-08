@@ -46,4 +46,9 @@ class User < ApplicationRecord
     self.raw_info = raw_info.to_json
     save!
   end
+
+  # Lineログインを判定
+  def line_logged_in?
+    self.provider == 'line'
+  end
 end
