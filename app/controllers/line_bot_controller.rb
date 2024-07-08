@@ -31,12 +31,13 @@ class LineBotController < ApplicationController
       config.channel_token = ENV['LINE_CHANNEL_TOKEN']
     end
   end
+
   # ユーザー検索
   def find_user(event)
     line_id = event['source']['userId']
-    user = User.find_by(uid: line_id)
-    return user
+    User.find_by(uid: line_id)
   end
+
   # メッセージ処理
   def main_event(event, user)
     case event
@@ -50,6 +51,7 @@ class LineBotController < ApplicationController
       end
     end
   end
+
   # LineBotからユーザーへのメッセージ生成
   def create_message(text, user, event)
     case text
@@ -76,7 +78,8 @@ class LineBotController < ApplicationController
       handle_text_message(text, user)
     end
   end
-# 画像メッセージの処理
+
+  # 画像メッセージの処理
   def handle_image_message(event, user)
     if user.status == 'waiting_add_food_image'
       file = fetch_image_file(event.message['id'])
@@ -90,7 +93,7 @@ class LineBotController < ApplicationController
     end
   end
 
-# 食材登録の対話機能の条件分岐（食材名、在庫数、消費期限、保存場所）
+  # 食材登録の対話機能の条件分岐（食材名、在庫数、消費期限、保存場所）
   def handle_text_message(text, user)
     case user.status
     when 'waiting_for_recipe'
@@ -145,11 +148,11 @@ class LineBotController < ApplicationController
     file.close
     file.unlink
 
-    if food.save
-      response_text = "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
-    else
-      response_text = 'エラーが発生しました。正しく入力してください。'
-    end
+    response_text = if food.save
+                      "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
+                    else
+                      'エラーが発生しました。正しく入力してください。'
+                    end
     user.update(status: 'idle')
     client.reply_message(event['replyToken'], { type: 'text', text: response_text })
   end
@@ -162,14 +165,14 @@ class LineBotController < ApplicationController
       quantity: temp_food.temp_quantity,
       expiration_date: temp_food.temp_expiration_date,
       storage: temp_food.temp_storage.to_i,
-      user_id: user.id,
+      user_id: user.id
     )
 
-    if food.save
-      response_text = "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
-    else
-      response_text = 'エラーが発生しました。正しく入力してください。'
-    end
+    response_text = if food.save
+                      "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
+                    else
+                      'エラーが発生しました。正しく入力してください。'
+                    end
     user.update(status: 'idle')
     client.reply_message(event['replyToken'], { type: 'text', text: response_text })
   end
@@ -200,6 +203,7 @@ class LineBotController < ApplicationController
       '二日以内が期限の食材はありません。'
     end
   end
+
   # レシピ検索の対話機能の条件分離
   def recipe_branch(user, food_name = nil)
     case user.status

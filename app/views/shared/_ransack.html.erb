@@ -1,6 +1,6 @@
 <%= search_form_for @q, html: { data: { controller: "select-submit" } } do |f| %>
   <div class="label_title mb-4">
-    <%= f.label :s, "並び替え", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= f.label :s, "並び替え", class: "block text-gray-700 text-lg font-bold mb-2" %>
     <div class="sort_order">
       <%= select_tag 'q[s]', options_for_select(
         [

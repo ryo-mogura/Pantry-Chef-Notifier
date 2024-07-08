@@ -1,8 +1,9 @@
-<button class="btn card bg-slate-50 rounded-box flex flex-row justify-between items-center w-full min-w-40 max-w-xs" onclick="expiration_modal.showModal()">
+<button class="btn card bg-slate-50 rounded-box flex flex-row justify-between items-center w-full min-w-40 max-w-xs flex-nowrap" onclick="expiration_modal.showModal()">
   <span></span>
-  <span><%= l food.expiration_date %></span>
+  <span class="text-xs sm:text-base"><%= l food.expiration_date %></span>
   <span>&gt;</span>
 </button>
+
 
 <dialog id="expiration_modal" class="modal">
   <div class="modal-box">

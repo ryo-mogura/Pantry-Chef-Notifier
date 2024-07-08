@@ -26,4 +26,5 @@
     </div>
   </div>
   <%= link_to t('foods.destroy'), food_path(@food), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm')}, class: "btn btn-outline btn-error btn-md mb-5"%>
+  <%= link_to "戻る", :back, class: 'btn btn-outline'  %>
 </div>
