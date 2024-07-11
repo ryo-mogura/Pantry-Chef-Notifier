@@ -10,7 +10,9 @@ class User < ApplicationRecord
                  waiting_add_food_quantity: 3,
                  waiting_add_food_expiration: 4,
                  waiting_add_food_storage: 5,
-                 waiting_add_food_image: 6 }
+                 waiting_add_food_image: 6,
+                 waiting_delete_food: 7
+                 }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
