@@ -72,6 +72,7 @@ class LineBotController < ApplicationController
         user.update(status: 'waiting_delete_food')
         { type: 'text', text: '削除する食材名を入力してください' }
       end
+      # ここまでの処理はOK
     when 'スキップ'
       if user.status == 'waiting_add_food_image'
         user.update(status: 'idle')
@@ -196,13 +197,13 @@ class LineBotController < ApplicationController
           food_items.each_with_index do |food, index|
             message += "#{index + 1}. #{food.name}\n"
           end
-          client.reply_message(event['replyToken'], { type: 'text', text: message })
+          { type: 'text', text: message }
         else
           food_items.first.destroy
-          client.reply_message(event['replyToken'], { type: 'text', text: '食材が削除されました。' })
+          { type: 'text', text: '食材が削除されました。' }
         end
       else
-        client.reply_message(event['replyToken'], { type: 'text', text: '削除する食材が見つかりませんでした。' })
+        { type: 'text', text: '削除する食材が見つかりませんでした。' }
       end
     when 'waiting_delete_food_number'
       temp_food = user.line_messages.last
@@ -210,9 +211,9 @@ class LineBotController < ApplicationController
       index = event.message['text'].to_i - 1
       if index >= 0 && index < food_items.length
         food_items[index].destroy
-        client.reply_message(event['replyToken'], { type: 'text', text: '食材が削除されました。' })
+        { type: 'text', text: '食材が削除されました。' }
       else
-        client.reply_message(event['replyToken'], { type: 'text', text: '無効な番号です。' })
+        { type: 'text', text: '無効な番号です。' }
       end
       user.update(status: 'idle')
     end
