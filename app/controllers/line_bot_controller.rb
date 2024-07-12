@@ -66,13 +66,11 @@ class LineBotController < ApplicationController
         user.update(status: 'waiting_add_food_name')
         { type: 'text', text: '登録する食材名を入力してください' }
       end
-      # ここから変更箇所
     when '食材の削除'
       if user.status == 'idle'
         user.update(status: 'waiting_delete_food')
         { type: 'text', text: '削除する食材名を入力してください' }
       end
-      # ここまでの処理はOK
     when 'スキップ'
       if user.status == 'waiting_add_food_image'
         user.update(status: 'idle')
@@ -100,7 +98,7 @@ class LineBotController < ApplicationController
     end
   end
 
-  # 食材登録の対話機能の条件分岐（食材名、在庫数、消費期限、保存場所）
+  # 対話機能の条件分岐（レシピ検索、削除、登録）
   def handle_text_message(text, user)
     case user.status
     when 'waiting_for_recipe'
