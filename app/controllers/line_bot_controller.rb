@@ -66,6 +66,12 @@ class LineBotController < ApplicationController
         user.update(status: 'waiting_add_food_name')
         { type: 'text', text: '登録する食材名を入力してください' }
       end
+      # ここから変更箇所
+    when '食材の削除'
+      if user.status == 'idle'
+        user.update(status: 'waiting_delete_food')
+        { type: 'text', text: '削除する食材名を入力してください' }
+      end
     when 'スキップ'
       if user.status == 'waiting_add_food_image'
         user.update(status: 'idle')
@@ -175,6 +181,41 @@ class LineBotController < ApplicationController
                     end
     user.update(status: 'idle')
     client.reply_message(event['replyToken'], { type: 'text', text: response_text })
+  end
+
+  # 食材の削除の処理
+  def delete_food(user, event)
+    case user.status
+    when 'waiting_delete_food'
+      user.line_messages.create(temp_name: event.message['text'])
+      food_items = Food.where(name: event.message['text'], user_id: user.id)
+      if food_items.any?
+        if food_items.length > 1
+          user.update(status: 'waiting_delete_food_number')
+          message = "削除する食材の番号を入力してください。\n"
+          food_items.each_with_index do |food, index|
+            message += "#{index + 1}. #{food.name}\n"
+          end
+          client.reply_message(event['replyToken'], { type: 'text', text: message })
+        else
+          food_items.first.destroy
+          client.reply_message(event['replyToken'], { type: 'text', text: '食材が削除されました。' })
+        end
+      else
+        client.reply_message(event['replyToken'], { type: 'text', text: '削除する食材が見つかりませんでした。' })
+      end
+    when 'waiting_delete_food_number'
+      temp_food = user.line_messages.last
+      food_items = Food.where(name: temp_food.temp_name, user_id: user.id)
+      index = event.message['text'].to_i - 1
+      if index >= 0 && index < food_items.length
+        food_items[index].destroy
+        client.reply_message(event['replyToken'], { type: 'text', text: '食材が削除されました。' })
+      else
+        client.reply_message(event['replyToken'], { type: 'text', text: '無効な番号です。' })
+      end
+      user.update(status: 'idle')
+    end
   end
 
   # エラーの場合の処理
