@@ -132,8 +132,7 @@ class LineBotController < ApplicationController
         user.update(status: 'idle')
         { type: 'text', text: '食材が削除されました。' }
       else
-        user.update(status: 'idle')
-        { type: 'text', text: '無効な番号です。' }
+        { type: 'text', text: '無効な番号です。もう一度番号を入力してください' }
       end
     when 'waiting_add_food_name'
       temp_food = user.line_messages.create(temp_name: text)
