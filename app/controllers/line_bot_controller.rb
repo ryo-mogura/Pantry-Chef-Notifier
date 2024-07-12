@@ -66,6 +66,11 @@ class LineBotController < ApplicationController
         user.update(status: 'waiting_add_food_name')
         { type: 'text', text: '登録する食材名を入力してください' }
       end
+    when '食材の削除'
+      if user.status == 'idle'
+        user.update(status: 'waiting_delete_food')
+        { type: 'text', text: '削除する食材名を入力してください' }
+      end
     when 'スキップ'
       if user.status == 'waiting_add_food_image'
         user.update(status: 'idle')
@@ -93,11 +98,42 @@ class LineBotController < ApplicationController
     end
   end
 
-  # 食材登録の対話機能の条件分岐（食材名、在庫数、消費期限、保存場所）
+  # 対話機能の条件分岐（レシピ検索、削除、登録）
   def handle_text_message(text, user)
     case user.status
     when 'waiting_for_recipe'
       recipe_branch(user, text)
+    when 'waiting_delete_food'
+      user.line_messages.create(temp_name: text)
+      food_items = Food.where(name: text, user_id: user.id)
+      if food_items.any?
+        if food_items.length > 1
+          user.update(status: 'waiting_delete_food_number')
+          message = "削除する食材の番号を入力してください。\n"
+          food_items.each_with_index do |food, index|
+            message += "#{index + 1}. #{food.name}, 消費期限: #{food.expiration_date}\n"
+          end
+          { type: 'text', text: message }
+        else
+          user.update(status: 'idle')
+          food_items.first.destroy
+          { type: 'text', text: '食材が削除されました。' }
+        end
+      else
+        user.update(status: 'idle')
+        { type: 'text', text: '削除する食材が見つかりませんでした。' }
+      end
+    when 'waiting_delete_food_number'
+      temp_food = user.line_messages.last
+      food_items = Food.where(name: temp_food.temp_name, user_id: user.id)
+      index = text.to_i - 1
+      if index >= 0 && index < food_items.length
+        food_items[index].destroy
+        user.update(status: 'idle')
+        { type: 'text', text: '食材が削除されました。' }
+      else
+        { type: 'text', text: '無効な番号です。もう一度番号を入力してください' }
+      end
     when 'waiting_add_food_name'
       temp_food = user.line_messages.create(temp_name: text)
       user.update(status: 'waiting_add_food_quantity')
@@ -176,6 +212,8 @@ class LineBotController < ApplicationController
     user.update(status: 'idle')
     client.reply_message(event['replyToken'], { type: 'text', text: response_text })
   end
+
+  # 食材の削除の処理
 
   # エラーの場合の処理
   def respond_with_error(event)
