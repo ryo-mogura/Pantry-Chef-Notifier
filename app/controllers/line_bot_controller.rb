@@ -105,6 +105,38 @@ class LineBotController < ApplicationController
     case user.status
     when 'waiting_for_recipe'
       recipe_branch(user, text)
+    when 'waiting_delete_food'
+      user.line_messages.create(temp_name: text)
+      food_items = Food.where(name: text, user_id: user.id)
+      if food_items.any?
+        if food_items.length > 1
+          user.update(status: 'waiting_delete_food_number')
+          message = "削除する食材の番号を入力してください。\n"
+          food_items.each_with_index do |food, index|
+            message += "#{index + 1}. #{food.name}, 消費期限: #{food.expiration_date}\n"
+          end
+          { type: 'text', text: message }
+        else
+          user.update(status: 'idle')
+          food_items.first.destroy
+          { type: 'text', text: '食材が削除されました。' }
+        end
+      else
+        user.update(status: 'idle')
+        { type: 'text', text: '削除する食材が見つかりませんでした。' }
+      end
+    when 'waiting_delete_food_number'
+      temp_food = user.line_messages.last
+      food_items = Food.where(name: temp_food.temp_name, user_id: user.id)
+      index = text.to_i - 1
+      if index >= 0 && index < food_items.length
+        food_items[index].destroy
+        user.update(status: 'idle')
+        { type: 'text', text: '食材が削除されました。' }
+      else
+        user.update(status: 'idle')
+        { type: 'text', text: '無効な番号です。' }
+      end
     when 'waiting_add_food_name'
       temp_food = user.line_messages.create(temp_name: text)
       user.update(status: 'waiting_add_food_quantity')
@@ -185,39 +217,6 @@ class LineBotController < ApplicationController
   end
 
   # 食材の削除の処理
-  def delete_food(user, event)
-    case user.status
-    when 'waiting_delete_food'
-      user.line_messages.create(temp_name: event.message['text'])
-      food_items = Food.where(name: event.message['text'], user_id: user.id)
-      if food_items.any?
-        if food_items.length > 1
-          user.update(status: 'waiting_delete_food_number')
-          message = "削除する食材の番号を入力してください。\n"
-          food_items.each_with_index do |food, index|
-            message += "#{index + 1}. #{food.name}\n"
-          end
-          { type: 'text', text: message }
-        else
-          food_items.first.destroy
-          { type: 'text', text: '食材が削除されました。' }
-        end
-      else
-        { type: 'text', text: '削除する食材が見つかりませんでした。' }
-      end
-    when 'waiting_delete_food_number'
-      temp_food = user.line_messages.last
-      food_items = Food.where(name: temp_food.temp_name, user_id: user.id)
-      index = event.message['text'].to_i - 1
-      if index >= 0 && index < food_items.length
-        food_items[index].destroy
-        { type: 'text', text: '食材が削除されました。' }
-      else
-        { type: 'text', text: '無効な番号です。' }
-      end
-      user.update(status: 'idle')
-    end
-  end
 
   # エラーの場合の処理
   def respond_with_error(event)
