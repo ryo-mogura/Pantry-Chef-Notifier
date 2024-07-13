@@ -2,6 +2,9 @@
 
 class Food < ApplicationRecord
   belongs_to :user
+  
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :category
   mount_uploader :food_image, FoodImageUploader
   enum storage: { refrigerator: 0, freezer: 1, others: 2 }
 
