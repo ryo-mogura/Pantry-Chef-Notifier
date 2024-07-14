@@ -25,6 +25,8 @@ class FoodsController < ApplicationController
 
   def show
     @food = Food.find(params[:id])
+    @categories = Category.all
+    @category = @food.category
   end
 
   def edit
@@ -52,7 +54,7 @@ class FoodsController < ApplicationController
   private
 
   def food_params
-    params.require(:food).permit(:id, :name, :quantity, :expiration_date, :storage, :food_image, :food_image_cache)
+    params.require(:food).permit(:id, :name, :quantity, :expiration_date, :storage, :food_image, :food_image_cache, :category_id)
   end
 
   def set_q

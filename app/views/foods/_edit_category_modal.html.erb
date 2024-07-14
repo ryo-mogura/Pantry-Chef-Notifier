@@ -1,0 +1,27 @@
+<button class="btn card bg-slate-50 rounded-box flex flex-row justify-between items-center w-full min-w-40 max-w-xs flex-nowrap" onclick="category_modal.showModal()">
+  <span></span>
+  <span class="text-xs sm:text-base">
+    <% if food.category.present? %>
+      <%= food.category.name %>
+    <% else %>
+      <p>なし</p>
+    <% end %>
+    </span>
+  <span>&gt;</span>
+</button>
+
+<dialog id="category_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg mb-3">カテゴリーを設定</h3>
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <%= form_with model: food, local:true do |f|%>
+      <div class='flex items-center mx-auto max-w-xs'>
+        <%= f.collection_select :category_id, @categories, :id, :name, class:"mx-auto text-center" %>
+      </div>
+      <%= f.submit "変更する", disable_with: '登録中...', class:"btn btn-outline btn-success mt-5"%>
+    <% end %>
+  </div>
+</dialog>
+
