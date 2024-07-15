@@ -41,6 +41,9 @@ gem 'rakuten_web_service'
 gem 'ransack'
 
 gem 'kaminari'
+
+gem 'active_hash'
+
 # image_uploader
 gem 'carrierwave'
 gem 'mini_magick'
