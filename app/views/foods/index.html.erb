@@ -13,7 +13,7 @@
                   <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"/>
                 </svg>
               </div>
-              <div class="grid grid-cols-3 ">
+              <div class="grid grid-cols-3">
                 <% if (food.expiration_date - Date.today).to_i >= 0 %>
                   <p class="text-gray-600">
                     あと<%= (food.expiration_date - Date.today).to_i %>日
@@ -37,6 +37,11 @@
               <div class="card-body items-center text-center">
                 <h2 class="card-title"><%= food.name %></h2>
                 <p>数量：<%= food.quantity %></p>
+                  <% if food.category.present? %>
+                    <p>カテゴリー：<%= food.category.name %></p>
+                  <% else %>
+                    <p>カテゴリー： なし</p>
+                  <% end %>
                 <% if (food.expiration_date - Date.today).to_i >= 0 %>
                   <p class="text-gray-600">
                     期限：<%= food.expiration_date %>
