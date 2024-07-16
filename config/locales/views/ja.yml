@@ -10,6 +10,7 @@ ja:
           refrigerator: 冷蔵庫
           freezer: 冷凍庫
           others: その他
+        category: カテゴリー
     models:
       food: 食材
   date:

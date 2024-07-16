@@ -10,6 +10,8 @@ class FoodsController < ApplicationController
 
   def new
     @food = current_user.foods.new
+    @categories = Category.all
+    @category = @food.category
   end
 
   def create

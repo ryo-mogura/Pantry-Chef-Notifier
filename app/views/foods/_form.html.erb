@@ -4,7 +4,14 @@
   <div class="field mb-8">
     <div class='input input-bordered flex items-center gap-2 mx-auto max-w-xs'>
       <%= f.label :name %>
-      <%= f.text_field :name, class:"text-area mx-auto text-center ", placeholder: "食材名" %>
+      <%= f.text_field :name, class:"text-area mx-auto text-center", placeholder: "食材名" %>
+    </div>
+  </div>
+
+  <div class="field mb-8">
+    <div class='input input-bordered flex items-center gap-2 mx-auto max-w-xs'>
+      <%= f.label :category %>
+      <%= f.select :category_id, @categories.map { |category| [category.name, category.id] }, { include_blank: '---' }, class: "mx-auto text-center" %>
     </div>
   </div>
 
