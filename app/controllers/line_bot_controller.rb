@@ -181,9 +181,10 @@ class LineBotController < ApplicationController
   # Foodオブジェクトの作成(画像あり)
   def save_food_with_image(file, user, event)
     temp_food = user.line_messages.last
+    category_id = temp_food.temp_category_id.to_i
     food = Food.new(
       name: temp_food.temp_name,
-      category_id: (1..11).include?(temp_food.temp_category_id) ? temp_food.temp_category_id : nil,
+      category_id: (1..11).include?(category_id) ? category_id : nil,
       quantity: temp_food.temp_quantity,
       expiration_date: temp_food.temp_expiration_date,
       storage: temp_food.temp_storage.to_i,
@@ -206,9 +207,10 @@ class LineBotController < ApplicationController
   # Foodオブジェクトの作成(画像なし)
   def save_food_without_image(user, event)
     temp_food = user.line_messages.last
+    category_id = temp_food.temp_category_id.to_i
     food = Food.new(
       name: temp_food.temp_name,
-      category_id: (1..11).include?(temp_food.temp_category_id) ? temp_food.temp_category_id : nil,
+      category_id: (1..11).include?(category_id) ? category_id : nil,
       quantity: temp_food.temp_quantity,
       expiration_date: temp_food.temp_expiration_date,
       storage: temp_food.temp_storage.to_i,

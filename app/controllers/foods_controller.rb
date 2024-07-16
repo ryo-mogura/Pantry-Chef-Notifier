@@ -11,7 +11,6 @@ class FoodsController < ApplicationController
   def new
     @food = current_user.foods.new
     @categories = Category.all
-    @category = @food.category
   end
 
   def create
@@ -28,7 +27,6 @@ class FoodsController < ApplicationController
   def show
     @food = Food.find(params[:id])
     @categories = Category.all
-    @category = @food.category
   end
 
   def edit
