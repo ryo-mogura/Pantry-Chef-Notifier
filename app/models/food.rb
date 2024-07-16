@@ -13,7 +13,7 @@ class Food < ApplicationRecord
   validates :expiration_date, presence: true
   validates :storage, presence: true
   validates :quantity, numericality: { only_integer: true }, presence: true
-  validates :category_id, inclusion: { in: Category.all.map(&:id) }
+  validates :category_id, inclusion: { in: Category.all.map(&:id) }, allow_nil: true
 
   # Ransackv4.0.0で追加された許可リストの作成
   def self.ransackable_attributes(_auth_object = nil)
