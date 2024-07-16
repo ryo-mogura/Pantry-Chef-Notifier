@@ -135,9 +135,18 @@ class LineBotController < ApplicationController
         { type: 'text', text: '無効な番号です。もう一度番号を入力してください' }
       end
     when 'waiting_add_food_name'
-      temp_food = user.line_messages.create(temp_name: text)
+      temp_food = user.line_messages.create(temp_name: text )
+      user.update(status: 'waiting_add_category')
+      { type: 'text',
+        text: "カテゴリーを数字で入力してください。\n\n1: 野菜\n 2: 果物\n 3: 水産物・水産加工品\n 4: 肉・肉加工品\n 5: 卵・チーズ・乳製品\n 6: 麺類\n 7: 粉類\n 8: 飲料\n 9: 菓子類\n 10: 調味料\n 11: その他"
+      }
+
+    when 'waiting_add_category'
+      temp_food = user.line_messages.last
+      temp_food.update(temp_category_id: text)
       user.update(status: 'waiting_add_food_quantity')
       { type: 'text', text: '在庫数を数字で入力してください。' }
+
     when 'waiting_add_food_quantity'
       temp_food = user.line_messages.last
       temp_food.update(temp_quantity: text)
@@ -172,8 +181,10 @@ class LineBotController < ApplicationController
   # Foodオブジェクトの作成(画像あり)
   def save_food_with_image(file, user, event)
     temp_food = user.line_messages.last
+    category_id = temp_food.temp_category_id.to_i
     food = Food.new(
       name: temp_food.temp_name,
+      category_id: (1..11).include?(category_id) ? category_id : nil,
       quantity: temp_food.temp_quantity,
       expiration_date: temp_food.temp_expiration_date,
       storage: temp_food.temp_storage.to_i,
@@ -185,7 +196,7 @@ class LineBotController < ApplicationController
     file.unlink
 
     response_text = if food.save
-                      "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
+                      "以下の食材が保存されました。\n\n食材名: #{food.name}\nカテゴリー: #{food.category.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
                     else
                       'エラーが発生しました。正しく入力してください。'
                     end
@@ -196,8 +207,10 @@ class LineBotController < ApplicationController
   # Foodオブジェクトの作成(画像なし)
   def save_food_without_image(user, event)
     temp_food = user.line_messages.last
+    category_id = temp_food.temp_category_id.to_i
     food = Food.new(
       name: temp_food.temp_name,
+      category_id: (1..11).include?(category_id) ? category_id : nil,
       quantity: temp_food.temp_quantity,
       expiration_date: temp_food.temp_expiration_date,
       storage: temp_food.temp_storage.to_i,
@@ -205,7 +218,7 @@ class LineBotController < ApplicationController
     )
 
     response_text = if food.save
-                      "以下の食材が保存されました。\n\n食材名: #{food.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
+                      "以下の食材が保存されました。\n\n食材名: #{food.name}\nカテゴリー: #{food.category.name}\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n保存場所: #{food.storage}"
                     else
                       'エラーが発生しました。正しく入力してください。'
                     end

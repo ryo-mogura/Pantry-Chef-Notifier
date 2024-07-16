@@ -18,7 +18,7 @@
     </form>
     <%= form_with model: food, local:true do |f|%>
       <div class='flex items-center mx-auto max-w-xs'>
-        <%= f.collection_select :category_id, @categories, :id, :name, class:"mx-auto text-center" %>
+        <%= f.select :category_id, @categories.map { |category| [category.name, category.id] }, { include_blank: '---' }, class: "mx-auto text-center text-ali" %>
       </div>
       <%= f.submit "変更する", disable_with: '登録中...', class:"btn btn-outline btn-success mt-5"%>
     <% end %>
