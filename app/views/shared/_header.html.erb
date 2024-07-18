@@ -9,7 +9,7 @@
     <ul class="menu menu-horizontal px-1 text-lg">
       <li><%= link_to t('header.index'),foods_path %></li>
       <li><%= link_to t('header.food_new'),new_food_path %></li>
-      <li><%= link_to "レシピ検索",search_path %></li>
+      <li><%= link_to "レシピ検索",search_rakuten_recipes_path %></li>
       <li>
         <details>
           <summary>ユーザー</summary>
@@ -31,7 +31,7 @@
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
           <li><%= link_to t('header.index'),foods_path %></li>
           <li><%= link_to t('header.new'),new_food_path %></li>
-          <li><%= link_to "レシピ検索",search_path %></li>
+          <li><%= link_to "レシピ検索", search_rakuten_recipes_path %></li>
           <li><%= link_to t('header.profile'),users_profile_path %></li>
           <li><%= link_to t('header.logout'), signout_path,data: { turbo_method: :delete, turbo_confirm: '本当にログアウトしますか？' } %></li>
         </ul>
