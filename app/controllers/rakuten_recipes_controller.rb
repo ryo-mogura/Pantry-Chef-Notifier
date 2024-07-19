@@ -14,4 +14,23 @@ class RakutenRecipesController < ApplicationController
       end
     end
   end
+# レシピを保存するアクションを追加
+  def create
+    @recipe = current_user.rakuten_recipes.new(recipe_params)
+
+    if @recipe.save
+      flash[:success] =  t('defaults.flash_message.keep')
+      redirect_to foods_path
+    else
+      flash.now[warning] =  t('defaults.flash_message.not_keep')
+      render :search
+    end
+  end
+
+  private
+
+  def recipe_params
+    params.permit(:id, :title, :cost, :indication, :image_url, :recipe_url)
+
+  end
 end
