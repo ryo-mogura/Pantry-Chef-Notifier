@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 
   # rakuten
   # get 'search', to: 'rakuten_recipes#search'
-  resources :rakuten_recipes, only: [:create] do
+  resources :rakuten_recipes, only: [:create, :destroy] do
     collection do
       get 'search'
     end
