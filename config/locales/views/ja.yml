@@ -26,6 +26,9 @@ ja:
       not_edit: "%{item}を編集できませんでした"
       deleted: "%{item}を削除しました"
       not_searched: "検索結果がありません"
+      keep : レシピを保存しました
+      not_keep : レシピを保存できませんでした
+
 
   header:
     title: PantryChefNotifier

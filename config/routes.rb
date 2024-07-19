@@ -34,7 +34,12 @@ Rails.application.routes.draw do
   resources :foods
 
   # rakuten
-  get 'search', to: 'rakuten_recipes#search'
+  # get 'search', to: 'rakuten_recipes#search'
+  resources :rakuten_recipes, only: [:create] do
+    collection do
+      get 'search'
+    end
+  end
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
