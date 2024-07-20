@@ -19,6 +19,9 @@ ja:
       short: "%m月%d日"
   defaults:
     delete_confirm: 削除しますか？
+    back: 戻る
+    show: 詳細
+    delete: 削除
     flash_message:
       created: "%{item}を作成しました"
       not_created: "%{item}を作成出来ませんでした"
@@ -28,8 +31,6 @@ ja:
       not_searched: "検索結果がありません"
       keep : レシピを保存しました
       not_keep : レシピを保存できませんでした
-
-
   header:
     title: PantryChefNotifier
     new: 登録する
