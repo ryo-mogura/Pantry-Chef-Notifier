@@ -9,8 +9,17 @@
       <% else %>
         <p><%= current_user.email %></p>
       <% end %>
+      <p>登録している食材数 : <%= @foods.count %></p>
+      <p>期限が3日以内の食材数 : <%= @limit_expiration.count %></p>
+      <p>期限切れの食材数 : <%= @over_expiration.count %></p>
+
+    </div>
+    <div class="divider md:divider-horizontal"></div>
+    <div class="grid w-[50%] card rounded-box place-items-center mx-auto">
+      <%= pie_chart @category_data %>
     </div>
   </div>
+
   <div>
     <p class="text-xl font-bold my-5">お気に入りのレシピ</p>
     <div class="flex justify-center my-5">
