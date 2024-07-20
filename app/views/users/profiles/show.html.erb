@@ -11,5 +11,29 @@
       <% end %>
     </div>
   </div>
-  <%= link_to "戻る", :back, class: 'btn btn-outline' %>
+  <div>
+    <p class="text-xl font-bold my-5">お気に入りのレシピ</p>
+    <div class="flex justify-center my-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-20">
+        <% @recipes.each do |recipe| %>
+          <div class="card w-96 bg-base-100 shadow-xl">
+            <figure class="p-5 bg-primary-content" style="height: 241px;">
+              <%= image_tag recipe.image_url, alt: recipe.title, class: "rounded-lg"%>
+            </figure>
+            <div class="card-body items-center text-center">
+              <h2 class="card-title"><%= recipe.title %></h2>
+              <p>調理時間：<%= recipe.indication %></p>
+              <p>費用：<%= recipe.cost %></p>
+              <div class="card-actions">
+                <%= link_to t('defaults.show'), recipe.recipe_url, target: "_blank", rel: "noopener noreferrer", data: { controller: "confirm-dialog", action: "click->confirm-dialog#confirm" }, class: "btn btn-outline btn-info" %>
+              </div>
+              <%= link_to t('defaults.delete'), rakuten_recipe_path(recipe), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm')}, class: "btn btn-outline btn-error btn-md mb-5"%>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to t('defaults.back'), :back, class: 'btn btn-outline' %>
 </div>

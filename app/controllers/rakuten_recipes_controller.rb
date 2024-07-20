@@ -27,6 +27,12 @@ class RakutenRecipesController < ApplicationController
     end
   end
 
+  def destroy
+    @recipe = current_user.rakuten_recipes.find(params[:id])
+    @recipe.destroy
+    redirect_to foods_path, success: t('defaults.flash_message.deleted', item: RakutenRecipe.model_name.human), status: :see_other
+  end
+
   private
 
   def recipe_params
