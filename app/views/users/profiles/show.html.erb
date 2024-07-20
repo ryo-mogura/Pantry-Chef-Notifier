@@ -2,7 +2,7 @@
   <h2 class="text-3xl font-bold my-5">マイページ</h2>
 
   <div class="flex flex-col w-full md:flex-row">
-    <div class="grid w-[50%] h-32 card bg-base-300 rounded-box place-items-center mx-auto">
+    <div class="grid sm:w-[50%] h-40 card bg-base-300 rounded-box mx-auto leading-loose">
       <p><%= current_user.name %></p>
       <% if current_user.line_logged_in? %>
         <p>Lineでログイン中</p>
@@ -12,12 +12,12 @@
       <p>登録している食材数 : <%= @foods.count %></p>
       <p>期限が3日以内の食材数 : <%= @limit_expiration.count %></p>
       <p>期限切れの食材数 : <%= @over_expiration.count %></p>
-
     </div>
     <div class="divider md:divider-horizontal"></div>
-    <div class="grid w-[50%] card rounded-box place-items-center mx-auto">
-      <%= pie_chart @category_data %>
-    </div>
+      <div class="w-[50%] card rounded-box mx-auto">
+        <%= pie_chart @category_data %>
+      </div>
+
   </div>
 
   <div>
