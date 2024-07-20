@@ -3,8 +3,16 @@
 module Users
   class ProfilesController < ApplicationController
     def show
-      @user = current_user
-      @recipes = @user.rakuten_recipes
+      @foods = current_user.foods
+      @limit_expiration = current_user.foods.where(expiration_date: Date.today..2.days.from_now.to_date)
+      @over_expiration = current_user.foods.where('expiration_date < ?', Date.today)
+
+      
+      @recipes = current_user.rakuten_recipes
+      categories = Category.all
+      @category_data = categories.map do |category|
+        [category.name, current_user.foods.where(category_id: category.id).count]
+      end
     end
 
     private

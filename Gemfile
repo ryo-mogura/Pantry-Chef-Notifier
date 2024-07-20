@@ -44,6 +44,8 @@ gem 'kaminari'
 
 gem 'active_hash'
 
+gem "chartkick"
+
 # image_uploader
 gem 'carrierwave'
 gem 'mini_magick'
