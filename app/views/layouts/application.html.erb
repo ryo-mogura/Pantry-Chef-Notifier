@@ -3,7 +3,7 @@
   <head>
     <title>pantry_chef_notifier</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    
+
     <!-- OGP Tags -->
     <meta property="og:title" content="PantryChefNotifier（食材管理とレシピ提示アプリ）" />
     <meta property="og:description" content="食材管理とレシピ提示アプリ" />
@@ -24,7 +24,9 @@
 
   <body class='bg-linen'>
     <div class='flex flex-col min-h-screen'>
-      <% if user_signed_in? %>
+      <% if request.path == "/admin/sign_in" %>
+        <%= render 'admin/shared/admin_sign_in_header' %>
+      <% elsif user_signed_in? %>
         <%= render 'shared/header' %>
       <% else %>
         <%= render 'shared/before_login_header' %>
