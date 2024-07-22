@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class='h-full'>
+  <head>
+    <title>pantry_chef_notifier</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- OGP Tags -->
+    <meta property="og:title" content="PantryChefNotifier（食材管理とレシピ提示アプリ）" />
+    <meta property="og:description" content="食材管理とレシピ提示アプリ" />
+    <meta property="og:image" content="https://i.gyazo.com/9bb67246eebcce04ce42ff63d3fda44a.png"/>
+    <meta property="og:url" content="https://pantry-chef-notifier.onrender.com"/>
+
+    <!-- Twitter Card Tags (optional) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PantryChefNotifier（食材管理とレシピ提示アプリ）">
+    <meta name="twitter:description" content="食材管理とレシピ提示アプリ">
+    <meta name="twitter:image" content="https://i.gyazo.com/9bb67246eebcce04ce42ff63d3fda44a.png">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  </head>
+
+  <body class='bg-linen'>
+    <div class='flex flex-col min-h-screen'>
+      <% if admin_signed_in? %>
+        <%= render 'admin/shared/admin_sign_in_header' %>
+      <% else %>
+        <%= render 'admin/shared/admin_before_login_header' %>
+      <% end %>
+      <%= render 'shared/flash_message' %>
+      <div class='flex-grow'>
+        <%= yield %>
+      </div>
+      <%= render 'shared/footer' %>
+    </div>
+  </body>
+</html>
