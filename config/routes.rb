@@ -14,9 +14,9 @@ Rails.application.routes.draw do
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
-  
   namespace :admin do
     get '/' => 'homes#top', as: :root
+    delete 'homes/:id' => 'homes#destroy', as: :destroy_home
   end
 
   # ゲストユーザー機能でControllerをカスタマイズしているので変更

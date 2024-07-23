@@ -1,1 +1,25 @@
-<h1>管理者トップページ</h1>
+<div class="container mx-auto text-center">
+  <h1 class="text-3xl font-bold text-center my-5">ユーザー一覧ページ</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>名前</th>
+        <th>Email</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= link_to '削除', admin_destroy_home_path(user), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm')}, class: "btn btn-outline btn-error btn-md" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
