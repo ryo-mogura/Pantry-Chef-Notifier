@@ -1,0 +1,23 @@
+<div class="container mx-auto text-center">
+  <h1 class="text-3xl font-bold text-center my-5">ユーザーの投稿一覧</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>名前</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @foods.each do |food| %>
+        <tr>
+          <td><%= food.id %></td>
+          <td><%= food.name %></td>
+          <td>
+            <%= link_to '削除', admin_destroy_food_path(food), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm')}, class: "btn btn-outline btn-error btn-md" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -14,9 +14,10 @@ Rails.application.routes.draw do
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
-  
   namespace :admin do
     get '/' => 'homes#top', as: :root
+    resources :homes, only: [:show, :destroy]
+    delete 'destroy_food/:id', to: 'homes#destroy_food', as: 'destroy_food'
   end
 
   # ゲストユーザー機能でControllerをカスタマイズしているので変更
