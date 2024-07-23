@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   }
   namespace :admin do
     get '/' => 'homes#top', as: :root
-    delete 'homes/:id' => 'homes#destroy', as: :destroy_home
+    resources :homes, only: [:show, :destroy]
+    delete 'destroy_food/:id', to: 'homes#destroy_food', as: 'destroy_food'
   end
 
   # ゲストユーザー機能でControllerをカスタマイズしているので変更
