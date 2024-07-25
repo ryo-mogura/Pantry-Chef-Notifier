@@ -30,39 +30,49 @@ namespace :line_notification do
 
         recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
 
-        columns = recipes.map do |recipe|
-          {
-            thumbnailImageUrl: recipe['foodImageUrl'],
-            title: (recipe['recipeTitle'][0..39] || ''), # タイトルを40文字以内に
-            text: (recipe['recipeDescription'][0..59] || ''), # テキストを60文字以内に
-            actions: [
-              {
-                type: 'uri',
-                label: 'レシピを見る',
-                uri: recipe['recipeUrl']
-              }
-            ]
+        if recipes.nil? || recipes.empty?
+          message1 = {
+            type: 'text',
+            text: "「#{f.name}」の期限は#{expiration_notice}です! しかし、関連するレシピが見つかりませんでした。"
           }
+
+          response1 = client.push_message(user.uid, message1)
+          p response1
+        else
+          columns = recipes.map do |recipe|
+            {
+              thumbnailImageUrl: recipe['foodImageUrl'],
+              title: (recipe['recipeTitle'][0..39] || ''), # タイトルを40文字以内に
+              text: (recipe['recipeDescription'][0..59] || ''), # テキストを60文字以内に
+              actions: [
+                {
+                  type: 'uri',
+                  label: 'レシピを見る',
+                  uri: recipe['recipeUrl']
+                }
+              ]
+            }
+          end
+
+          message1 = {
+            type: 'text',
+            text: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください"
+          }
+
+          message2 = {
+            type: 'template',
+            altText: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください。",
+            template: {
+              type: 'carousel',
+              columns: columns.slice(0, 10) # カラムを最大10個に制限
+            }
+          }
+          response1 = client.push_message(user.uid, message1)
+          p response1
+
+          response2 = client.push_message(user.uid, message2)
+          p response2
         end
-
-        message1 = {
-          type: 'text',
-          text: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください"
-        }
-
-        message2 = {
-          type: 'template',
-          altText: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください。",
-          template: {
-            type: 'carousel',
-            columns: columns.slice(0, 10) # カラムを最大10個に制限
-          }
-        }
-        response1 = client.push_message(user.uid, message1)
-        p response1
-
-        response2 = client.push_message(user.uid, message2)
-        p response2
       end
     end
   end
