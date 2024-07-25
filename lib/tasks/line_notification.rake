@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 namespace :line_notification do
+  desc 'LINE通知とメール通知を同時に行う'
+  task send_all_notifications: :environment do
+    Rake::Task['line_notification:push_line_message_expiration_date'].invoke
+    Rake::Task['line_notification:send_expiration_notices'].invoke
+  end
+
   desc 'LINEBOT : 食材の消費期限の通知'
   task push_line_message_expiration_date: :environment do
     client = Line::Bot::Client.new do |config|
@@ -89,4 +95,5 @@ end
 
 # rails line_notification:push_line_message_expiration_date
 # rails line_notification:send_expiration_notices
+# rails line_notification:send_all_notifications
 
