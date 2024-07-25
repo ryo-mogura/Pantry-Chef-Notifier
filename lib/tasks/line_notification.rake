@@ -30,7 +30,7 @@ namespace :line_notification do
 
         recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
 
-        if recipes.nil? || recipes.empty?
+        if recipes.nil?
           message1 = {
             type: 'text',
             text: "「#{f.name}」の期限は#{expiration_notice}です! しかし、関連するレシピが見つかりませんでした。"
@@ -96,7 +96,7 @@ namespace :line_notification do
         recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
 
         # メール送信
-        if recipes.nil? || recipes.empty?
+        if recipes.nil?
           # レシピが見つからなかった場合の処理
           UserMailer.expiration_notice(user, f, expiration_notice, []).deliver_now
         else

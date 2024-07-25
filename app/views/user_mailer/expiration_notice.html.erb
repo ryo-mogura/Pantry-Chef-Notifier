@@ -4,20 +4,24 @@
     <h2><%= @food.name %>の消費期限通知</h2>
     <p>「<%= @food.name %>」の消費期限は<%= @expiration_notice %>です!</p>
 
-    <% if @recipes.any? %>
-      <p>関連するレシピをご覧ください:</p>
-      <ul>
-        <% @recipes.each do |recipe| %>
-          <li>
-            <img src="<%= recipe['foodImageUrl'] %>" alt="<%= recipe['recipeTitle'] %>" style="width:400px;">
-            <h4><%= recipe['recipeTitle'] %></h4>
-            <p><%= recipe['recipeDescription'] %></p>
-            <p><a href="<%= recipe['recipeUrl'] %>">レシピを見る</a></p>
-          </li>
-        <% end %>
-      </ul>
+    <% if @recipes.nil? %>
+      <p>関連するレシピの情報が取得できませんでした。</p>
     <% else %>
-      <p>関連するレシピが見つかりませんでした。</p>
+      <% if @recipes.any? %>
+        <p>関連するレシピをご覧ください:</p>
+        <ul>
+          <% @recipes.each do |recipe| %>
+            <li>
+              <img src="<%= recipe['foodImageUrl'] %>" alt="<%= recipe['recipeTitle'] %>" style="width:400px;">
+              <h4><%= recipe['recipeTitle'] %></h4>
+              <p><%= recipe['recipeDescription'] %></p>
+              <p><a href="<%= recipe['recipeUrl'] %>">レシピを見る</a></p>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>関連するレシピが見つかりませんでした。</p>
+      <% end %>
     <% end %>
   </body>
 </html>
