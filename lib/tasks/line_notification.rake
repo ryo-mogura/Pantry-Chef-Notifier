@@ -79,7 +79,6 @@ namespace :line_notification do
 
   desc '食材の消費期限の通知'
   task send_expiration_notices: :environment do
-
     User.find_each do |user|
       # 今日から2日後までの消費期限を取得
       limit_expiration = user.foods.where(expiration_date: Date.today..2.days.from_now.to_date)
@@ -97,7 +96,13 @@ namespace :line_notification do
         recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
 
         # メール送信
-        UserMailer.expiration_notice(user, f, expiration_notice, recipes).deliver_now
+        if recipes.nil? || recipes.empty?
+          # レシピが見つからなかった場合の処理
+          UserMailer.expiration_notice(user, f, expiration_notice, []).deliver_now
+        else
+          # レシピが見つかった場合の処理
+          UserMailer.expiration_notice(user, f, expiration_notice, recipes).deliver_now
+        end
       end
     end
   end
