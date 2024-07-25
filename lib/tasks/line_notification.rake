@@ -28,9 +28,8 @@ namespace :line_notification do
                               f.expiration_date.strftime('%m月%d日')
                             end
 
-        recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
-
-        if recipes.nil?
+        category = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }
+        if category.nil?
           message1 = {
             type: 'text',
             text: "「#{f.name}」の期限は#{expiration_notice}です! しかし、関連するレシピが見つかりませんでした。"
@@ -39,6 +38,7 @@ namespace :line_notification do
           response1 = client.push_message(user.uid, message1)
           p response1
         else
+          recipes = category.ranking
           columns = recipes.map do |recipe|
             {
               thumbnailImageUrl: recipe['foodImageUrl'],
@@ -93,13 +93,11 @@ namespace :line_notification do
                               f.expiration_date.strftime('%m月%d日')
                             end
 
-        recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
-
-        # メール送信
-        if recipes.nil?
-          # レシピが見つからなかった場合の処理
+        category = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }
+        if category.nil?
           UserMailer.expiration_notice(user, f, expiration_notice, []).deliver_now
         else
+          recipes = category.ranking
           # レシピが見つかった場合の処理
           UserMailer.expiration_notice(user, f, expiration_notice, recipes).deliver_now
         end
