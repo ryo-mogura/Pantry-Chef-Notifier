@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2><%= @food.name %>の消費期限通知</h2>
+    <p>「<%= @food.name %>」の消費期限は<%= @expiration_notice %>です!</p>
+    <p>関連するレシピをご覧ください:</p>
+    <ul>
+      <% @recipes.each do |recipe| %>
+          <img src="<%= recipe['foodImageUrl'] %>" alt="<%= recipe['recipeTitle'] %>" style="width:400px;">
+        <li>
+          <h4><%= recipe['recipeTitle'] %></h4>
+          <p><%= recipe['recipeDescription'] %></p>
+          <p><a href="<%= recipe['recipeUrl'] %>">レシピを見る</a></p>
+        </li>
+      <% end %>
+    </ul>
+  </body>
+</html>
