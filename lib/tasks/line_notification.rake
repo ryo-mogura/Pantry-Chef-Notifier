@@ -28,48 +28,57 @@ namespace :line_notification do
                               f.expiration_date.strftime('%m月%d日')
                             end
 
-        recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
-
-        columns = recipes.map do |recipe|
-          {
-            thumbnailImageUrl: recipe['foodImageUrl'],
-            title: (recipe['recipeTitle'][0..39] || ''), # タイトルを40文字以内に
-            text: (recipe['recipeDescription'][0..59] || ''), # テキストを60文字以内に
-            actions: [
-              {
-                type: 'uri',
-                label: 'レシピを見る',
-                uri: recipe['recipeUrl']
-              }
-            ]
+        category = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }
+        if category.nil?
+          message1 = {
+            type: 'text',
+            text: "「#{f.name}」の期限は#{expiration_notice}です! しかし、関連するレシピが見つかりませんでした。"
           }
+
+          response1 = client.push_message(user.uid, message1)
+          p response1
+        else
+          recipes = category.ranking
+          columns = recipes.map do |recipe|
+            {
+              thumbnailImageUrl: recipe['foodImageUrl'],
+              title: (recipe['recipeTitle'][0..39] || ''), # タイトルを40文字以内に
+              text: (recipe['recipeDescription'][0..59] || ''), # テキストを60文字以内に
+              actions: [
+                {
+                  type: 'uri',
+                  label: 'レシピを見る',
+                  uri: recipe['recipeUrl']
+                }
+              ]
+            }
+          end
+
+          message1 = {
+            type: 'text',
+            text: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください"
+          }
+
+          message2 = {
+            type: 'template',
+            altText: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください。",
+            template: {
+              type: 'carousel',
+              columns: columns.slice(0, 10) # カラムを最大10個に制限
+            }
+          }
+          response1 = client.push_message(user.uid, message1)
+          p response1
+
+          response2 = client.push_message(user.uid, message2)
+          p response2
         end
-
-        message1 = {
-          type: 'text',
-          text: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください"
-        }
-
-        message2 = {
-          type: 'template',
-          altText: "「#{f.name}」の期限は#{expiration_notice}です! 関連するレシピをご覧ください。",
-          template: {
-            type: 'carousel',
-            columns: columns.slice(0, 10) # カラムを最大10個に制限
-          }
-        }
-        response1 = client.push_message(user.uid, message1)
-        p response1
-
-        response2 = client.push_message(user.uid, message2)
-        p response2
       end
     end
   end
 
   desc '食材の消費期限の通知'
   task send_expiration_notices: :environment do
-
     User.find_each do |user|
       # 今日から2日後までの消費期限を取得
       limit_expiration = user.foods.where(expiration_date: Date.today..2.days.from_now.to_date)
@@ -84,10 +93,14 @@ namespace :line_notification do
                               f.expiration_date.strftime('%m月%d日')
                             end
 
-        recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
-
-        # メール送信
-        UserMailer.expiration_notice(user, f, expiration_notice, recipes).deliver_now
+        category = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }
+        if category.nil?
+          UserMailer.expiration_notice(user, f, expiration_notice, []).deliver_now
+        else
+          recipes = category.ranking
+          # レシピが見つかった場合の処理
+          UserMailer.expiration_notice(user, f, expiration_notice, recipes).deliver_now
+        end
       end
     end
   end
