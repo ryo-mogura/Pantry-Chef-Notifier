@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 namespace :line_notification do
+  desc 'LINE通知とメール通知を同時に行う'
+  task send_all_notifications: :environment do
+    Rake::Task['line_notification:push_line_message_expiration_date'].invoke
+    Rake::Task['line_notification:send_expiration_notices'].invoke
+  end
+
   desc 'LINEBOT : 食材の消費期限の通知'
   task push_line_message_expiration_date: :environment do
     client = Line::Bot::Client.new do |config|
@@ -60,6 +66,34 @@ namespace :line_notification do
       end
     end
   end
+
+  desc '食材の消費期限の通知'
+  task send_expiration_notices: :environment do
+
+    User.find_each do |user|
+      # 今日から2日後までの消費期限を取得
+      limit_expiration = user.foods.where(expiration_date: Date.today..2.days.from_now.to_date)
+
+      limit_expiration.each do |f|
+        expiration_notice = case f.expiration_date
+                            when Date.today
+                              '今日'
+                            when Date.tomorrow
+                              '明日'
+                            else
+                              f.expiration_date.strftime('%m月%d日')
+                            end
+
+        recipes = RakutenWebService::Recipe.small_categories.find { |c| c.name.match(f.name) }.ranking
+
+        # メール送信
+        UserMailer.expiration_notice(user, f, expiration_notice, recipes).deliver_now
+      end
+    end
+  end
 end
 
 # rails line_notification:push_line_message_expiration_date
+# rails line_notification:send_expiration_notices
+# rails line_notification:send_all_notifications
+
