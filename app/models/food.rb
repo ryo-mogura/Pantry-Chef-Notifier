@@ -4,6 +4,7 @@ class Food < ApplicationRecord
   before_validation :sanitize_category_id
 
   belongs_to :user
+  belongs_to :food_image, optional: true
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
   mount_uploader :food_image, FoodImageUploader
