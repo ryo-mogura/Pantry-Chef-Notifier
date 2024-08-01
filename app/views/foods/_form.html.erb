@@ -41,5 +41,11 @@
     <%= f.hidden_field :food_image_cache %>
   </div>
 
+  <%# すでに保存されている画像を使用 %>
+  <div class="field mb-8">
+    <div class='input input-bordered flex items-center gap-2 mx-auto max-w-xs'>
+      <%= f.select :image_id, Image.all.map { |image| [image.image_name, image.id] }, { include_blank: '画像を選択...' }, class: "mx-auto text-center" %>
+    </div>
+  </div>
   <%= f.submit "登録する", disable_with: '登録中...', class:"btn btn-outline btn-success mb-5"%>
 <% end %>
