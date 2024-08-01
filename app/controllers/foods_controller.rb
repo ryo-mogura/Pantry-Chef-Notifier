@@ -35,9 +35,20 @@ class FoodsController < ApplicationController
 
   def update
     food = Food.find(params[:id])
+    # image_idが存在していて、food_imageを新しく設定する場合
+    if food.image_id.present? && food_params[:food_image].present?
+      food.image_id = nil
+    end
+    # food_imageが存在していて、image_idを新しく設定する場合
+    if food.food_image.present? && food_params[:image_id].present?
+      food.food_image = nil
+    end
+
     food.update(food_params)
 
-    if food.save
+    if food.image_id.present? && food.food_image.present?
+      redirect_to food_path(food), warning: t('defaults.flash_message.double_image', item: Food.model_name.human)
+    elsif food.save
       redirect_to food_path(food)
     else
       flash.now[:warning] = t('defaults.flash_message.not_edit', item: Food.model_name.human)
