@@ -4,10 +4,10 @@ class Food < ApplicationRecord
   before_validation :sanitize_category_id
 
   belongs_to :user
-  belongs_to :food_image, optional: true
+  belongs_to :image, optional: true
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
-  mount_uploader :food_image, FoodImageUploader
+  # mount_uploader :food_image, FoodImageUploader
   enum storage: { refrigerator: 0, freezer: 1, others: 2 }
 
   validates :name, presence: true

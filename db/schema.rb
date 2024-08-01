@@ -27,13 +27,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_131026) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "food_images", force: :cascade do |t|
-    t.string "image_url", null: false
-    t.string "image_name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "foods", force: :cascade do |t|
     t.string "name"
     t.date "expiration_date"
@@ -44,9 +37,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_131026) do
     t.integer "storage", default: 0, null: false
     t.string "food_image"
     t.integer "category_id"
-    t.bigint "food_image_id"
-    t.index ["food_image_id"], name: "index_foods_on_food_image_id"
+    t.bigint "image_id"
+    t.index ["image_id"], name: "index_foods_on_image_id"
     t.index ["user_id"], name: "index_foods_on_user_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "image_url", null: false
+    t.string "image_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "line_messages", force: :cascade do |t|
@@ -90,7 +90,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_131026) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "foods", "food_images"
+  add_foreign_key "foods", "images"
   add_foreign_key "foods", "users"
   add_foreign_key "line_messages", "users"
   add_foreign_key "rakuten_recipes", "users"

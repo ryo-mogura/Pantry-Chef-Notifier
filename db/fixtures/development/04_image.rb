@@ -1,5 +1,5 @@
 
-FoodImage.create!([
+Image.create!([
   { image_name: 'たまねぎ', image_url: File.open(Rails.root.join('db/fixtures/images/たまねぎ.jpg')) },
   { image_name: 'にんじん', image_url: File.open(Rails.root.join('db/fixtures/images/にんじん.jpg')) },
   { image_name: 'レタス', image_url: File.open(Rails.root.join('db/fixtures/images/レタス.jpg')) },
