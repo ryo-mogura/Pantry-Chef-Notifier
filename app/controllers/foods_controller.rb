@@ -15,11 +15,12 @@ class FoodsController < ApplicationController
 
   def create
     @food = current_user.foods.new(food_params)
-    if @food.save
+    if @food.image_id.present? && @food.food_image.present?
+      redirect_to new_food_path, warning: t('defaults.flash_message.double_image', item: Food.model_name.human)
+    elsif @food.save
       redirect_to foods_path, success: t('defaults.flash_message.created', item: Food.model_name.human)
     else
-      flash.now[:warning] = t('defaults.flash_message.not_created', item: Food.model_name.human)
-      render :new, status: :unprocessable_entity
+      redirect_to new_food_path, warning: t('defaults.flash_message.not_created', item: Food.model_name.human)
     end
   end
 
