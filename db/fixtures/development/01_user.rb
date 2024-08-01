@@ -15,3 +15,10 @@ User.seed do |s|
   s.password = 'test34'
   s.name = 'LineUser'
 end
+
+User.seed do |s|
+  s.id = 3
+  s.email = 'bbbb@example.com'
+  s.password = 'test56'
+  s.name = 'ログインユーザー'
+end
