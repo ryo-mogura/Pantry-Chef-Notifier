@@ -1,1 +1,1 @@
-Admin.create!(email: 'ryosuke48696869@gmail.com', password: ENV['ADMIN_PASSWORD'])
+Admin.create!(email: 'ryo-62-gnt-0000@outlook.jp', password: ENV['ADMIN_PASSWORD'])
