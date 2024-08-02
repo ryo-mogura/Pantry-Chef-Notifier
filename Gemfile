@@ -53,6 +53,9 @@ gem 'mini_magick'
 gem 'aws-sdk-s3', require: false
 gem 'fog-aws'
 
+gem 'faker'
+gem 'seed-fu'
+
 group :development, :test do
   # Debugging tools
   gem 'debug', platforms: %i[mri windows]
@@ -72,10 +75,6 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec'
-
-  # Seed Data
-  gem 'faker'
-  gem 'seed-fu'
 
   # env
   gem 'dotenv-rails'
