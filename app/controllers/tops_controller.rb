@@ -2,4 +2,6 @@
 
 class TopsController < ApplicationController
   def top; end
+
+  def policy; end
 end
