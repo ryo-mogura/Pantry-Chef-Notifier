@@ -52,6 +52,7 @@ Rails.application.routes.draw do
 
   # policy_pages
   get '/policy', to: 'tops#privacy_policy', as: :privacy_policy
+  get '/terms', to: 'tops#terms', as: :terms
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
