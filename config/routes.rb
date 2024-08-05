@@ -50,5 +50,10 @@ Rails.application.routes.draw do
     end
   end
 
+  # policy_pages
+  get '/policy', to: 'tops#privacy_policy', as: :privacy_policy
+
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+
+
 end
