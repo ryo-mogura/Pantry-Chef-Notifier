@@ -3,8 +3,10 @@
     <p>Copyright © 2024 - All right reserved</p>
   </aside>
 
-  <aside class="grid-flow-col">
-    <%= link_to 'プライバシーポリシー', privacy_policy_path, class: 'btn btn-square btn-ghost' %>
-    <%= link_to '利用規約', terms_path, class: 'btn btn-square btn-ghost' %>
-    <a href="#" class="btn btn-square btn-ghost">Contact</a>
+  <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+    <%= link_to 'プライバシーポリシー', privacy_policy_path, class: 'text-sm sm:text-lg hover:text-blue-500' %>
+    <%= link_to '利用規約', terms_path, class: 'text-sm sm:text-lg hover:text-blue-500'  %>
+    <%= link_to 'お問い合わせ', contact_form_path, class: 'text-sm sm:text-lg hover:text-blue-500' %>
+  </nav>
+
 </footer>
