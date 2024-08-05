@@ -25,6 +25,7 @@ ja:
     flash_message:
       created: "%{item}を作成しました"
       not_created: "%{item}を作成出来ませんでした"
+      double_image: "画像は1枚だけ選択してください"
       edit: "%{item}を編集しました"
       not_edit: "%{item}を編集できませんでした"
       deleted: "%{item}を削除しました"

@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class FoodImageUploader < CarrierWave::Uploader::Base
+class DefaultFoodImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
@@ -12,8 +10,6 @@ class FoodImageUploader < CarrierWave::Uploader::Base
   else
     storage :file # 開発環境とテスト環境ではfileを使用
   end
-
-  # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:

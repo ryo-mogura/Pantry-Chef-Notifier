@@ -32,7 +32,11 @@
           <div class="flex justify-center">
             <div class="card w-80 bg-base-100 shadow-xl">
               <figure class="p-5 bg-primary-content">
-                <%= image_tag food.food_image_url, class: "w-36 h-36" %>
+                <% if food.image_id.present? %>
+                  <%= image_tag food.image.image_url.url %>
+                <% else %>
+                  <%= image_tag food.food_image_url %>
+                <% end %>
               </figure>
               <div class="card-body items-center text-center">
                 <h2 class="card-title"><%= food.name %></h2>
