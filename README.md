@@ -48,8 +48,11 @@ https://pantry-chef-notifier.onrender.com
 - 食材のカテゴリー機能
 - LineBotとの対話機能
   - 食材の登録
-- 食材画像の共有機能
+  - 食材の削除
 - レシピのお気に入り機能
+- メール通知(AM:8:00に通知が来るように設定)
+  - 消費期限が２日以内の食材のリスト
+  - 消費期限が２日以内の食材を使用したレシピ
 
 ## 技術スタック
 ### 以下予定している技術スタックです
@@ -66,4 +69,4 @@ https://pantry-chef-notifier.onrender.com
 Figma : https://www.figma.com/design/x2fw3OmqTtjzpc56sfMBTQ/Pantry-Chef-Notifier?m=auto&t=HUXtHfzUDPXl2FWk-6
 
 ## ER図
-![Pantry-Chef-Notifier-ER図](https://github.com/ryo-mogura/Pantry-Chef-Notifier/assets/154300601/99e4592e-01b0-4275-bffa-1a544cd4064e)
+![Pantry-Chef-Notifier-ER図](https://github.com/user-attachments/assets/193c837a-62e0-4637-8bb6-b927b632b2f1)
