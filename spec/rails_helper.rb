@@ -30,25 +30,6 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
-
-# Capybaraテストフレームワークを使用した自動テスト用の新しいドライバーを登録 (system specを使用するためのコード）
-Capybara.register_driver :remote_chrome do |app|
-  url = "http://chrome:4444/wd/hub"
-  caps = ::Selenium::WebDriver::Remote::Capabilities.chrome(
-    "goog:chromeOptions" => {
-      "args" => [
-        "no-sandbox",
-        "headless",
-        "disable-gpu",
-        # ディスクのメモリスペースを使用。
-        'disable-dev-shm-usage',
-        'remote-debugging-port=9222',
-      ],
-    }
-  )
-  Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: caps, timeout: 120)
-end
-
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
