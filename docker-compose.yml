@@ -35,15 +35,20 @@ services:
       db:
         condition: service_healthy
 # ngrokは本番環境では使用しないのでデプロイする際にコメントアウトすること
-  ngrok:
-      image: ngrok/ngrok:latest
-      environment:
-        NGROK_AUTHTOKEN: ${NGROK_AUTH}
-      command: ["http", "web:3000"]
-      depends_on:
-        - web
-      ports:
-        - "4040:4040"
+  # ngrok:
+  #     image: ngrok/ngrok:latest
+  #     environment:
+  #       NGROK_AUTHTOKEN: ${NGROK_AUTH}
+  #     command: ["http", "web:3000"]
+  #     depends_on:
+  #       - web
+  #     ports:
+  #       - "4040:4040"
+# selenium/standalone-chromeはテスト実行時のみ使用するのでテスト実行時以外はコメントアウトすること
+  chrome:
+    image: selenium/standalone-chrome:latest
+    ports:
+    - 4444:4444
 volumes:
   bundle_data:
   pantry_chef_notifier_data:
