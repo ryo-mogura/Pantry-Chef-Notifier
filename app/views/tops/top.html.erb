@@ -4,7 +4,7 @@
     <h1 class="text-white text-center text-sm md:text-4xl">PantryChefNotifier <br> - 食材管理とレシピ提示アプリ -</h1>
   </div>
 
-  <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center hidden sm:flex">
+  <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center hidden sm:flex pc-screen">
     <div class="collapse collapse-plus border border-base-300 bg-base-200 m-4">
       <input type="checkbox" />
       <div class="collapse-title text-2xl font-medium">
@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-<%# スマホ画面 %>
+  <%# スマホ画面 %>
   <div class="md:absolute top-40 left-0 m-4 md:w-1/2 flex flex-col items-center">
     <button class="btn mb-5 block md:hidden" onclick="description.showModal()">サービスの説明</button>
     <dialog id="description" class="modal">
@@ -150,7 +150,7 @@
     </dialog>
   </div>
 
-  <div class="border border-base-300 bg-base-200 m-4 p-4 block md:hidden">
+  <div class="border border-base-300 bg-base-200 m-4 p-4 block md:hidden smartphone-screen">
     <div class="text-sm text-center font-semibold p-1">
         <p>さっそく使ってみる</p>
       </div>
