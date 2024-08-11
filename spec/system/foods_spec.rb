@@ -1,7 +1,7 @@
 require 'rails_helper'
 describe 'FoodのCRUD' do
   let(:user) { create(:user) } # ユーザーを定義
-  let!(:food) { create(:food, user: user, name: "テスト食材2",expiration_date: Date.today ) }
+  let!(:food) { create(:food, user: user, name: "テスト食材2", expiration_date: Date.today ) }
   let!(:food2) { create(:food, user: user, name: "テスト食材1", expiration_date: Date.today + 1 ) }
   let!(:food3) { create(:food, user: user, name: "テスト食材3", expiration_date: Date.today + 2) }
   let!(:image) { create(:image) }
@@ -133,18 +133,18 @@ describe 'FoodのCRUD' do
   end
 
   #----------------show------------------------
-  describe '食材の詳細' do
-    it '食材の情報が表示されている' do
-
+  fdescribe '食材の詳細' do
+    before do
+      click_on '詳細', match: :first
+      visit food_path(food.id)
     end
-    it 'モーダルで編集画面が表示される' do
-
+    it '食材の情報が表示されている' do
+      expect(page).to have_text (food.name)
+      expect(page).to have_text(food.expiration_date.strftime('%Y年%m月%d日'))
+      expect(page).to have_text (food.quantity)
     end
     it '削除btnが表示されている' do
-
-    end
-    it '戻るbtnが表示されている' do
-
+      expect(page).to have_link '使いきった'
     end
   end
 end
