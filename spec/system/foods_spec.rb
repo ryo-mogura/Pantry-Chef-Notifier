@@ -133,15 +133,15 @@ describe 'FoodのCRUD' do
   end
 
   #----------------show------------------------
-  fdescribe '食材の詳細' do
+  describe '食材の詳細' do
     before do
       click_on '詳細', match: :first
       visit food_path(food.id)
     end
     it '食材の情報が表示されている' do
       expect(page).to have_text (food.name)
-      expect(page).to have_text(food.expiration_date.strftime('%Y年%m月%d日'))
-      expect(page).to have_text (food.quantity)
+      expect(page).to have_text (food.expiration_date.strftime('%Y年%m月%d日'))
+      expect(page).to have_field('input-number', with: food.quantity)
     end
     it '削除btnが表示されている' do
       expect(page).to have_link '使いきった'
