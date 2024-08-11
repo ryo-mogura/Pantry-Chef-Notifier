@@ -24,7 +24,7 @@ ja:
     delete: 削除
     flash_message:
       created: "%{item}を作成しました"
-      not_created: "%{item}を作成出来ませんでした"
+      not_created: "%{item}を作成できませんでした"
       double_image: "画像は1枚だけ選択してください"
       edit: "%{item}を編集しました"
       not_edit: "%{item}を編集できませんでした"
@@ -34,7 +34,7 @@ ja:
       not_keep : レシピを保存できませんでした
   header:
     title: PantryChefNotifier
-    new: 登録する
+    new: 食材登録
     profile: マイページ
     index: 食材一覧
     food_new: 食材登録
