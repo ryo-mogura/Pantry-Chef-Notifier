@@ -463,6 +463,8 @@ GEM
       hashie
       version_gem (~> 1.1, >= 1.1.1)
     spring (4.2.1)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -566,6 +568,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   spring
+  spring-commands-rspec
   sprockets-rails
   stimulus-rails
   timecop

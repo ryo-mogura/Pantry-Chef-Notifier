@@ -29,21 +29,29 @@ services:
       - node_modules:/app/node_modules
     environment:
       TZ: Asia/Tokyo
+      SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
     ports:
       - "3000:3000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+      - chrome
+
 # ngrokは本番環境では使用しないのでデプロイする際にコメントアウトすること
-  ngrok:
-      image: ngrok/ngrok:latest
-      environment:
-        NGROK_AUTHTOKEN: ${NGROK_AUTH}
-      command: ["http", "web:3000"]
-      depends_on:
-        - web
-      ports:
-        - "4040:4040"
+  # ngrok:
+  #     image: ngrok/ngrok:latest
+  #     environment:
+  #       NGROK_AUTHTOKEN: ${NGROK_AUTH}
+  #     command: ["http", "web:3000"]
+  #     depends_on:
+  #       - web
+  #     ports:
+  #       - "4040:4040"
+# selenium/standalone-chromeはテスト実行時のみ使用するのでテスト実行時以外はコメントアウトすること
+  chrome:
+    image: seleniarm/standalone-chromium:latest
+    shm_size: 512m
+    ports:
+      - 4444:4444
 volumes:
   bundle_data:
   pantry_chef_notifier_data:

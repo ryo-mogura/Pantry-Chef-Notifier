@@ -66,6 +66,8 @@ group :development, :test do
   # RSpec
   gem 'factory_bot_rails'
   gem 'rspec-rails'
+  # rspec高速化
+  gem 'spring-commands-rspec'
 
   # Code Analysis
   gem 'bullet'
