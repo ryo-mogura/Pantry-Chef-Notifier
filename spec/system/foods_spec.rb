@@ -147,4 +147,63 @@ describe 'FoodのCRUD' do
       expect(page).to have_link '使いきった'
     end
   end
+  #----------------edit------------------------
+  describe '食材の編集', js:true do
+    before do
+      click_on '詳細', match: :first
+      visit food_path(food.id)
+    end
+    context '名前を編集する場合' do
+      it '編集に成功する' do
+
+      end
+      it '編集に失敗する' do
+
+      end
+    end
+    context '在庫数を編集する場合' do
+      it '編集に成功する' do
+
+      end
+      it '編集に失敗する' do
+
+      end
+    end
+    context '期限日を編集する場合' do
+      it '編集に成功する' do
+
+      end
+      it '編集に失敗する' do
+
+      end
+    end
+    context '画像を編集する場合' do
+      it '編集に成功する' do
+
+      end
+      it '編集に失敗する' do
+
+      end
+    end
+    context '保存場所を編集する場合' do
+      it '編集に成功する' do
+
+      end
+    end
+    context 'カテゴリーを編集する場合' do
+      it '編集に成功する' do
+
+      end
+    end
+  end
+  #----------------delete------------------------
+  describe '食材の削除' do
+    before do
+      click_on '詳細', match: :first
+      visit food_path(food.id)
+    end
+    it '削除に成功する' do
+
+    end
+  end
 end
