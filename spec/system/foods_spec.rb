@@ -181,11 +181,12 @@ describe 'FoodのCRUD' do
         attach_file 'food[food_image]', Rails.root.join('spec/fixtures/images/test.jpg')
         click_on '変更する'
       end
-      fit '初期データの画像を使用して編集に成功する' do
+      it '初期データの画像を使用して編集に成功する' do
         find('.image-card').click
         select 'テスト初期データ画像', from: 'food[image_id]'
         click_on '変更する'
         expect(page).to have_selector("img[src='#{image.image_url.url}']")
+        binding.irb
       end
     end
     context '保存場所を編集する場合' do
