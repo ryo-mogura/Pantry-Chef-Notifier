@@ -1,4 +1,4 @@
-<button class="h-62 p-5 card mx-auto" onclick="image_modal.showModal()">
+<button class="h-62 p-5 card mx-auto image-card" onclick="image_modal.showModal()">
   <% if food.image_id.present? %>
     <span><%= image_tag food.image.image_url.url %></span>
   <% else %>

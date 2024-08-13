@@ -147,4 +147,67 @@ describe 'FoodのCRUD' do
       expect(page).to have_link '使いきった'
     end
   end
+  #----------------edit------------------------
+  describe '食材の編集', js:true do
+    before do
+      click_on '詳細', match: :first
+      visit food_path(food.id)
+    end
+    context '名前を編集する場合' do
+      it '編集に成功する' do
+        click_on food.name
+        fill_in '食材名を入力', with: '編集後食材'
+        click_on '変更する'
+        expect(page).to have_text '編集後食材'
+      end
+    end
+    context '在庫数を編集する場合' do
+      it '編集に成功する' do
+        fill_in 'input-number', with: 5
+        expect(find('#input-number').value).to eq('5')
+      end
+    end
+    context '期限日を編集する場合' do
+      it '編集に成功する' do
+        click_on food.expiration_date.strftime('%Y年%m月%d日')
+        fill_in 'food[expiration_date]', with: Date.today + 1
+        click_on '変更する'
+        expect(page).to have_text((Date.today + 1).strftime('%Y年%m月%d日'))
+      end
+    end
+    context '画像を編集する場合' do
+      it '新規の画像を登録して編集に成功する' do
+        find('.image-card').click
+        attach_file 'food[food_image]', Rails.root.join('spec/fixtures/images/test.jpg')
+        click_on '変更する'
+      end
+      it '初期データの画像を使用して編集に成功する' do
+        find('.image-card').click
+        select 'テスト初期データ画像', from: 'food[image_id]'
+        click_on '変更する'
+        expect(page).to have_selector("img[src='#{image.image_url.url}']")
+        binding.irb
+      end
+    end
+    context '保存場所を編集する場合' do
+      it '編集に成功する' do
+        click_on I18n.t("activerecord.attributes.food.storages.#{food.storage}")
+        select '冷凍庫', from: 'food_storage'
+        expect(page).to have_text '冷凍庫'
+      end
+    end
+  end
+  #----------------delete------------------------
+  describe '食材の削除' do
+    before do
+      click_on '詳細', match: :first
+      visit food_path(food.id)
+    end
+    it '削除に成功する' do
+      click_on '使いきった'
+      expect(current_path).to eq(foods_path)
+      expect(page).to have_text('食材を削除しました')
+      expect(page).not_to have_text(food.name)
+    end
+  end
 end
