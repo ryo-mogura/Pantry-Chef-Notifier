@@ -30,7 +30,6 @@ https://pantry-chef-notifier.onrender.com
 トップ画面 | ログイン画面
 -- | --
 [![Image from Gyazo](https://i.gyazo.com/823a4b975d8071754c3526c0320bfa70.gif)](https://gyazo.com/823a4b975d8071754c3526c0320bfa70) | [![Image from Gyazo](https://i.gyazo.com/14fe01b50e299cc8b7e26613aa3bb075.gif)](https://gyazo.com/14fe01b50e299cc8b7e26613aa3bb075)
-LINEでのログインかメールアドレスでのログインを選択できます。 | メールアドレスとパスワードでの認証・LINEを使用した認証機能を実装しました。
 食材一覧画面 | 食材の登録画面
 -- | --
 [![Image from Gyazo](https://i.gyazo.com/abb364ef28956fdee46c6a3f0c28c5b7.gif)](https://gyazo.com/abb364ef28956fdee46c6a3f0c28c5b7) | [![Image from Gyazo](https://i.gyazo.com/b32b0a97c20d4d78bfa5ca9dc27676bb.gif)](https://gyazo.com/b32b0a97c20d4d78bfa5ca9dc27676bb)
@@ -50,7 +49,6 @@ LINEでのログインかメールアドレスでのログインを選択でき�
 食材の削除 | レシピ検索 | 入力情報のリセット
 -- | -- | --
 [![Image from Gyazo](https://i.gyazo.com/00e57e02c47a045e52ba2865f54794e1.png)](https://gyazo.com/00e57e02c47a045e52ba2865f54794e1) | [![Image from Gyazo](https://i.gyazo.com/48802a38ff45551edd25e31146753e41.png)](https://gyazo.com/48802a38ff45551edd25e31146753e41) | [![Image from Gyazo](https://i.gyazo.com/403e60d59930e221f2683e214e3aaa6a.jpg)](https://gyazo.com/403e60d59930e221f2683e214e3aaa6a)
-
 ### MVP
 - ユーザー登録
   - メール・パスワード
