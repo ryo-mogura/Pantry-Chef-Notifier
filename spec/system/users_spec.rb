@@ -2,10 +2,6 @@ require 'rails_helper'
 describe 'UserのCRUD' do
   let(:user) { create(:user) }
 
-  before do
-
-  end
-
   #----------------registration new------------------------
   describe '新規登録' do
     describe '新規登録' do
@@ -42,4 +38,28 @@ describe 'UserのCRUD' do
   end
 
   #----------------sessions------------------------
+  describe 'ログイン' do
+    describe 'ログイン' do
+      before do
+        visit new_user_session_path
+      end
+
+      it '正しい情報でログインすると、ユーザーがログインされること' do
+        fill_in 'Email', with: user.email
+        fill_in 'パスワード', with: user.password
+        click_button 'ログイン'
+
+        expect(page).to have_content('ログインしました。')
+        expect(current_path).to eq(authenticated_root_path)
+      end
+
+      it '誤った情報でログインすると、エラーメッセージが表示されること' do
+        fill_in 'Email', with: 'wrong_email@example.com'
+        fill_in 'パスワード', with: 'wrong_password'
+        click_button 'ログイン'
+
+        expect(page).to have_content('Eメールまたはパスワードが違います。')
+      end
+    end
+  end
 end
