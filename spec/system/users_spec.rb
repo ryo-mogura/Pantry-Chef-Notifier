@@ -62,4 +62,30 @@ describe 'UserのCRUD' do
       end
     end
   end
+
+    #----------------------------------------
+    describe 'パスワードを忘れた場合に再設定のメールを送る処理' do
+      describe 'パスワードリセットメールの送信' do
+        before do
+          visit new_user_password_path
+        end
+
+        it '登録されているメールアドレスにパスワードリセットメールが送信されること' do
+          fill_in '登録メールアドレスを入力', with: user.email
+          click_button '再設定メールを送信する'
+
+          expect(page).to have_content('パスワードの再設定について数分以内にメールでご連絡いたします。')
+          expect(ActionMailer::Base.deliveries.last.to).to include(user.email)
+          expect(ActionMailer::Base.deliveries.last.subject).to eq('パスワードの再設定について')
+        end
+
+        it '登録されていないメールアドレスにはパスワードリセットメールが送信されないこと' do
+          fill_in '登録メールアドレスを入力', with: 'nonexistent@example.com'
+          click_button '再設定メールを送信する'
+
+          expect(page).to have_content('Eメールは見つかりませんでした。')
+          expect(ActionMailer::Base.deliveries).to be_empty
+        end
+      end
+    end
 end
