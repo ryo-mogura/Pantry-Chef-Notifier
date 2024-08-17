@@ -186,7 +186,6 @@ describe 'FoodのCRUD' do
         select 'テスト初期データ画像', from: 'food[image_id]'
         click_on '変更する'
         expect(page).to have_selector("img[src='#{image.image_url.url}']")
-        binding.irb
       end
     end
     context '保存場所を編集する場合' do
