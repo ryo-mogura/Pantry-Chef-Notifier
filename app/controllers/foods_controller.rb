@@ -31,10 +31,12 @@ class FoodsController < ApplicationController
 
   def edit
     @food = Food.find(params[:id])
+    @categories = Category.all
   end
 
   def update
     food = Food.find(params[:id])
+    @categories = Category.all
     # image_idが存在していて、food_imageを新しく設定する場合
     if food.image_id.present? && food_params[:food_image].present?
       food.image_id = nil
@@ -51,8 +53,8 @@ class FoodsController < ApplicationController
     elsif food.save
       redirect_to food_path(food)
     else
-      flash.now[:warning] = t('defaults.flash_message.not_edit', item: Food.model_name.human)
-      render :new, status: :unprocessable_entity
+      @food = food
+      redirect_to food_path(food), warning: t('defaults.flash_message.not_edit', item: Food.model_name.human)
     end
   end
 
