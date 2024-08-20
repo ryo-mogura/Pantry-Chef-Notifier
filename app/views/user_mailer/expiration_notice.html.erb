@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      .recipe-list {
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
+        padding: 0;
+      }
+      .recipe-list li {
+        margin-right: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        text-align: center;
+      }
+      .recipe-list img {
+        max-width: 100%;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+
   <body>
     <h2><%= @food.name %>の消費期限通知</h2>
     <p>「<%= @food.name %>」の消費期限は<%= @expiration_notice %>です!</p>
@@ -9,10 +34,10 @@
     <% else %>
       <% if @recipes.any? %>
         <p>関連するレシピをご覧ください:</p>
-        <ul>
+        <ul class="recipe-list">
           <% @recipes.each do |recipe| %>
             <li>
-              <img src="<%= recipe['foodImageUrl'] %>" alt="<%= recipe['recipeTitle'] %>" style="width:400px;">
+              <img src="<%= recipe['foodImageUrl'] %>" alt="<%= recipe['recipeTitle'] %>">
               <h4><%= recipe['recipeTitle'] %></h4>
               <p><%= recipe['recipeDescription'] %></p>
               <p><a href="<%= recipe['recipeUrl'] %>">レシピを見る</a></p>
