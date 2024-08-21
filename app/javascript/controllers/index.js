@@ -13,6 +13,9 @@ application.register("hello", HelloController)
 import InputNumberController from "./input_number_controller"
 application.register("input-number", InputNumberController)
 
+import LoadingController from "./loading_controller"
+application.register("loading", LoadingController)
+
 import SelectSubmitController from "./select_submit_controller"
 application.register("select-submit", SelectSubmitController)
 

@@ -1,7 +1,7 @@
 <div class="container mx-auto text-center">
   <h1 class="text-3xl font-bold text-center my-5">人気レシピ検索</h1>
-  <div class='my-5'>
-    <%= form_with url: search_rakuten_recipes_path, method: :get, local: true do |f| %>
+  <div class='my-5' data-controller="loading">
+    <%= form_with url: search_rakuten_recipes_path, method: :get, local: true, data: { action: "submit->loading#showLoading" }  do |f| %>
       <div class="field">
         <div class="max-w-xs mx-auto">
           <%= f.text_field :keyword, class: "input input-bordered w-full text-center" %>
@@ -9,37 +9,42 @@
         <%= f.submit '検索する', disable_with: '検索中...', class: "btn btn-outline btn-primary my-5" %>
       </div>
     <% end %>
-  </div>
-  <% if @search.present? %>
-    <div class="flex justify-center my-5">
-      <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-20">
-        <% @recipes.each do |r| %>
-          <div class="card w-96 bg-base-100 shadow-xl">
-            <figure class="p-5 bg-primary-content" style="height: 241px;">
-              <%= image_tag r['foodImageUrl'], alt: r['recipeTitle'], class: "rounded-lg"%>
-            </figure>
-            <div class="card-body items-center text-center">
-              <h2 class="card-title"><%= r['recipeTitle'] %></h2>
-              <p>調理時間：<%= r['recipeIndication'] %></p>
-              <p>費用：<%= r['recipeCost'] %></p>
-              <div class="card-actions">
-                  <%= link_to "詳細", r['recipeUrl'], target: "_blank", rel: "noopener noreferrer", data: { controller: "confirm-dialog", action: "click->confirm-dialog#confirm" }, class: "btn btn-outline btn-info" %>
-              </div>
-              <%# お気に入りbtn %>
-              <%= form_with url:rakuten_recipes_path, local: true do |f| %>
-                <%= f.hidden_field :recipe_id, value: r['recipeId'] %>
-                <%= f.hidden_field :title, value: r['recipeTitle'] %>
-                <%= f.hidden_field :indication, value: r['recipeIndication'] %>
-                <%= f.hidden_field :cost, value: r['recipeCost'] %>
-                <%= f.hidden_field :image_url, value: r['foodImageUrl'] %>
-                <%= f.hidden_field :recipe_url, value: r['recipeUrl'] %>
-                <%= f.submit 'お気に入りに追加', class: "btn btn-outline btn-success" %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
+    <div data-loading-target="loading" class="hidden">
+      <span class="loading loading-spinner loading-lg"></span>
     </div>
-  <% end %>
+  </div>
+  <div data-loading-target="results">
+    <% if @search.present? %>
+      <div class="flex justify-center my-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-20">
+          <% @recipes.each do |r| %>
+            <div class="card w-96 bg-base-100 shadow-xl">
+              <figure class="p-5 bg-primary-content" style="height: 241px;">
+                <%= image_tag r['foodImageUrl'], alt: r['recipeTitle'], class: "rounded-lg"%>
+              </figure>
+              <div class="card-body items-center text-center">
+                <h2 class="card-title"><%= r['recipeTitle'] %></h2>
+                <p>調理時間：<%= r['recipeIndication'] %></p>
+                <p>費用：<%= r['recipeCost'] %></p>
+                <div class="card-actions">
+                    <%= link_to "詳細", r['recipeUrl'], target: "_blank", rel: "noopener noreferrer", data: { controller: "confirm-dialog", action: "click->confirm-dialog#confirm" }, class: "btn btn-outline btn-info" %>
+                </div>
+                <%# お気に入りbtn %>
+                <%= form_with url:rakuten_recipes_path, local: true do |f| %>
+                  <%= f.hidden_field :recipe_id, value: r['recipeId'] %>
+                  <%= f.hidden_field :title, value: r['recipeTitle'] %>
+                  <%= f.hidden_field :indication, value: r['recipeIndication'] %>
+                  <%= f.hidden_field :cost, value: r['recipeCost'] %>
+                  <%= f.hidden_field :image_url, value: r['foodImageUrl'] %>
+                  <%= f.hidden_field :recipe_url, value: r['recipeUrl'] %>
+                  <%= f.submit 'お気に入りに追加', class: "btn btn-outline btn-success" %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
   <%= link_to "戻る", :back, class: 'btn btn-outline'  %>
 </div>
