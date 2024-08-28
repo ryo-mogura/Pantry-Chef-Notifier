@@ -6,19 +6,10 @@ describe 'RakutenRecipesController' do
     sign_in(user)
     visit search_rakuten_recipes_path
   end
-  
+
   describe 'レシピ検索' do
     before do
-      # small_categoriesのモックを設定
-      allow(RakutenWebService::Recipe).to receive(:small_categories).and_return([
-        OpenStruct.new(
-          name: 'にんじん',
-          ranking: [
-            OpenStruct.new(title: 'レシピ1', foodImageUrl: 'https://example.com/recipe1.jpg', recipeTitle: 'レシピ1タイトル'),
-            OpenStruct.new(title: 'レシピ2', foodImageUrl: 'https://example.com/recipe2.jpg', recipeTitle: 'レシピ2タイトル')
-          ]
-        )
-      ])
+      search_recipe_mock
     end
 
     context '検索ワードが入力されている場合' do
