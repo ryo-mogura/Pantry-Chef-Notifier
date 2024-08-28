@@ -4,14 +4,11 @@ describe 'RakutenRecipesController' do
 
   before do
     sign_in(user)
+    search_recipe_mock
     visit search_rakuten_recipes_path
   end
 
   describe 'レシピ検索' do
-    before do
-      search_recipe_mock
-    end
-
     context '検索ワードが入力されている場合' do
       it '検索結果が表示される' do
         fill_in 'keyword', with: 'にんじん'
@@ -40,20 +37,28 @@ describe 'RakutenRecipesController' do
 
   describe 'レシピのお気に入り登録' do
     context 'レシピが保存された場合' do
-      it 'レシピを保存しましたと表示される' do
-
-      end
-      it 'マイページにお気に入りしたレシピが表示されている' do
-
+      it 'レシピを保存しましたと表示され、マイページにお気に入りしたレシピが表示されている' do
+        fill_in 'keyword', with: 'にんじん'
+        click_on '検索する'
+        click_on 'お気に入りに追加', match: :first
+        expect(current_path).to eq(users_profile_path)
+        expect(page).to have_content('レシピを保存しました')
+        expect(page).to have_content('レシピ1')
       end
     end
 
     context 'お気に入りしたレシピを削除する場合' do
-      it 'レシピを削除しましたと表示される' do
-
+      before do
+        fill_in 'keyword', with: 'にんじん'
+        click_on '検索する'
+        click_on 'お気に入りに追加', match: :first
+        expect(current_path).to eq(users_profile_path)
       end
-      it 'マイページからお気に入りしたレシピが削除されている' do
 
+      it 'レシピを削除しましたと表示され、' do
+        click_on '削除', match: :first
+        expect(page).to have_content('レシピを削除しました')
+        expect(page).not_to have_content('レシピ1')
       end
     end
   end

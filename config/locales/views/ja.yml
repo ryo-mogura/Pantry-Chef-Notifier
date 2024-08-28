@@ -33,6 +33,7 @@ ja:
       not_keyword: "検索ワードを入力してください"
       keep : レシピを保存しました
       not_keep : レシピを保存できませんでした
+      delete_keep : レシピを削除しました
   header:
     title: PantryChefNotifier
     new: 食材登録
