@@ -23,7 +23,9 @@ describe 'RakutenRecipesController' do
 
     context '検索ワードが入力されていない場合' do
       it '検索ワードを入力してくださいと表示される' do
-
+        fill_in 'keyword', with: ''
+        click_on '検索する'
+        expect(page).to have_content('検索ワードを入力してください')
       end
     end
 
