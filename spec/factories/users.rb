@@ -8,8 +8,6 @@ FactoryBot.define do
 
   trait :line_user do
     provider { 'line' }
-    uid      { 'test12' }
-    email    { 'test@example.com' }
-    name     { 'test_user' }
+    uid      { 'line_test' }
   end
 end
