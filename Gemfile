@@ -33,6 +33,7 @@ gem 'devise-i18n'
 gem 'omniauth'
 gem 'omniauth-line'
 gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-google-oauth2'
 # line-bot
 gem 'line-bot-api'
 
