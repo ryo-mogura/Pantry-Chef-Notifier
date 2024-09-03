@@ -310,7 +310,13 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+
   # 他のプロバイダーで認証するための OmniAuth サポート
   require 'omniauth-line'
   config.omniauth :line, ENV['LINE_KEY'], ENV['LINE_SECRET']
+
+  # googleログイン用のOmniAuth設定
+  config.omniauth :google_oauth2,
+                Rails.application.credentials.google[:google_client_id],
+                Rails.application.credentials.google[:google_client_secret]
 end

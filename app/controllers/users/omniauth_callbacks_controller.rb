@@ -6,6 +6,22 @@ module Users
       basic_action
     end
 
+    # def google_oauth2
+    #   @user = User.from_omniauth(request.env["omniauth.auth"])
+
+    #   if @user.persisted?
+    #     sign_in_and_redirect @user, event: :authentication
+    #     set_flash_message(:notice, :success, kind: "Google") if is_navigational_format?
+    #   else
+    #     session["devise.google_data"] = request.env["omniauth.auth"].except("extra")
+    #     redirect_to new_user_registration_url, alert: @user.errors.full_messages.join("\n")
+    #   end
+    # end
+
+    # def failure
+    #   redirect_to root_path, alert: "Authentication failed, please try again."
+    # end
+
     private
 
     def basic_action
@@ -19,7 +35,7 @@ module Users
           email = @omniauth['info']['email'] || "#{@omniauth['uid']}-#{@omniauth['provider']}@example.com"
           # current_userが存在する場合、そのユーザーを@profileに設定
           # current_userが存在しない場合、新しいユーザーを作成し、そのユーザーを@profileに設定
-          # User.create!メソッドは、指定された属性を持つ新しいユーザーを作成します。このとき、ランダムなパスワードを生成して設定
+          # User.create!メソッドは、指定された属性を持つ新しいユーザーを作成。このとき、ランダムなパスワードを生成して設定
           @profile = current_user || User.create!(provider: @omniauth['provider'], uid: @omniauth['uid'], email:, name: @omniauth['info']['name'], password: Devise.friendly_token[0, 20])
         end
         @profile.set_values(@omniauth)
@@ -32,5 +48,9 @@ module Users
     def fake_email(_uid, _provider)
       "#{auth.uid}-#{auth.provider}@example.com"
     end
+
+    # def auth
+    #   auth = request.env['omniauth.auth']
+    # end
   end
 end
