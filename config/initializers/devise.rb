@@ -316,7 +316,7 @@ Devise.setup do |config|
   config.omniauth :line, ENV['LINE_KEY'], ENV['LINE_SECRET']
 
   # googleログイン用のOmniAuth設定
-  config.omniauth :google_oauth2,
-                Rails.application.credentials.google[:google_client_id],
-                Rails.application.credentials.google[:google_client_secret]
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
+                # Rails.application.credentials.google[:google_client_id],
+                # Rails.application.credentials.google[:google_client_secret]
 end
