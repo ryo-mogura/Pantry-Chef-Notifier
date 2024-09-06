@@ -19,14 +19,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[line]
-  # ゲストログイン機能アクション（6.18 使用しないと考えコメントアウト）
-  # def self.guest
-  #   find_or_create_by!(email: 'guest@example.com') do |user|
-  #     user.password = SecureRandom.urlsafe_base64
-  #     user.name = 'ゲストユーザー'
-  #   end
-  # end
+         :omniauthable, omniauth_providers: %i[line google_oauth2]
 
   # Lineログイン機能アクション
   def social_profile(provider)
@@ -34,6 +27,7 @@ class User < ApplicationRecord
   end
 
   # OmniAuthから取得した認証情報を使って、ユーザーのソーシャルプロファイルを更新
+  # （LINEとGoogleで使えるように汎用化）
   def set_values(omniauth)
     return if provider.to_s != omniauth['provider'].to_s || uid != omniauth['uid']
 
@@ -44,6 +38,7 @@ class User < ApplicationRecord
     access_secret = credentials['secret']
     credentials = credentials.to_json
     name = info['name']
+    self.email = info['email'] if email.blank?  # emailが未設定の場合にGoogleのemailを使用
   end
 
   def set_values_by_raw_info(raw_info)
@@ -54,5 +49,14 @@ class User < ApplicationRecord
   # Lineログインを判定
   def line_logged_in?
     provider == 'line'
+  end
+
+  # Googleログイン情報を基にユーザーを検索または作成
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name   # Googleから取得した名前を使用
+    end
   end
 end
