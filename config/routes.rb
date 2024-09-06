@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions',
     omniauth_callbacks: 'users/omniauth_callbacks'
-  }
+  }, omniauth_providers: [:line, :google_oauth2]
 
   devise_scope :user do
     # sign_inとsign_outのルーティングを変更する
@@ -56,6 +56,4 @@ Rails.application.routes.draw do
   get '/contact', to: 'tops#contact', as: :contact_form
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
-
-
 end

@@ -52,11 +52,11 @@ class User < ApplicationRecord
   end
 
   # Googleログイン情報を基にユーザーを検索または作成
-  # def self.from_omniauth(auth)
-  #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-  #     user.email = auth.info.email
-  #     user.password = Devise.friendly_token[0, 20]
-  #     user.name = auth.info.name   # Googleから取得した名前を使用
-  #   end
-  # end
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name   # Googleから取得した名前を使用
+    end
+  end
 end
