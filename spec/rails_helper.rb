@@ -86,4 +86,5 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include SignInSupport
   config.include LineBotSupport
+  config.include RakutenRecipeMock
 end

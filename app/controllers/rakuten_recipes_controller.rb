@@ -12,6 +12,8 @@ class RakutenRecipesController < ApplicationController
       else
         @recipes = category.ranking
       end
+    else
+      flash.now[:warning] = t('defaults.flash_message.not_keyword')
     end
   end
 # レシピを保存するアクションを追加
@@ -20,7 +22,7 @@ class RakutenRecipesController < ApplicationController
 
     if @recipe.save
       flash[:success] =  t('defaults.flash_message.keep')
-      redirect_to foods_path
+      redirect_to users_profile_path
     else
       flash.now[warning] =  t('defaults.flash_message.not_keep')
       render :search
@@ -30,7 +32,7 @@ class RakutenRecipesController < ApplicationController
   def destroy
     @recipe = current_user.rakuten_recipes.find(params[:id])
     @recipe.destroy
-    redirect_to foods_path, success: t('defaults.flash_message.deleted', item: RakutenRecipe.model_name.human), status: :see_other
+    redirect_to users_profile_path, success: t('defaults.flash_message.delete_keep', item: RakutenRecipe.model_name.human), status: :see_other
   end
 
   private

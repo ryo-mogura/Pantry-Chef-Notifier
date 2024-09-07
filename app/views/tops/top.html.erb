@@ -78,12 +78,21 @@
           <div class="flex-none gap-2 hidden sm:flex">
             <%= link_to t('top.login'), new_user_session_path, class:"btn btn-outline mr-2" %>
           </div>
-
           <% resource_class.omniauth_providers.each do |provider| %>
-            <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
-              <%= image_tag("btn_login_base.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}") %>
-            <% end %><br />
-          <% end %>
+
+            <% if provider == :line %>
+              <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
+                <%= image_tag("btn_login_#{provider}.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44", class: "mr-2") %>
+              <% end %><br />
+            <% end %>
+
+            <% if provider == :google_oauth2 %>
+              <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
+                <%= image_tag("btn_login_#{provider}.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44", class: "mr-2") %>
+              <% end %><br />
+            <% end %>
+
+        <% end %>
         </div>
       </div>
     </div>
@@ -152,17 +161,18 @@
 
   <div class="border border-base-300 bg-base-200 m-4 p-4 block md:hidden smartphone-screen">
     <div class="text-sm text-center font-semibold p-1">
-        <p>さっそく使ってみる</p>
+        <p class="text-xl">さっそく使ってみる</p>
       </div>
-      <div class="flex m-5">
+      <div class="flex flex-col items-center m-5">
         <div class="flex-none gap-2">
-          <%= link_to t('top.login'), new_user_session_path, class:"btn btn-sm btn-outline mr-2" %>
+          <%= link_to t('top.login'), new_user_session_path, class:"btn btn-sm btn-outline mb-5" %>
         </div>
-
         <% resource_class.omniauth_providers.each do |provider| %>
-          <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
-            <%= image_tag("btn_login_base.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44") %>
-          <% end %><br />
+          <% if provider == :line || provider == :google_oauth2 %>
+            <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
+              <%= image_tag("btn_login_#{provider}.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44") %>
+            <% end %><br />
+          <% end %>
         <% end %>
       </div>
     </div>
