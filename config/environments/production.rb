@@ -112,4 +112,5 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   config.hosts << 'www.pantry-chef-notifier.com'
   config.hosts << 'pantry-chef-notifier.com'
+  config.hosts << 'pantry-chef-notifier.onrender.com'
 end
