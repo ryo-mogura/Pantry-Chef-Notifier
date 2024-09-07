@@ -1,57 +1,29 @@
 RSpec.describe 'LineBotController', type: :request do
-  describe 'POST /' do
-    let(:user) { create(:user, :line_user, email: "line_test_#{SecureRandom.uuid}@example.com") }
-    let(:headers) { { 'X-Line-Signature' => 'test_signature', 'CONTENT_TYPE' => 'application/json'  } }
-    let(:events) do
-      [
-        {
-          'type' => 'message',
-          'replyToken' => 'test_token',
-          'source' => {
-            'userId' => user.uid
-          },
-          'message' => {
-            'type' => 'text',
-            'text' => '食材リスト'
-          }
-        }
-      ]
-    end
-
-    #
-    let(:client) { instance_double(Line::Bot::Client, reply_message: true) }
+  describe 'LineBot API' do
+    let(:valid_signature) { 'valid-signature' }
+    let(:invalid_signature) { 'invalid-signature' }
+    let(:user) { create(:user, uid: 'U1234567890', provider: 'line') }
+    let(:food_item) { create(:food, user: user, name: 'りんご', quantity: 3) }
+    let(:expiring_food) { create(:food, user: user, name: 'バナナ', expiration_date: Date.today + 1.day) }
 
     before do
-      allow(Line::Bot::Client).to receive(:new).and_return(client)
-      allow(client).to receive(:validate_signature).and_return(true)
-      allow(client).to receive(:parse_events_from).and_return(events)
-      allow(client).to receive(:reply_message).and_return(true)
+      allow_any_instance_of(Line::Bot::Client).to receive(:validate_signature).and_return(true)
+      allow_any_instance_of(Line::Bot::Client).to receive(:reply_message).and_return(true)
     end
 
-    fit 'responds with the food list message' do
-      post '/', params: events.to_json, headers: headers
+    describe 'POST /' do
+
+    end
+
+    it '「食材リスト」を送信した際に正しいリストが返される' do
+
+    end
+
+    it '「食材リスト」を送信した際、食材が登録されていない場合に適切なメッセージが返されるか' do
+      post '/', params: line_request_with_text('食材リスト').to_json, headers: { 'X-Line-Signature': valid_signature }, as: :json
 
       expect(response).to have_http_status(:ok)
-
-      puts "Client was called: #{client.inspect}"
-      expect(client).to have_received(:reply_message).with(
-        'test_token',
-        { type: 'text', text: '食材が登録されていません。' }
-      )
+      expect(response.body).to include('食材が登録されていません。')
     end
-    # 9/2 12;30 以下のエラーが発生
-    # 予想問題点
-    # have_received マッチャが正しく機能していない可能性。
-    # テスト内でclientオブジェクトが何らかの理由で期待される呼び出しを認識していない可能性。
-    #   1) LineBotController POST / responds with the food list message
-    #  Failure/Error:
-    #  expect(client).to have_received(:reply_message).with(
-    #    'test_token',
-    #    { type: 'text', text: '食材が登録されていません。' }
-    #  )
-
-    #  (InstanceDouble(Line::Bot::Client) (anonymous)).reply_message("test_token", {:text=>"食材が登録されていません。", :type=>"text"})
-    #      expected: 1 time with arguments: ("test_token", {:text=>"食材が登録されていません。", :type=>"text"})
-    #      received: 0 times
   end
 end

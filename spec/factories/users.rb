@@ -5,9 +5,4 @@ FactoryBot.define do
     password              { "111111" }
     password_confirmation { "111111" }
   end
-
-  trait :line_user do
-    provider { 'line' }
-    uid      { 'line_test' }
-  end
 end
