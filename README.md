@@ -29,7 +29,7 @@ https://pantry-chef-notifier.com
 ## 機能一覧
 トップ画面 | ログイン画面
 -- | --
-[![Image from Gyazo](https://i.gyazo.com/823a4b975d8071754c3526c0320bfa70.gif)](https://gyazo.com/823a4b975d8071754c3526c0320bfa70) | [![Image from Gyazo](https://i.gyazo.com/14fe01b50e299cc8b7e26613aa3bb075.gif)](https://gyazo.com/14fe01b50e299cc8b7e26613aa3bb075)
+[![Image from Gyazo](https://i.gyazo.com/e7e1ae987f47a09b7c2ac2a2a178383d.jpg)](https://gyazo.com/e7e1ae987f47a09b7c2ac2a2a178383d)| [![Image from Gyazo](https://i.gyazo.com/7c500d3532ebab7a5f13823abb468b01.png)](https://gyazo.com/7c500d3532ebab7a5f13823abb468b01)
 
 食材一覧画面 | 食材の登録画面
 -- | --
