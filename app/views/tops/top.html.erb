@@ -92,7 +92,7 @@
               <% end %><br />
             <% end %>
 
-        <% end %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -168,12 +168,18 @@
           <%= link_to t('top.login'), new_user_session_path, class:"btn btn-sm btn-outline mb-5" %>
         </div>
         <% resource_class.omniauth_providers.each do |provider| %>
-          <% if provider == :line || provider == :google_oauth2 %>
-            <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
-              <%= image_tag("btn_login_#{provider}.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44") %>
-            <% end %><br />
+            <% if provider == :line %>
+              <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
+                <%= image_tag("btn_login_#{provider}.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44", class: "mr-2") %>
+              <% end %><br />
+            <% end %>
+
+            <% if provider == :google_oauth2 %>
+              <%= link_to omniauth_authorize_path(resource_name, provider), data: { turbo: false } do %>
+                <%= image_tag("btn_login_#{provider}.png", alt: "Sign in with #{OmniAuth::Utils.camelize(provider)}", size: "151x44", class: "mr-2") %>
+              <% end %><br />
+            <% end %>
           <% end %>
-        <% end %>
       </div>
     </div>
   </div>
