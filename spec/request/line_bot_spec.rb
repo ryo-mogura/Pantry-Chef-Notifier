@@ -23,14 +23,25 @@ RSpec.describe 'LineBotController', type: :request do
       allow(@client_instance).to receive(:parse_events_from).and_return([line_event])
       allow(@client_instance).to receive(:reply_message).and_return(nil)
     end
+    context 'ユーザーが食材リストを送信したとき' do
+      let(:line_event) do
+        Line::Bot::Event::Message.new(
+          'replyToken' => 'dummy_reply_token',
+          'type' => 'message',
+          'timestamp' => Time.now.to_i * 1000,
+          'source' => { 'type' => 'user', 'userId' => line_user_id },
+          'message' => { 'id' => '325708', 'type' => 'text', 'text' => message_text }
+        )
+      end
 
-    it '食材リストを返信する' do
-      post '/', params: '', headers: { 'HTTP_X_LINE_SIGNATURE' => signature }
+      it '食材リストを返信する' do
+        post '/', params: '', headers: { 'HTTP_X_LINE_SIGNATURE' => signature }
 
-      expect(response).to have_http_status(:ok)
-      expected_text = "食材名: りんご\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n"
-      expected_message = { type: 'text', text: expected_text }
-      expect(@client_instance).to have_received(:reply_message).with('dummy_reply_token', expected_message)
+        expect(response).to have_http_status(:ok)
+        expected_text = "食材名: りんご\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n"
+        expected_message = { type: 'text', text: expected_text }
+        expect(@client_instance).to have_received(:reply_message).with('dummy_reply_token', expected_message)
+      end
     end
   end
 end
