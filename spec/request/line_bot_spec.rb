@@ -23,5 +23,11 @@ RSpec.describe 'LineBotController', type: :request do
       allow(@client_instance).to receive(:parse_events_from).and_return([line_event])
       allow(@client_instance).to receive(:reply_message).and_return(nil)
     end
+
+    it '食材リストを返信する' do
+      post '/', params: '', headers: { 'HTTP_X_LINE_SIGNATURE' => signature }
+
+      expect(response).to have_http_status(:ok)
+    end
   end
 end
