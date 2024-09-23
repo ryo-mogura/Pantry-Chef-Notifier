@@ -25,6 +25,7 @@ RSpec.describe 'LineBotController', type: :request do
     end
 
     context 'ユーザーが食材リストを送信したとき' do
+      # LINE Messaging APIからのメッセージイベントを定義
       let(:line_event) do
         Line::Bot::Event::Message.new(
           'replyToken' => 'dummy_reply_token',
@@ -38,6 +39,12 @@ RSpec.describe 'LineBotController', type: :request do
         post '/', params: '', headers: { 'HTTP_X_LINE_SIGNATURE' => signature }
 
         expect(response).to have_http_status(:ok)
+
+        expected_text = "食材名: りんご\n在庫数: #{food.quantity}\n消費期限: #{food.expiration_date}\n"
+
+        expected_message = { type: 'text', text: expected_text }
+
+        expect(@client_instance).to have_received(:reply_message).with('dummy_reply_token', expected_message)
       end
     end
   end
