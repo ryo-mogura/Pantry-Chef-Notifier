@@ -1,6 +1,7 @@
 # PantryChefNotifier(- 食材管理とレシピ提示アプリ -)
 ## サービスURL
-https://pantry-chef-notifier.com
+~~https://pantry-chef-notifier.com~~
+現在はサービスを停止しています
 ## サービス概要
 消費・賞味期限が近い食材と、その食材を使用したレシピを通知してくれるアプリです。
 ## Webアプリを開発するに至った経緯
